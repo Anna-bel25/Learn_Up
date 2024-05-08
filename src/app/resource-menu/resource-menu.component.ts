@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import Swiper from 'swiper';
+import { HomePageComponent } from '../home-page/home-page.component';
 
 @Component({
   selector: 'app-resource-menu',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, CommonModule, HomePageComponent],
   templateUrl: './resource-menu.component.html',
   styleUrl: './resource-menu.component.css'
 })
