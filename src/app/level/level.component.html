@@ -1,0 +1,108 @@
+
+<link rel="stylesheet" href="./level.component.css">
+
+<!-- <div class="heading">
+  <h1>Recursos</h1>
+  <p><a routerLink="/home">Inicio >></a> Nivel educativo</p>
+</div>
+
+<section class="category">
+  <h1 class="title">Categoría <span>nivel educativo</span></h1>
+
+  <div class="box-container">
+    <div *ngFor="let nivel of niveles" class="box" (click)="mostrarMaterias(nivel)">
+      <img [src]="'/assets/img/' + nivel + '.png'" alt="{{nivel}}">
+      <h3>{{nivel | titlecase}}</h3>
+    </div>
+  </div>
+</section>
+
+<ng-container *ngFor="let nivel of niveles">
+  <section class="blogs" *ngIf="nivel === nivelSeleccionado">
+    <h1 class="title">Materias de <span>{{nivel | titlecase}}</span> <a href="#">ver todo >></a> </h1>
+
+    <div class="box-container" id="materias-container">
+      <div *ngFor="let materia of materias[nivel]" class="box">
+        <div class="image">
+          <img [src]="materia.image" alt="">
+        </div>
+
+        <div class="content">
+          <div class="icons">
+            <a href="#"><i class="fas fa-calendar"></i> {{materia.date}}</a>
+          </div>
+
+          <h3>{{materia.name}}</h3>
+          <p>{{materia.description}}</p>
+          <a [routerLink]="materia.routerLink" class="btn">Ver recursos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container> -->
+
+
+
+
+
+
+<!-- CATEGORY SECTION START -->
+<div class="heading">
+  <h1>Recursos</h1>
+  <p> <a [routerLink]="'/home'">Inicio >></a> Nivel educativo </p>
+</div>
+
+<section class="category">
+  <h1 class="title"> categoria <span>nivel educativo</span></h1>
+  <div class="box-container">
+
+      <div class="box" (click)="mostrarMaterias('preescolar')">
+        <img src="/assets/img/preescolar.png" alt="preescolar">
+        <h3>Preescolar</h3>
+      </div>
+
+      <div class="box" (click)="mostrarMaterias('primaria')">
+          <img src="/assets/img/primaria.png" alt="primaria">
+          <h3>Primaria</h3>
+      </div>
+      <div class="box">
+          <img src="/assets/img/secundaria.png" alt="">
+          <h3>Secundaria</h3>
+      </div>
+      <div class="box">
+          <img src="/assets/img/bachillerato.png" alt="">
+          <h3>Bachillerato</h3>
+      </div>
+  </div>
+</section>
+<!-- CATEGORY SECTION END -->
+
+<app-themed
+[mostrarPreescolar]="mostrarPreescolar"
+[mostrarPrimaria]="mostrarPrimaria">
+</app-themed>
+
+
+
+
+
+
+
+<!-- <div class="heading">
+  <h1>Recursos</h1>
+  <p><a [routerLink]="'/home'">Inicio >></a> Nivel educativo</p>
+</div>
+
+<section class="category">
+  <h1 class="title">categoria <span>nivel educativo</span></h1>
+
+  <div class="box-container">
+    <div *ngFor="let level of levels" class="box" (click)="showLevel(level)">
+      <img [src]="level.image" alt="{{ level.name }}">
+      <h3>{{ level.name }}</h3>
+    </div>
+  </div>
+</section> -->
+
+
+
