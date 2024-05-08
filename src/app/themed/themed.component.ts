@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 export class ThemedComponent {
   @Input() mostrarPreescolar: boolean = false;
   @Input() mostrarPrimaria: boolean = false;
+  @Input() mostrarSecundaria: boolean = false;
+  @Input() mostrarBachillerato: boolean = false;
 
   //@Input() mostrarNiveles: { [key: string]: boolean } = {};
 }

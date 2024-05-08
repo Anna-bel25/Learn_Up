@@ -14,14 +14,13 @@ import { ThemedComponent } from '../themed/themed.component';
 export class LevelComponent {
   mostrarPreescolar: boolean = false;
   mostrarPrimaria: boolean = false;
+  mostrarSecundaria: boolean = false;
+  mostrarBachillerato: boolean = false;
 
   mostrarMaterias(nivel: string): void {
-    // Reiniciar la visibilidad de todos los niveles
     this.mostrarPreescolar = false;
     this.mostrarPrimaria = false;
-    // Reiniciar la visibilidad de otros niveles si es necesario
 
-    // Mostrar solo el nivel seleccionado
     switch (nivel) {
       case 'preescolar':
         this.mostrarPreescolar = true;
@@ -29,7 +28,12 @@ export class LevelComponent {
       case 'primaria':
         this.mostrarPrimaria = true;
         break;
-      // Agregar casos para otros niveles si es necesario
+      case 'secundaria':
+        this.mostrarSecundaria = true;
+        break;
+      case 'bachillerato':
+        this.mostrarBachillerato = true;
+        break;
     }
   }
 
