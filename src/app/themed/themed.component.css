@@ -2,6 +2,7 @@
 
 section {
     padding: 3rem 5%;
+    text-transform: capitalize;
 }
 
 .title {
@@ -207,6 +208,7 @@ section {
 }
 
 .blogs .box .content p {
+  text-transform: capitalize;
   font-size: .8rem;
   color: var(--light-color);
   line-height: 2;

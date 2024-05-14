@@ -1,7 +1,7 @@
 
 
 section {
-  padding: 0 3rem 9%;
+  padding: 0 3rem 0 9%;
 }
 
 
@@ -10,7 +10,7 @@ section {
   background-size: cover;
   background-position: center;
   text-align: center;
-  padding-top: 12rem;
+  padding-top: 10rem;
   margin-bottom: 2rem;
 }
 
@@ -116,7 +116,8 @@ section {
 
 /* Review section */
 .review .review-slider{
-  padding-bottom: 2rem;
+  padding-bottom: .2rem;
+  overflow: hidden;
 }
 
 .review .box{
@@ -151,4 +152,7 @@ section {
   font-size: 1.2rem;
 }
 
+.swiper-container {
+  width: 100%;
+}
 

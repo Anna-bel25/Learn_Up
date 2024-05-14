@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LevelComponent } from './level/level.component';
 import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
+import { ResourceVideoComponent } from './resource-video/resource-video.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
     LevelComponent,
     ThemedComponent,
     ResourceMenuComponent,
+    ResourceVideoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

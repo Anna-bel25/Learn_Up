@@ -9,7 +9,7 @@ section {
   background-size: cover;
   background-position: center;
   text-align: center;
-  padding-top: 12rem;
+  padding-top: 10rem;
   margin-bottom: 2rem;
 }
 
@@ -90,7 +90,7 @@ section {
 }
 
 .category .box img {
-  height: 10rem;
+  height: 12rem;
 }
 
 .category .box h3 {
