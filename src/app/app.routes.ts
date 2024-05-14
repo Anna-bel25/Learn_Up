@@ -12,13 +12,13 @@ export const routes: Routes =
   { path: 'home', component: HomePageComponent },
   { path: 'nivel', component: LevelComponent },
   { path: 'materia', component: ThemedComponent },
-  //{ path: 'menu-recurso', component: ResourceMenuComponent },
-  //{ path: 'video', component: ResourceVideoComponent },
-  
+  { path: 'menu-recurso', component: ResourceMenuComponent },
+  { path: 'video', component: ResourceVideoComponent },
+
   // Ruta para el menú de recursos con parámetros de nivel y materia
-  { path: 'menu-recurso/:nivel/:materia', component: ResourceMenuComponent },
+  //{ path: 'menu-recurso/:nivel/:materia', component: ResourceMenuComponent },
   // Ruta para el componente de video con parámetros de nivel, materia y ID de video
-  { path: 'video/:nivel/:materia/:id', component: ResourceVideoComponent },
+  //{ path: 'video/:nivel/:materiaId', component: ResourceVideoComponent },
   { path: '**', redirectTo: '/level' }
 
 ];

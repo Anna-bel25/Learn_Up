@@ -13,7 +13,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCs8-j56_VtxKhrn3bEq1jVaix3Rukm4Z4",
+  apiKey: "",
   authDomain: "learnup-eb884.firebaseapp.com",
   projectId: "learnup-eb884",
   storageBucket: "learnup-eb884.appspot.com",

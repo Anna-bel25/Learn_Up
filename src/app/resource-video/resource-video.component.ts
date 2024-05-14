@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
@@ -14,35 +14,41 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ResourceVideoComponent implements OnInit {
 
-  videosPreescolar: any[] = [];
-  videosPrimaria: any[] = [];
-  videosSecundaria: any[] = [];
-  videosBachillerato: any[] = [];
+  @Input() mostrarVideos: boolean = false;
+  @Input() materiaId: number | undefined;
+  @Input() nivelAcademico: string | undefined;
+  @Input() materiaNombre: string | undefined;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  videos: any[] = [];
+
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.http.get<any[]>('https://raw.githubusercontent.com/Anna-bel25/api_resource/main/recurso_video.json')
-      .subscribe(videos => {
-      //console.log('Datos recibidos:', videos);
-      this.videosPreescolar = videos.filter(video => video.materia_id === 4);
-      this.videosPrimaria = videos.filter(video => video.materia_id === 11);
-      this.videosSecundaria = videos.filter(video => video.materia_id === 11);
-      this.videosBachillerato = videos.filter(video => video.materia_id === 11);
-
-      //console.log('Videos de Preescolar:', this.videosPreescolar);
-
-        // Sanitizar las URL de los videos
-        this.sanitizeUrls();
-      });
+      .subscribe(
+        videos => {
+          console.log('Videos recuperados:', videos);
+          // Filtrar los videos correspondientes al materia_id
+          this.videos = videos.filter(video => video.materia_id === this.materiaId);
+          this.sanitizeUrls();
+          if (this.videos.length === 0) {
+            console.log('No se encontraron videos para este materia_id.');
+          }
+        },
+        error => {
+          console.error('Error al recuperar los videos:', error);
+        }
+      );
   }
 
+
+
+
+
+
+
   sanitizeUrls(): void {
-    // Sanitizar las URL de los videos en todas las listas
-    this.videosPreescolar.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
-    this.videosPrimaria.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
-    this.videosSecundaria.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
-    this.videosBachillerato.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
+    this.videos.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
   }
 
 

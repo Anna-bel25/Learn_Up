@@ -1,25 +1,31 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-@Component({
+import { OnInit } from '@angular/core';@Component({
   selector: 'app-themed',
   standalone: true,
-  imports: [RouterLink, ResourceMenuComponent, CommonModule],
+  imports: [RouterModule, ResourceMenuComponent, CommonModule],
   templateUrl: './themed.component.html',
   styleUrl: './themed.component.css'
 })
 
 export class ThemedComponent implements OnInit {
+
   materiasPreescolar: any[] = [];
   materiasPrimaria: any[] = [];
   materiasSecundaria: any[] = [];
   materiasBachillerato: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  @Input() mostrarPreescolar: boolean = false;
+  @Input() mostrarPrimaria: boolean = false;
+  @Input() mostrarSecundaria: boolean = false;
+  @Input() mostrarBachillerato: boolean = false;
+
+  constructor(private http: HttpClient,  private router: Router) {}
 
   ngOnInit() {
     this.obtenerMaterias();
@@ -35,13 +41,16 @@ export class ThemedComponent implements OnInit {
       });
   }
 
-
-  @Input() mostrarPreescolar: boolean = false;
-  @Input() mostrarPrimaria: boolean = false;
-  @Input() mostrarSecundaria: boolean = false;
-  @Input() mostrarBachillerato: boolean = false;
-
   //@Input() mostrarNiveles: { [key: string]: boolean } = {};
+
+  irAMenuRecursos(materiaId: number) {
+    this.router.navigate(['/menu-recurso', { materiaId: materiaId }]);
+  }
+
+  //irAMenuRecursos(materiaId: number, nivelAcademico: string, materiaNombre: string) {
+  //  this.router.navigate(['/menu-recurso', { materiaId: materiaId, nivelAcademico: nivelAcademico, materiaNombre: materiaNombre }]);
+  //}
+
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });

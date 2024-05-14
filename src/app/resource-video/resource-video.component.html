@@ -21,34 +21,30 @@
 
 <!-- END HEADING -->
 
-
-
-<!-- START ABOUT SECTION -->
-<section class="about" id="about">
-  <h1 class="title"> primaria <span>arte</span></h1>
-
-  <div *ngFor="let video of videosPreescolar">
-    <div class="row" *ngIf="video.materia_id === 4">
+<!-- VIDEOS SECTION START -->
+<section class="about" *ngIf="mostrarVideos">
+  <h1 class="title">{{ nivelAcademico }} <span>{{ materiaNombre }}</span></h1>
+  <div *ngIf="videos.length > 0; else noVideosMessage">
+    <div class="row" *ngFor="let video of videos">
       <div class="video-container">
-        <iframe width="100%" height="315" [src]="video.safeUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+        <iframe width="100%" height="315" [src]="video.safeUrl" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
       </div>
-
       <div class="content">
-          <h3>{{ video.titulo }}</h3>
-          <p>{{ video.descripcion }}</p>
-          <div class="icons">
-            <a href="#" class="fas fa-heart" title="Favorito"></a>
-            <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
-            <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        <h3>{{ video.titulo }}</h3>
+        <p>{{ video.descripcion }}</p>
+        <div class="icons">
+          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
   </div>
+  <ng-template #noVideosMessage>
+    <p>No se encontraron videos para esta materia.</p>
+  </ng-template>
 </section>
-<!-- END ABOUT SECTION -->
-
-
-
+<!-- VIDEOS SECTION END -->
 
 
 

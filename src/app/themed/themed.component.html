@@ -19,7 +19,8 @@
 
         <h3>{{ materia.nombre }}</h3>
         <p>{{ materia.descripcion }}</p>
-        <a [routerLink]="['/menu-recurso', 'preescolar', materia.id]" (click)="scrollToTop()" class="btn2">Ver recursos</a>
+        <a (click)="irAMenuRecursos(materia.materia_id); scrollToTop()" class="btn2">Ver recursos</a>
+        <!-- <a (click)="irAMenuRecursos(materia.id, 'Preescolar', materia.nombre); scrollToTop()" class="btn2">Ver recursos</a> -->
       </div>
     </div>
   </div>
@@ -50,7 +51,7 @@
         <h3>{{ materia.nombre }}</h3>
         <p>{{ materia.descripcion }}</p>
         <!-- <a [routerLink]="'/menu-recurso'" (click)="scrollToTop()" class="btn2">Ver recursos</a> -->
-        <a [routerLink]="['/menu-recurso', 'primaria', materia.id]" class="btn2">Ver recursos</a>
+        <a (click)="irAMenuRecursos(materia.materia_id); scrollToTop()" class="btn2">Ver recursos</a>
 
       </div>
     </div>

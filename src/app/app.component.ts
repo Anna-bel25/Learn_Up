@@ -7,6 +7,8 @@ import { LevelComponent } from './level/level.component';
 import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
+//import { routes } from './app.routes';
+
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,7 @@ import { ResourceVideoComponent } from './resource-video/resource-video.componen
     RouterOutlet,
     CommonModule,
     RouterLink,
+    //routes,
 
     //GENERAL COMPONENTS
     HeaderComponent,

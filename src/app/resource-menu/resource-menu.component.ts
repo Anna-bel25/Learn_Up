@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Output, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import Swiper from 'swiper';
 import { HomePageComponent } from '../home-page/home-page.component';
@@ -15,24 +15,25 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResourceMenuComponent implements AfterViewInit, OnInit  {
 
-  materia: any;
-  nivelEduc: string = '';
-  materiaId: string = '';
+  swiper!: Swiper;
+  materiaId: number | undefined;
+  nivelAcademico: string = '';
+  materiaNombre: string = '';
+  mostrarVideos: boolean = false;
+
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.nivelEduc = params['nivel'];
-      this.materiaId = params['materiaId'];
-      // Aquí puedes usar this.nivelEduc y this.materiaId para filtrar el contenido
+      this.materiaId = +params['materiaId']; // Convertir a numero
+      //this.nivelAcademico = params['nivelAcademico'] || ''; // Capturar nivel academico
+      //this.materiaNombre = params['materiaNombre'] || ''; // Capturar nombre de la materia
     });
   }
 
-  swiper!: Swiper;
-
   ngAfterViewInit(): void {
-    this.swiper = new Swiper(".review-slider", {
+    new Swiper('.review-slider', {
       spaceBetween: 20,
       loop: true,
       autoplay: {
@@ -40,17 +41,15 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
         disableOnInteraction: false,
       },
       breakpoints: {
-        640: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        },
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
       },
     });
+  }
+
+  toggleVideos() {
+    this.mostrarVideos = !this.mostrarVideos;
   }
 
   scrollToTop(): void {
