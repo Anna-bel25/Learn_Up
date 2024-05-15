@@ -16,8 +16,9 @@ export class ResourceVideoComponent implements OnInit {
 
   @Input() mostrarVideos: boolean = false;
   @Input() materiaId: number | undefined;
-  @Input() nivelAcademico: string | undefined;
-  @Input() materiaNombre: string | undefined;
+  @Input() nivel: string | undefined;
+  @Input() materia: string | undefined;
+  
 
   videos: any[] = [];
 
@@ -28,7 +29,6 @@ export class ResourceVideoComponent implements OnInit {
       .subscribe(
         videos => {
           console.log('Videos recuperados:', videos);
-          // Filtrar los videos correspondientes al materia_id
           this.videos = videos.filter(video => video.materia_id === this.materiaId);
           this.sanitizeUrls();
           if (this.videos.length === 0) {
@@ -40,12 +40,6 @@ export class ResourceVideoComponent implements OnInit {
         }
       );
   }
-
-
-
-
-
-
 
   sanitizeUrls(): void {
     this.videos.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));

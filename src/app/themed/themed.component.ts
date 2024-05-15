@@ -25,6 +25,9 @@ export class ThemedComponent implements OnInit {
   @Input() mostrarSecundaria: boolean = false;
   @Input() mostrarBachillerato: boolean = false;
 
+  nivelSeleccionado: string = '';
+  materiaSeleccionada: string = '';
+
   constructor(private http: HttpClient,  private router: Router) {}
 
   ngOnInit() {
@@ -45,6 +48,11 @@ export class ThemedComponent implements OnInit {
 
   irAMenuRecursos(materiaId: number) {
     this.router.navigate(['/menu-recurso', { materiaId: materiaId }]);
+  }
+
+  seleccionarNivelYmateria(nivel: string, materia: string) {
+    this.nivelSeleccionado = nivel;
+    this.materiaSeleccionada = materia;
   }
 
   //irAMenuRecursos(materiaId: number, nivelAcademico: string, materiaNombre: string) {

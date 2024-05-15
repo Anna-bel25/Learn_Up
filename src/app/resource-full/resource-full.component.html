@@ -1,0 +1,138 @@
+
+
+<!-- START HEADING -->
+<!-- <a [routerLink]="'/inicio'" (click)="scrollToTop()" ></a> -->
+<div class="title">
+  <div class="heading">
+      <h1>
+        <span>r</span>
+        <span>e</span>
+        <span>c</span>
+        <span>u</span>
+        <span>r</span>
+        <span>s</span>
+        <span>o</span>
+        <span>s</span>
+      </h1>
+      <div class="subtitle"><a> <p> Todos los </p> Recursos</a> </div>
+  </div>
+</div>
+<!-- END HEADING -->
+
+<div class="" style="align-items: center;"><H2 style="text-align: center;">COMPONENTE DE BUSQUEDA AQUÍ *MARIA</H2></div>
+
+
+
+<!-- START FILTER -->
+<div class="filtro">
+  <!-- <a class="btn3" [class.active]="filtroActivo === null" (click)="mostrarTodo()">Todos</a> -->
+  <a class="btn3" [class.active]="filtroActivo === 'videos'" (click)="mostrarVideos()">Videos</a>
+  <a class="btn3" [class.active]="filtroActivo === 'libros'" (click)="mostrarLibros()">Libros</a>
+  <a class="btn3" [class.active]="filtroActivo === 'actividades'" (click)="mostrarActividades()"> Actividades </a>
+  <a class="btn3" > Artículos </a>
+</div>
+<!-- END FILTER -->
+
+
+
+<!-- VIDEOS SECTION START -->
+<section *ngIf="mostrarVideo" class="about">
+  <h1 class="title2">Recursos de<span>Videos</span></h1>
+  <div>
+    <div class="row" *ngFor="let video of videosPaginados">
+      <div class="video-container">
+        <iframe width="100%" height="315" [src]="video.safeUrl" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+      </div>
+      <div class="content">
+        <h3>{{ video.titulo }}</h3>
+        <p>{{ video.descripcion }}</p>
+        <div class="icons">
+          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorVideos()" [disabled]="paginaActualVideos === 1">Anterior</button>
+      <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
+      <button class="btn2" (click)="paginaSiguienteVideos()" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noVideosMessage>
+    <p>No se encontraron videos.</p>
+  </ng-template>
+</section>
+<!-- VIDEOS SECTION END -->
+
+
+<!-- LIBROS SECTION START -->
+<section *ngIf="mostrarLibro" class="about">
+  <h1 class="title2">Recursos de<span>Libros</span></h1>
+
+  <div>
+    <div class="row" *ngFor="let entry of librosPaginados">
+      <div class="img-container">
+        <img width="100%" height="315" [src]="entry.url_cubierta" alt="Cubierta del libro">
+      </div>
+      <div class="content">
+        <h3>{{ entry.titulo }}</h3>
+        <p>Autor: {{ entry.autores }}</p>
+        <p>Fecha de publicación: {{ entry.fecha_publicacion }}</p>
+        <div class="icons">
+          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorLibros()" [disabled]="paginaActualLibros === 1">Anterior</button>
+      <span>Página {{ paginaActualLibros }} de {{ numeroTotalPaginasLibros }}</span>
+      <button class="btn2" (click)="paginaSiguienteLibros()" [disabled]="paginaActualLibros === numeroTotalPaginasLibros">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noLibrosMessage>
+    <p>No se encontraron libros.</p>
+  </ng-template>
+</section>
+<!-- LIBROS SECTION END -->
+
+
+<!-- ACTIVIDADES SECTION START -->
+<section *ngIf="mostrarActividad" class="about">
+  <h1 class="title2">Recursos de<span>Actividades</span></h1>
+  <div>
+    <div class="row" *ngFor="let actividad of actividadesPaginados">
+      <div class="video-container">
+        <img width="100%" height="315" [src]="actividad.imagen_url" alt="Vista previa de la actividad">
+      </div>
+      <div class="content">
+        <h3>{{ actividad.titulo }}</h3>
+        <p>{{ actividad.descripcion }}</p>
+        <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <div class="icons">
+          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorActividades()" [disabled]="paginaActualActividades === 1">Anterior</button>
+      <span>Página {{ paginaActualActividades }} de {{ numeroTotalPaginasActividades }}</span>
+      <button class="btn2" (click)="paginaSiguienteActividades()" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noActividadesMessage>
+    <p>No se encontraron actividades.</p>
+  </ng-template>
+</section>
+<!-- ACTIVIDADES SECTION END -->
+

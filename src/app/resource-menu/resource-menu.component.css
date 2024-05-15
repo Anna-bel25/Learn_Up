@@ -145,6 +145,7 @@ section {
   color: var(--dark-gray);
   font-size: 0.8rem;
   padding: .8rem 0;
+  text-transform: none !important;
 }
 
 .review .box .stars i{

@@ -1,29 +1,8 @@
 
 
-<!-- START HEADING -->
-
-<!-- <div class="title">
-  <div class="heading">
-      <h1>
-        <span>v</span>
-        <span>i</span>
-        <span>d</span>
-        <span>e</span>
-        <span>o</span>
-        <span>s</span>
-      </h1>
-      <div class="subtitle"><a [routerLink]="'/menu-recurso'" (click)="scrollToTop()" >
-        <p> Arte </p>
-        &lt;&lt; menú</a>
-      </div>
-  </div>
-</div> -->
-
-<!-- END HEADING -->
-
 <!-- VIDEOS SECTION START -->
-<section class="about" *ngIf="mostrarVideos">
-  <h1 class="title">{{ nivelAcademico }} <span>{{ materiaNombre }}</span></h1>
+<section #videoSection class="about" *ngIf="mostrarVideos">
+  <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
   <div *ngIf="videos.length > 0; else noVideosMessage">
     <div class="row" *ngFor="let video of videos">
       <div class="video-container">
@@ -35,7 +14,7 @@
         <div class="icons">
           <a href="#" class="fas fa-heart" title="Favorito"></a>
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <!-- <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a> -->
         </div>
       </div>
     </div>

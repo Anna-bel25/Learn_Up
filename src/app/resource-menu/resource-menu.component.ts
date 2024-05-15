@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Output, Input, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import Swiper from 'swiper';
 import { HomePageComponent } from '../home-page/home-page.component';
@@ -15,12 +15,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResourceMenuComponent implements AfterViewInit, OnInit  {
 
+  @Output() nivelSeleccionado: EventEmitter<any> = new EventEmitter();
+  @Input() nivel: string | undefined;
+  @Input() materia: string | undefined;
+
   swiper!: Swiper;
   materiaId: number | undefined;
   nivelAcademico: string = '';
   materiaNombre: string = '';
   mostrarVideos: boolean = false;
 
+  @ViewChild('videosSection') videoSection!: ElementRef<any>;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -48,8 +53,19 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
     });
   }
 
+
   toggleVideos() {
     this.mostrarVideos = !this.mostrarVideos;
+  }
+
+
+  scrollToVideos() {
+    this.videoSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
+  mostrarMaterias(nivel: string, materia: string): void {
+    this.nivelSeleccionado.emit({nivel: nivel, materia: materia});
   }
 
   scrollToTop(): void {

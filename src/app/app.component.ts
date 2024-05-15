@@ -7,6 +7,7 @@ import { LevelComponent } from './level/level.component';
 import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
+import { ResourceFullComponent } from './resource-full/resource-full.component';
 //import { routes } from './app.routes';
 
 
@@ -28,6 +29,7 @@ import { ResourceVideoComponent } from './resource-video/resource-video.componen
     ThemedComponent,
     ResourceMenuComponent,
     ResourceVideoComponent,
+    ResourceFullComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
