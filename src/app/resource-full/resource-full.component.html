@@ -19,8 +19,6 @@
 </div>
 <!-- END HEADING -->
 
-<div class="" style="align-items: center;"><H2 style="text-align: center;">COMPONENTE DE BUSQUEDA AQUÍ *MARIA</H2></div>
-
 
 
 <!-- START FILTER -->
@@ -37,11 +35,21 @@
 
 <!-- VIDEOS SECTION START -->
 <section *ngIf="mostrarVideo" class="about">
-  <h1 class="title2">Recursos de<span>Videos</span></h1>
+  <h1 class="title2">Recursos de <span>Videos</span></h1>
   <div>
-    <div class="row" *ngFor="let video of videosPaginados">
+    <div class="row" *ngFor="let video of videos">
       <div class="video-container">
-        <iframe width="100%" height="315" [src]="video.safeUrl" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+        <iframe
+          width="100%"
+          height="315"
+          [src]="getSafeUrl(video.id)"
+          title="Reproductor de video de YouTube"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          style="border-radius: 1.5rem;">
+        </iframe>
       </div>
       <div class="content">
         <h3>{{ video.titulo }}</h3>
@@ -109,7 +117,7 @@
   <div>
     <div class="row" *ngFor="let actividad of actividadesPaginados">
       <div class="video-container">
-        <img width="100%" height="315" [src]="actividad.imagen_url" alt="Vista previa de la actividad">
+        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="315" style="border-radius: 1.5rem;">
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>

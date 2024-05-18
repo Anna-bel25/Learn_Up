@@ -2,34 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
-
-interface LibrosResponse {
-  reading_log_entries: {
-    work: {
-      title: string;
-      author_names: string[];
-      first_publish_year: number;
-      cover_id?: number;
-    };
-    logged_date: string;
-  }[];
-}
-
-
-interface Actividad {
-  recurso_det_id: number;
-  titulo: string;
-  imagen_url: string;
-  url: string;
-  descripcion: string;
-  materia_id: number;
-  materia: string;
-  nivel_id: string;
-}
-
+import { LibrosResponse } from '../interfaces/libro.interface'
 
 
 @Component({
@@ -50,7 +25,9 @@ export class ResourceFullComponent implements OnInit {
 
   videos: any[] = [];
   libros: any[] = [];
-  actividades: Actividad[] = [];
+  actividades: any[] = [];
+
+  sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
 
   videosPorPagina: number = 5;
   librosPorPagina: number = 5;
@@ -99,14 +76,19 @@ export class ResourceFullComponent implements OnInit {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    
+    this.fetchVideos();
+    this.fetchActivities();
+    this.fetchObras();
     this.mostrarVideos();
+  }
 
-    this.http.get<any[]>('https://raw.githubusercontent.com/Anna-bel25/api_resource/main/recurso_video.json')
+
+  private fetchVideos(): void {
+    this.http.get<any>('http://127.0.0.1:8090/api/collections/recurso_video/records')
       .subscribe(
-        videos => {
-          console.log('Videos recuperados:', videos);
-          this.videos = videos;
+        response => {
+          console.log('Videos recuperados:', response);
+          this.videos = response.items;
           this.sanitizeUrls();
           if (this.videos.length === 0) {
             console.log('No se encontraron videos.');
@@ -116,36 +98,26 @@ export class ResourceFullComponent implements OnInit {
           console.error('Error al recuperar los videos:', error);
         }
       );
+  }
 
-      this.http.get<LibrosResponse>('https://openlibrary.org/people/mekBot/books/want-to-read.json')
+  private sanitizeUrls(): void {
+    this.videos.forEach(video => {
+      this.sanitizedUrls[video.id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
+    });
+  }
+
+  getSafeUrl(id: string): SafeResourceUrl | undefined {
+    return this.sanitizedUrls[id];
+  }
+
+
+
+  private fetchActivities(): void {
+    this.http.get<any>('http://127.0.0.1:8090/api/collections/recurso_actividad/records')
       .subscribe(
         response => {
-          console.log('Libros recuperados:', response);
-          this.libros = response.reading_log_entries.map(entry => ({
-            titulo: entry.work.title,
-            autores: entry.work.author_names.join(', '),
-            fecha_publicacion: entry.work.first_publish_year,
-            fecha_registro: entry.logged_date,
-            url_cubierta: entry.work.cover_id ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-L.jpg` : null
-          }));
-          if (this.libros.length === 0) {
-            console.log('No se encontraron libros.');
-          }
-        },
-        error => {
-          console.error('Error al recuperar los libros:', error);
-        }
-      );
-
-      this.http.get<Actividad[]>('https://raw.githubusercontent.com/Anna-bel25/api_resource/main/recurso_actividad.json')
-      .subscribe(
-        actividades => {
-          console.log('Actividades recuperadas:', actividades);
-          this.actividades = actividades;
-          this.actividades.forEach(actividad => {
-            actividad.imagen_url = actividad.imagen_url;
-          });
-
+          console.log('Actividades recuperadas:', response);
+          this.actividades = response.items;
           if (this.actividades.length === 0) {
             console.log('No se encontraron actividades.');
           }
@@ -153,17 +125,40 @@ export class ResourceFullComponent implements OnInit {
         error => {
           console.error('Error al recuperar las actividades:', error);
         }
+      );
+  }
+
+
+
+  private fetchObras(): void {
+    this.http.get<LibrosResponse>('https://openlibrary.org/people/mekBot/books/want-to-read.json')
+    .subscribe(
+      response => {
+        console.log('Libros recuperados:', response);
+        this.libros = response.reading_log_entries.map(entry => ({
+          titulo: entry.work.title,
+          autores: entry.work.author_names.join(', '),
+          fecha_publicacion: entry.work.first_publish_year,
+          fecha_registro: entry.logged_date,
+          url_cubierta: entry.work.cover_id ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-L.jpg` : null
+        }));
+        if (this.libros.length === 0) {
+          console.log('No se encontraron libros.');
+        }
+      },
+      error => {
+        console.error('Error al recuperar los libros:', error);
+      }
     );
-
   }
 
-  sanitizeUrls(): void {
-    this.videos.forEach(video => video.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(video.url));
-  }
+
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+
 
 
   paginaAnteriorVideos(): void {
@@ -223,7 +218,7 @@ export class ResourceFullComponent implements OnInit {
     }
   }
 
-  get actividadesPaginados(): Actividad[] {
+  get actividadesPaginados(): any[] {
     const inicio = (this.paginaActualActividades - 1) * this.actividadesPorPagina;
     return this.actividades.slice(inicio, inicio + this.actividadesPorPagina);
   }
