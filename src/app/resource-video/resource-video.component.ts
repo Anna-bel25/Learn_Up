@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { VideoListModel, VideoModel } from '../models/video.model';
 //import { VideosService } from '../services/recursos.services';
 
 
@@ -26,8 +27,7 @@ export class ResourceVideoComponent implements OnInit {
   @Input() nivel: string | undefined;
   @Input() materia: string | undefined;
 
-
-  videos: any[] = [];
+  videos: VideoModel[] = [];
   sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
@@ -36,13 +36,12 @@ export class ResourceVideoComponent implements OnInit {
     this.fetchVideos();
   }
 
-
   private fetchVideos() {
-    this.http.get<any>('http://127.0.0.1:8090/api/collections/recurso_video/records')
+    this.http.get<VideoListModel>('http://127.0.0.1:8090/api/collections/recurso_video/records')
       .subscribe(
         response => {
           console.log('Videos recuperados:', response);
-          this.videos = response.items.filter((video: any) => video.materia_id === this.materiaId);
+          this.videos = response.items.filter(video => video.materia_id === this.materiaId);
           this.sanitizeUrls();
           if (this.videos.length === 0) {
             console.log('No se encontraron videos para este materia_id.');
@@ -68,13 +67,10 @@ export class ResourceVideoComponent implements OnInit {
     return this.sanitizedUrls[id];
   }
 
-
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-
-  //+----------------------------------PAGINACION------------------------------+
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -88,7 +84,7 @@ export class ResourceVideoComponent implements OnInit {
     }
   }
 
-  get videosPaginados(): any[] {
+  get videosPaginados(): VideoModel[] {
     const inicio = (this.paginaActual - 1) * this.paginaPorPagina;
     return this.videos.slice(inicio, inicio + this.paginaPorPagina);
   }

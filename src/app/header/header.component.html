@@ -9,11 +9,11 @@
     <a href="#" class="logo">Learn<span>Up</span></a>
 
     <nav class="navbar">
-        <a routerLink="/home" >Inicio</a>
-        <a routerLink="" >Colecciones</a>
-        <a routerLink="/nivel" >Categoria</a>
-        <a routerLink="/recursos" >Recursos</a>
-        <!-- <a routerLink="/menu-recurso" >Contactanos</a> -->
+      <a routerLink="/" [class.active]="isActiveLink(0)" (click)="setActiveLink(0)">Inicio</a>
+      <a routerLink="/colecciones" [class.active]="isActiveLink(1)" (click)="setActiveLink(1)">Colecciones</a>
+      <a routerLink="/nivel" [class.active]="isActiveLink(2)" (click)="setActiveLink(2)">Categoria</a>
+      <a routerLink="/recursos" [class.active]="isActiveLink(3)" (click)="setActiveLink(3)">Recursos</a>
+      <!-- <a routerLink="/menu-recurso" (click)="setActiveLink(4)">Contactanos</a> -->
     </nav>
 
     <div class="icons">

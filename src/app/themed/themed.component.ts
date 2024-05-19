@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { OnInit } from '@angular/core';@Component({
+import { OnInit } from '@angular/core';import { MateriaListModel } from '../models/materia.model';
+@Component({
   selector: 'app-themed',
   standalone: true,
   imports: [RouterModule, ResourceMenuComponent, CommonModule],
@@ -35,14 +36,16 @@ export class ThemedComponent implements OnInit {
   }
 
   obtenerMaterias() {
-    this.http.get<any[]>('https://raw.githubusercontent.com/Anna-bel25/api_resource/main/materia_nivel.json')
-      .subscribe(materias => {
-        this.materiasPreescolar = materias.filter(materia => materia.nivel_id === 1);
-        this.materiasPrimaria = materias.filter(materia => materia.nivel_id === 2);
-        this.materiasSecundaria = materias.filter(materia => materia.nivel_id === 3);
-        this.materiasBachillerato = materias.filter(materia => materia.nivel_id === 4);
+    this.http.get<MateriaListModel>('http://localhost:8090/api/collections/materia_nivel/records')
+      .subscribe(response => {
+        this.materiasPreescolar = response.items.filter(materia => materia.nivel_id === 1);
+        this.materiasPrimaria = response.items.filter(materia => materia.nivel_id === 2);
+        this.materiasSecundaria = response.items.filter(materia => materia.nivel_id === 3);
+        this.materiasBachillerato = response.items.filter(materia => materia.nivel_id === 4);
       });
   }
+
+
 
   //@Input() mostrarNiveles: { [key: string]: boolean } = {};
 

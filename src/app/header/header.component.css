@@ -75,6 +75,11 @@
   display: none;
 }
 
+.header .navbar a.active {
+  color: var(--pink);
+  border-bottom: 2px solid var(--pink);
+  font-weight: 500;
+}
 
 
 /* Media Queries */

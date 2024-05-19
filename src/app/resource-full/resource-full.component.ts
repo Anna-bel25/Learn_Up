@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { LibrosResponse } from '../interfaces/libro.interface';
+import { VideoListModel, VideoModel } from '../models/video.model';
+import { Observable, map } from 'rxjs';
+import { ActividadListModel, ActividadModel } from '../models/actividad.model';
 
 
 
@@ -24,11 +27,13 @@ export class ResourceFullComponent implements OnInit {
   @Input() nivel: string | undefined;
   @Input() materia: string | undefined;
 
-  videos: any[] = [];
-  libros: any[] = [];
-  actividades: any[] = [];
 
-  sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
+  libros: any[] = [];
+  actividades: ActividadModel[] = [];
+  videos: VideoModel[] = [];
+  sanitizedUrls: { [id: string]: SafeResourceUrl } = {}
+
+  //sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
 
   videosPorPagina: number = 5;
   librosPorPagina: number = 5;
@@ -84,8 +89,8 @@ export class ResourceFullComponent implements OnInit {
   }
 
 
-  private fetchVideos(): void {
-    this.http.get<any>('http://127.0.0.1:8090/api/collections/recurso_video/records')
+  private fetchVideos() {
+    this.http.get<VideoListModel>('http://127.0.0.1:8090/api/collections/recurso_video/records')
       .subscribe(
         response => {
           console.log('Videos recuperados:', response);
@@ -93,6 +98,10 @@ export class ResourceFullComponent implements OnInit {
           this.sanitizeUrls();
           if (this.videos.length === 0) {
             console.log('No se encontraron videos.');
+          } else {
+            const firstVideo = this.videos[0];
+            this.nivel = firstVideo.nivel;
+            this.materia = firstVideo.materia;
           }
         },
         error => {
@@ -101,7 +110,8 @@ export class ResourceFullComponent implements OnInit {
       );
   }
 
-  private sanitizeUrls(): void {
+
+  private sanitizeUrls() {
     this.videos.forEach(video => {
       this.sanitizedUrls[video.id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
     });
@@ -114,7 +124,7 @@ export class ResourceFullComponent implements OnInit {
 
 
   private fetchActivities(): void {
-    this.http.get<any>('http://127.0.0.1:8090/api/collections/recurso_actividad/records')
+    this.http.get<ActividadListModel>('http://127.0.0.1:8090/api/collections/recurso_actividad/records')
       .subscribe(
         response => {
           console.log('Actividades recuperadas:', response);
@@ -128,6 +138,7 @@ export class ResourceFullComponent implements OnInit {
         }
       );
   }
+
 
 
 
@@ -175,7 +186,7 @@ export class ResourceFullComponent implements OnInit {
     }
   }
 
-  get videosPaginados(): any[] {
+  get videosPaginados(): VideoModel[] {
     const inicio = (this.paginaActualVideos - 1) * this.videosPorPagina;
     return this.videos.slice(inicio, inicio + this.videosPorPagina);
   }
@@ -183,6 +194,10 @@ export class ResourceFullComponent implements OnInit {
   get numeroTotalPaginasVideos(): number {
     return Math.ceil(this.videos.length / this.videosPorPagina);
   }
+
+
+
+
 
   paginaAnteriorLibros(): void {
     if (this.paginaActualLibros > 1) {
@@ -206,6 +221,10 @@ export class ResourceFullComponent implements OnInit {
     return Math.ceil(this.libros.length / this.librosPorPagina);
   }
 
+
+
+
+
   paginaAnteriorActividades(): void {
     if (this.paginaActualActividades > 1) {
       this.paginaActualActividades--;
@@ -219,7 +238,7 @@ export class ResourceFullComponent implements OnInit {
     }
   }
 
-  get actividadesPaginados(): any[] {
+  get actividadesPaginados(): ActividadModel[] {
     const inicio = (this.paginaActualActividades - 1) * this.actividadesPorPagina;
     return this.actividades.slice(inicio, inicio + this.actividadesPorPagina);
   }

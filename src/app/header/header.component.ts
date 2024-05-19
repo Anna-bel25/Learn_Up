@@ -12,6 +12,15 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HeaderComponent {
 
+  activeLinkIndex = 0;
+  links = [
+    { path: '/home', label: 'Inicio', active: true },
+    { path: '/colecciones', label: 'Colecciones', active: false },
+    { path: '/nivel', label: 'Categoria', active: false },
+    { path: '/recursos', label: 'Recursos', active: false },
+    // { path: '/menu-recurso', label: 'Contactanos', active: false },
+  ];
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -21,5 +30,14 @@ export class HeaderComponent {
       }
     });
   }
-  
+
+  setActiveLink(index: number) {
+    this.activeLinkIndex = index;
+    this.links.forEach((link, i) => link.active = i === index);
+  }
+
+  isActiveLink(index: number): boolean {
+    return this.activeLinkIndex === index;
+  }
+
 }

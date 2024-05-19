@@ -19,4 +19,5 @@ export interface ActividadModel {
   materia_id:     number;
   materia:        string;
   nivel:          string;
+  pdf:            string;
 }
