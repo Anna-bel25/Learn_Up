@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit, OnInit, Output, Input, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Output, Input, EventEmitter, ElementRef, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import Swiper from 'swiper';
 import { HomePageComponent } from '../home-page/home-page.component';
@@ -16,24 +16,18 @@ import { ActivatedRoute } from '@angular/router';
 export class ResourceMenuComponent implements AfterViewInit, OnInit  {
 
   @Output() nivelSeleccionado: EventEmitter<any> = new EventEmitter();
-  @Input() nivel: string | undefined;
-  @Input() materia: string | undefined;
+  @ViewChild('videoSection') videoSection!: ElementRef;
 
+  nivel: string = '';
   swiper!: Swiper;
   materiaId: number | undefined;
-  nivelAcademico: string = '';
-  materiaNombre: string = '';
   mostrarVideos: boolean = false;
 
-  @ViewChild('videosSection') videoSection!: ElementRef<any>;
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private changeDetectorRef: ChangeDetectorRef, private zone: NgZone) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.materiaId = +params['materiaId']; // Convertir a numero
-      //this.nivelAcademico = params['nivelAcademico'] || ''; // Capturar nivel academico
-      //this.materiaNombre = params['materiaNombre'] || ''; // Capturar nombre de la materia
+      this.materiaId = +params['materiaId'];
     });
   }
 
@@ -54,8 +48,23 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
   }
 
 
-  toggleVideos() {
+  toggleVideos(videoSlide: HTMLElement): void {
     this.mostrarVideos = !this.mostrarVideos;
+    setTimeout(() => {
+        const tituloSeccion = document.querySelector('.about .title') as HTMLElement;
+        if (tituloSeccion) {
+            tituloSeccion.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            //window.scrollBy(0, 650);
+            window.scrollTo({ top: 650, behavior: 'smooth' });
+        } else {
+            console.error('Elemento del título de la sección no encontrado');
+        }
+    }, 100);
+  }
+
+
+  mostrarMaterias(nivel: string, materia: string): void {
+    this.nivelSeleccionado.emit({nivel: nivel, materia: materia});
   }
 
 
@@ -63,10 +72,6 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
     this.videoSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
-
-  mostrarMaterias(nivel: string, materia: string): void {
-    this.nivelSeleccionado.emit({nivel: nivel, materia: materia});
-  }
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });

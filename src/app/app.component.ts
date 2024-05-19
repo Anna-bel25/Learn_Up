@@ -10,7 +10,6 @@ import { ResourceVideoComponent } from './resource-video/resource-video.componen
 import { ResourceFullComponent } from './resource-full/resource-full.component';
 //import { routes } from './app.routes';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,

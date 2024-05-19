@@ -28,7 +28,7 @@
   <div class="swiper-container review-slider">
     <div class="swiper-wrapper">
 
-        <div class="swiper-slide" (click)="toggleVideos()">
+        <div class="swiper-slide" #videoSlide (click)="toggleVideos(videoSlide)">
         <div class="box">
             <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmlkZW9zfGVufDB8fDB8fHww" alt="" />
             <h3>videos</h3>
@@ -105,8 +105,7 @@
 <app-resource-video
   [mostrarVideos]="mostrarVideos"
   [materiaId]="materiaId"
-  [nivel]="nivelAcademico"
-  [materia]="materiaNombre">
+  [nivel]="nivel">
 </app-resource-video>
 
 

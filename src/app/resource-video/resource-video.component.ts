@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 //import { VideosService } from '../services/recursos.services';
+
 
 @Component({
   selector: 'app-resource-video',
@@ -15,6 +16,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ResourceVideoComponent implements OnInit {
 
+  paginaPorPagina: number = 5;
+  paginaActual: number = 1;
+
+  @Output() nivelLoaded: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() mostrarVideos: boolean = false;
   @Input() materiaId: number | undefined;
@@ -25,12 +30,11 @@ export class ResourceVideoComponent implements OnInit {
   videos: any[] = [];
   sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.fetchVideos();
   }
-
 
 
   private fetchVideos() {
@@ -42,6 +46,10 @@ export class ResourceVideoComponent implements OnInit {
           this.sanitizeUrls();
           if (this.videos.length === 0) {
             console.log('No se encontraron videos para este materia_id.');
+          } else {
+            const firstVideo = this.videos[0];
+            this.nivel = firstVideo.nivel;
+            this.materia = firstVideo.materia;
           }
         },
         error => {
@@ -63,6 +71,30 @@ export class ResourceVideoComponent implements OnInit {
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+
+  //+----------------------------------PAGINACION------------------------------+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+    }
+  }
+
+  paginaSiguiente(): void {
+    const numeroTotalPaginas = Math.ceil(this.videos.length / this.paginaPorPagina);
+    if (this.paginaActual < numeroTotalPaginas) {
+      this.paginaActual++;
+    }
+  }
+
+  get videosPaginados(): any[] {
+    const inicio = (this.paginaActual - 1) * this.paginaPorPagina;
+    return this.videos.slice(inicio, inicio + this.paginaPorPagina);
+  }
+
+  get numeroTotalPaginas(): number {
+    return Math.ceil(this.videos.length / this.paginaPorPagina);
   }
 
 }

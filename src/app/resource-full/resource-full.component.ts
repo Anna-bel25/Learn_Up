@@ -4,7 +4,8 @@ import { HomePageComponent } from '../home-page/home-page.component';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { LibrosResponse } from '../interfaces/libro.interface'
+import { LibrosResponse } from '../interfaces/libro.interface';
+
 
 
 @Component({
@@ -73,7 +74,7 @@ export class ResourceFullComponent implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {  }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -160,7 +161,7 @@ export class ResourceFullComponent implements OnInit {
 
 
 
-
+ //+----------------------------------PAGINACION------------------------------+
   paginaAnteriorVideos(): void {
     if (this.paginaActualVideos > 1) {
       this.paginaActualVideos--;

@@ -19,6 +19,13 @@
       </div>
     </div>
   </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnterior()" [disabled]="paginaActual === 1">Anterior</button>
+      <span>Página {{ paginaActual }} de {{ numeroTotalPaginas }}</span>
+      <button class="btn2" (click)="paginaSiguiente()" [disabled]="paginaActual === numeroTotalPaginas">Siguiente</button>
+    </div>
+  </div>
   <ng-template #noVideosMessage>
     <p>No se encontraron videos para esta materia.</p>
   </ng-template>
