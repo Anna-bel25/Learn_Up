@@ -13,8 +13,8 @@
 
       <div class="content">
         <div class="icons">
-          <a href="#"><i class="fas fa-calendar"></i>{{ materia.fecha }}</a>
-          <a href="#"><i class="fas fa-user"></i>{{ materia.autor }}</a>
+          <a><i class="fas fa-calendar"></i>{{ materia.fecha | date:'dd MMMM yyyy' }}</a>
+          <a><i class="fas fa-user"></i>{{ materia.autor }}</a>
         </div>
 
         <h3>{{ materia.nombre }}</h3>
@@ -44,8 +44,8 @@
 
       <div class="content">
         <div class="icons">
-          <a href="#"><i class="fas fa-calendar"></i>{{ materia.fecha }}</a>
-          <a href="#"><i class="fas fa-user"></i>{{ materia.autor }}</a>
+          <a><i class="fas fa-calendar"></i>{{ materia.fecha | date:'dd MMMM yyyy' }}</a>
+          <a><i class="fas fa-user"></i>{{ materia.autor }}</a>
         </div>
 
         <h3>{{ materia.nombre }}</h3>
@@ -76,13 +76,13 @@
 
       <div class="content">
         <div class="icons">
-          <a href="#"><i class="fas fa-calendar"></i>{{ materia.fecha }}</a>
-          <a href="#"><i class="fas fa-user"></i>{{ materia.autor }}</a>
+          <a><i class="fas fa-calendar"></i>{{ materia.fecha | date:'dd MMMM yyyy' }}</a>
+          <a><i class="fas fa-user"></i>{{ materia.autor }}</a>
         </div>
 
         <h3>{{ materia.nombre }}</h3>
         <p>{{ materia.descripcion }}</p>
-        <a [routerLink]="'/menu-recurso'" (click)="scrollToTop()" class="btn2">Ver recursos</a>
+        <a (click)="irAMenuRecursos(materia.materia_id); scrollToTop()" (click)="scrollToTop()" class="btn2">Ver recursos</a>
       </div>
     </div>
   </div>
@@ -106,13 +106,13 @@
 
       <div class="content">
         <div class="icons">
-          <a href="#"><i class="fas fa-calendar"></i>{{ materia.fecha }}</a>
-          <a href="#"><i class="fas fa-user"></i>{{ materia.autor }}</a>
+          <a><i class="fas fa-calendar"></i>{{ materia.fecha | date:'dd MMMM yyyy' }}</a>
+          <a><i class="fas fa-user"></i>{{ materia.autor }}</a>
         </div>
 
         <h3>{{ materia.nombre }}</h3>
         <p>{{ materia.descripcion }}</p>
-        <a [routerLink]="'/menu-recurso'" (click)="scrollToTop()" class="btn2">Ver recursos</a>
+        <a (click)="irAMenuRecursos(materia.materia_id); scrollToTop()" class="btn2">Ver recursos</a>
       </div>
     </div>
   </div>

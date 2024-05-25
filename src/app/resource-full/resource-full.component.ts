@@ -1,39 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { LibrosResponse } from '../interfaces/libro.interface';
-import { VideoListModel, VideoModel } from '../models/video.model';
+import { VideoModel } from '../models/video.model';
 import { Observable, map } from 'rxjs';
-import { ActividadListModel, ActividadModel } from '../models/actividad.model';
-
-
+import { ActividadModel } from '../models/actividad.model';
+import { FormsModule } from '@angular/forms';
+import { LibroModel } from '../models/lirbo.model';
 
 @Component({
   selector: 'app-resource-full',
   standalone: true,
-  imports: [RouterLink, HomePageComponent, CommonModule],
+  imports: [RouterLink, HomePageComponent, CommonModule, FormsModule],
   templateUrl: './resource-full.component.html',
   styleUrl: './resource-full.component.css'
 })
 
+export class ResourceFullComponent implements OnInit  {
 
-export class ResourceFullComponent implements OnInit {
-
-  //@Input() mostrarVideos: boolean = false;
   @Input() materiaId: number | undefined;
   @Input() nivel: string | undefined;
   @Input() materia: string | undefined;
 
-
-  libros: any[] = [];
-  actividades: ActividadModel[] = [];
   videos: VideoModel[] = [];
+  libros: LibroModel[] = [];
+  actividades: ActividadModel[] = [];
+
   sanitizedUrls: { [id: string]: SafeResourceUrl } = {}
 
-  //sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
+  videosMostrados: VideoModel[] = [];
+  librosMostrados: LibroModel[] = [];
+  actividadesMostradas: ActividadModel[] = [];
+
+  videosPaginados: VideoModel[] = [];
+  librosPaginados: LibroModel[] = [];
+  actividadesPaginados: ActividadModel[] = [];
+
+  filtroBusqueda: string = '';
 
   videosPorPagina: number = 5;
   librosPorPagina: number = 5;
@@ -47,7 +53,7 @@ export class ResourceFullComponent implements OnInit {
   mostrarLibro = true;
   mostrarActividad = true;
 
-  filtroActivo: string | null = null;
+  filtroActivo: string | null = null
 
   mostrarTodo() {
     this.mostrarVideo = true;
@@ -77,61 +83,61 @@ export class ResourceFullComponent implements OnInit {
     this.filtroActivo = 'actividades';
   }
 
-
-
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {  }
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.fetchVideos();
     this.fetchActivities();
-    this.fetchObras();
+    this.fetchLibros();
+    //this.fetchObras();
+
     this.mostrarVideos();
   }
 
+  get numeroTotalPaginasVideos(): number {
+    return Math.ceil(this.videosMostrados.length / this.videosPorPagina);
+  }
 
-  private fetchVideos() {
-    this.http.get<VideoListModel>('http://127.0.0.1:8090/api/collections/recurso_video/records')
+  get numeroTotalPaginasLibros(): number {
+    return Math.ceil(this.librosMostrados.length / this.librosPorPagina);
+  }
+
+  get numeroTotalPaginasActividades(): number {
+    return Math.ceil(this.actividadesMostradas.length / this.actividadesPorPagina);
+  }
+
+  private fetchVideos(): void {
+    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
       .subscribe(
         response => {
-          console.log('Videos recuperados:', response);
-          this.videos = response.items;
+          this.videos = response;
           this.sanitizeUrls();
-          if (this.videos.length === 0) {
-            console.log('No se encontraron videos.');
-          } else {
-            const firstVideo = this.videos[0];
-            this.nivel = firstVideo.nivel;
-            this.materia = firstVideo.materia;
-          }
+          this.videosMostrados = this.videos;
+          this.actualizarVideosPaginados();
         },
         error => {
-          console.error('Error al recuperar los videos:', error);
+          console.error('Error al recuperar los videos:', error.message);
         }
       );
   }
 
-
   private sanitizeUrls() {
     this.videos.forEach(video => {
-      this.sanitizedUrls[video.id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
+      this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
     });
   }
 
-  getSafeUrl(id: string): SafeResourceUrl | undefined {
-    return this.sanitizedUrls[id];
+  getSafeUrl(videoId: number): SafeResourceUrl | undefined {
+    return this.sanitizedUrls[videoId];
   }
 
-
-
   private fetchActivities(): void {
-    this.http.get<ActividadListModel>('http://127.0.0.1:8090/api/collections/recurso_actividad/records')
+    this.http.get<ActividadModel[]>('http://localhost:3000/api/actividades')
       .subscribe(
         response => {
-          console.log('Actividades recuperadas:', response);
-          this.actividades = response.items;
-          if (this.actividades.length === 0) {
-            console.log('No se encontraron actividades.');
-          }
+          this.actividades = response;
+          this.actividadesMostradas = this.actividades;
+          this.actualizarActividadesPaginadas();
         },
         error => {
           console.error('Error al recuperar las actividades:', error);
@@ -140,113 +146,132 @@ export class ResourceFullComponent implements OnInit {
   }
 
 
-
-
-  private fetchObras(): void {
-    this.http.get<LibrosResponse>('https://openlibrary.org/people/mekBot/books/want-to-read.json')
-    .subscribe(
-      response => {
-        console.log('Libros recuperados:', response);
-        this.libros = response.reading_log_entries.map(entry => ({
-          titulo: entry.work.title,
-          autores: entry.work.author_names.join(', '),
-          fecha_publicacion: entry.work.first_publish_year,
-          fecha_registro: entry.logged_date,
-          url_cubierta: entry.work.cover_id ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-L.jpg` : null
-        }));
-        if (this.libros.length === 0) {
-          console.log('No se encontraron libros.');
+  private fetchLibros(): void {
+    this.http.get<LibroModel[]>('http://localhost:3000/api/libros')
+      .subscribe(
+        response => {
+          this.libros = response;
+          this.librosMostrados = this.libros;
+          this.actualizarLibrosPaginados();
+        },
+        error => {
+          console.error('Error al recuperar los libros:', error.message);
         }
-      },
-      error => {
-        console.error('Error al recuperar los libros:', error);
-      }
-    );
+      );
   }
 
 
+  /*private fetchObras(): void {
+    this.http.get<LibrosResponse>('https://openlibrary.org/people/mekBot/books/want-to-read.json')
+      .subscribe(
+        response => {
+          this.libros = response.reading_log_entries.map(entry => ({
+            titulo: entry.work.title,
+            autores: entry.work.author_names.join(', '),
+            fecha_publicacion: entry.work.first_publish_year,
+            fecha_registro: entry.logged_date,
+            url_cubierta: entry.work.cover_id ? `https://covers.openlibrary.org/b/id/${entry.work.cover_id}-L.jpg` : null
+          }));
+          this.librosMostrados = this.libros;
+          this.actualizarLibrosPaginados();
+        },
+        error => {
+          console.error('Error al recuperar los libros:', error);
+        }
+      );
+  }*/
 
-  scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  filtrarRecursos(): void {
+    const filtro = this.filtroBusqueda.trim().toLowerCase();
+
+    if (filtro === '') {
+      this.restablecerRecursos();
+    } else {
+      this.videosMostrados = this.filtrarPorTituloYDescripcion(this.videos, filtro);
+      this.actividadesMostradas = this.filtrarPorTituloYDescripcion(this.actividades, filtro);
+      this.librosMostrados = this.filtrarPorTituloYDescripcion(this.libros, filtro);
+    }
+
+    this.paginaActualVideos = 1;
+    this.paginaActualLibros = 1;
+    this.paginaActualActividades = 1;
+
+    this.actualizarVideosPaginados();
+    this.actualizarLibrosPaginados();
+    this.actualizarActividadesPaginadas();
   }
 
+  private filtrarPorTituloYDescripcion(recursos: any[], filtro: string): any[] {
+    return recursos.filter(recurso => {
+      const titulo = recurso.titulo ? recurso.titulo.toLowerCase() : '';
+      const descripcion = recurso.descripcion ? recurso.descripcion.toLowerCase() : '';
+      return titulo.includes(filtro) || descripcion.includes(filtro);
+    });
+  }
 
+  private actualizarVideosPaginados() {
+    const startIndex = (this.paginaActualVideos - 1) * this.videosPorPagina;
+    this.videosPaginados = this.videosMostrados.slice(startIndex, startIndex + this.videosPorPagina);
+  }
 
- //+----------------------------------PAGINACION------------------------------+
-  paginaAnteriorVideos(): void {
+  private actualizarLibrosPaginados() {
+    const startIndex = (this.paginaActualLibros - 1) * this.librosPorPagina;
+    this.librosPaginados = this.librosMostrados.slice(startIndex, startIndex + this.librosPorPagina);
+  }
+
+  private actualizarActividadesPaginadas() {
+    const startIndex = (this.paginaActualActividades - 1) * this.actividadesPorPagina;
+    this.actividadesPaginados = this.actividadesMostradas.slice(startIndex, startIndex + this.actividadesPorPagina);
+  }
+
+  paginaAnteriorVideos() {
     if (this.paginaActualVideos > 1) {
       this.paginaActualVideos--;
+      this.actualizarVideosPaginados();
     }
   }
 
-  paginaSiguienteVideos(): void {
-    const numeroTotalPaginas = Math.ceil(this.videos.length / this.videosPorPagina);
-    if (this.paginaActualVideos < numeroTotalPaginas) {
+  paginaSiguienteVideos() {
+    if (this.paginaActualVideos * this.videosPorPagina < this.videosMostrados.length) {
       this.paginaActualVideos++;
+      this.actualizarVideosPaginados();
     }
   }
 
-  get videosPaginados(): VideoModel[] {
-    const inicio = (this.paginaActualVideos - 1) * this.videosPorPagina;
-    return this.videos.slice(inicio, inicio + this.videosPorPagina);
-  }
-
-  get numeroTotalPaginasVideos(): number {
-    return Math.ceil(this.videos.length / this.videosPorPagina);
-  }
-
-
-
-
-
-  paginaAnteriorLibros(): void {
+  paginaAnteriorLibros() {
     if (this.paginaActualLibros > 1) {
       this.paginaActualLibros--;
+      this.actualizarLibrosPaginados();
     }
   }
 
-  paginaSiguienteLibros(): void {
-    const numeroTotalPaginas = Math.ceil(this.libros.length / this.librosPorPagina);
-    if (this.paginaActualLibros < numeroTotalPaginas) {
+  paginaSiguienteLibros() {
+    if (this.paginaActualLibros * this.librosPorPagina < this.librosMostrados.length) {
       this.paginaActualLibros++;
+      this.actualizarLibrosPaginados();
     }
   }
 
-  get librosPaginados(): any[] {
-    const inicio = (this.paginaActualLibros - 1) * this.librosPorPagina;
-    return this.libros.slice(inicio, inicio + this.librosPorPagina);
-  }
-
-  get numeroTotalPaginasLibros(): number {
-    return Math.ceil(this.libros.length / this.librosPorPagina);
-  }
-
-
-
-
-
-  paginaAnteriorActividades(): void {
+  paginaAnteriorActividades() {
     if (this.paginaActualActividades > 1) {
       this.paginaActualActividades--;
+      this.actualizarActividadesPaginadas();
     }
   }
 
-  paginaSiguienteActividades(): void {
-    const numeroTotalPaginas = Math.ceil(this.actividades.length / this.actividadesPorPagina);
-    if (this.paginaActualActividades < numeroTotalPaginas) {
+  paginaSiguienteActividades() {
+    if (this.paginaActualActividades * this.actividadesPorPagina < this.actividadesMostradas.length) {
       this.paginaActualActividades++;
+      this.actualizarActividadesPaginadas();
     }
   }
 
-  get actividadesPaginados(): ActividadModel[] {
-    const inicio = (this.paginaActualActividades - 1) * this.actividadesPorPagina;
-    return this.actividades.slice(inicio, inicio + this.actividadesPorPagina);
+  restablecerRecursos(): void {
+    this.videosMostrados = this.videos.slice();
+    this.actividadesMostradas = this.actividades.slice();
+    this.librosMostrados = this.libros.slice();
+    this.actualizarVideosPaginados();
+    this.actualizarLibrosPaginados();
+    this.actualizarActividadesPaginadas();
   }
-
-  get numeroTotalPaginasActividades(): number {
-    return Math.ceil(this.actividades.length / this.actividadesPorPagina);
-  }
-
-
-
 }

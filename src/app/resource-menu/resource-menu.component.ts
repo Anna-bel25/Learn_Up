@@ -5,11 +5,12 @@ import Swiper from 'swiper';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { ResourceVideoComponent } from '../resource-video/resource-video.component';
 import { ActivatedRoute } from '@angular/router';
+import { ResouceLibroComponent } from '../resouce-libro/resouce-libro.component';
 
 @Component({
   selector: 'app-resource-menu',
   standalone: true,
-  imports: [RouterLink, CommonModule, HomePageComponent, ResourceMenuComponent, ResourceVideoComponent],
+  imports: [RouterLink, CommonModule, HomePageComponent, ResourceMenuComponent, ResourceVideoComponent, ResouceLibroComponent],
   templateUrl: './resource-menu.component.html',
   styleUrl: './resource-menu.component.css'
 })
@@ -17,11 +18,14 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
 
   @Output() nivelSeleccionado: EventEmitter<any> = new EventEmitter();
   @ViewChild('videoSection') videoSection!: ElementRef;
+  @ViewChild('libroSection') libroSection!: ElementRef;
 
   nivel: string = '';
   swiper!: Swiper;
   materiaId: number | undefined;
   mostrarVideos: boolean = false;
+  mostrarLibros: boolean = false;
+  resourceToShow: string | undefined;
 
   constructor(private route: ActivatedRoute, private changeDetectorRef: ChangeDetectorRef, private zone: NgZone) {}
 
@@ -55,7 +59,44 @@ export class ResourceMenuComponent implements AfterViewInit, OnInit  {
         if (tituloSeccion) {
             tituloSeccion.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
             //window.scrollBy(0, 650);
-            window.scrollTo({ top: 650, behavior: 'smooth' });
+            window.scrollTo({ top: 730, behavior: 'smooth' });
+        } else {
+            console.error('Elemento del título de la sección no encontrado');
+        }
+    }, 100);
+  }
+
+  toggleLibros(libroSlide: HTMLElement): void {
+    this.mostrarLibros = !this.mostrarLibros;
+    setTimeout(() => {
+        const tituloSeccion = document.querySelector('.about .title') as HTMLElement;
+        if (tituloSeccion) {
+            tituloSeccion.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            //window.scrollBy(0, 650);
+            window.scrollTo({ top: 730, behavior: 'smooth' });
+        } else {
+            console.error('Elemento del título de la sección no encontrado');
+        }
+    }, 100);
+  }
+
+
+  toggleResource(resource: string): void {
+    if (resource === 'videos') {
+      this.mostrarVideos = true;
+      this.mostrarLibros = false;
+      this.resourceToShow = 'videos';
+    } else if (resource === 'libros') {
+      this.mostrarVideos = false;
+      this.mostrarLibros = true;
+      this.resourceToShow = 'libros';
+    }
+      setTimeout(() => {
+        const tituloSeccion = document.querySelector('.about .title') as HTMLElement;
+        if (tituloSeccion) {
+            tituloSeccion.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            //window.scrollBy(0, 650);
+            window.scrollTo({ top: 730, behavior: 'smooth' });
         } else {
             console.error('Elemento del título de la sección no encontrado');
         }

@@ -1,6 +1,8 @@
 
 section {
-  padding: 0 3rem 0 9%;
+  font-size: 62.5%;
+  padding: 2rem 9%;
+  /* padding: 0 3rem 0 9%; */
 }
 
 
@@ -37,7 +39,7 @@ section {
 
 
 .title {
-  background: url(/assets/img/heading2.png) no-repeat;
+  background: url(/assets/img/heading3.png) no-repeat;
   background-size: cover;
   background-position: center;
   text-align: center;
@@ -115,7 +117,7 @@ section {
 
 .title2 a {
   margin-left: auto;
-  color: var(--dark-gray);
+  color: var(--light-gray);
   font-size: 1rem;
 }
 
@@ -123,26 +125,114 @@ section {
   color: var(--pink);
 }
 
+
+
 .pagination-container {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
 }
 
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination button{
+  margin: 0.5rem;
+}
+
 .pagination span {
-  color: var(--dark-gray);
+  margin: 0.5rem;
+  font-size: 1rem;
   padding: .7rem;
 }
 
-.filtro{
+
+@media screen and (max-width: 668px) {
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination button,
+  .pagination span {
+    display: block;
+    margin: 0.5rem 0;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+}
+
+
+
+
+.filtro {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  padding: 2rem 9%;
 }
+
+.search-wrapper {
+  position: relative;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.search-wrapper input {
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 3rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  /* width: calc(100% - 2rem); */
+  width: 100%;
+  max-width: 20rem;
+}
+
+.search-wrapper i {
+  position: absolute;
+  font-size: 1rem;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: var(--pink);
+  cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 668px) {
+  .filtro {
+    display: block;
+    text-align: center;
+  }
+
+  .search-wrapper {
+    margin: 1rem auto;
+    width: calc(100% - 4rem);
+  }
+
+  .search-wrapper i {
+    right: 1rem;
+    transform: translateY(-50%);
+  }
+
+  .search-wrapper input {
+    width: 100%;
+    padding-right: 2.5rem;
+    box-sizing: border-box;
+  }
+
+}
+
 
 /* .subtitle a:hover {
   color: var(--pink);
 } */
+
 
 
 
@@ -168,7 +258,7 @@ section {
   margin-left: .3rem;
   display: inline-block;
   padding:.5rem 1.5rem;
-  background: var(--black-suit);
+  background: var(--light-gray);
   color: var(--white-suit);
   font-size: 1rem;
   cursor: pointer;
@@ -289,5 +379,15 @@ section {
   color:var(--pink);
   transition: text-decoration 0.3s ease;
   text-decoration: underline;
+}
+
+.about .row .content .libro-titulo {
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.libro-dato {
+  font-weight: normal;
+  color: var(--light-gray);
 }
 

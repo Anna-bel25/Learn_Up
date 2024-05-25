@@ -8,6 +8,8 @@ import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
 import { ResourceFullComponent } from './resource-full/resource-full.component';
+import { ResouceActividadComponent } from './resouce-actividad/resouce-actividad.component';
+import { ResouceLibroComponent } from './resouce-libro/resouce-libro.component';
 //import { routes } from './app.routes';
 
 @Component({
@@ -28,6 +30,8 @@ import { ResourceFullComponent } from './resource-full/resource-full.component';
     ThemedComponent,
     ResourceMenuComponent,
     ResourceVideoComponent,
+    ResouceActividadComponent,
+    ResouceLibroComponent,
     ResourceFullComponent,
   ],
   templateUrl: './app.component.html',

@@ -1,0 +1,48 @@
+
+
+
+<!-- LIBROS SECTION START -->
+<section #libroSection class="about" *ngIf="mostrarLibros">
+
+  <!-- START FILTER -->
+  <div class="filtro">
+    <div class="search-wrapper">
+      <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
+      <i class="fas fa-search"></i>
+    </div>
+  </div>
+  <!-- END FILTER -->
+
+  <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
+  <div *ngIf="libros.length > 0; else noLibrosMessage">
+    <div class="row" *ngFor="let libro of librosPaginados">
+      <div class="libro-container">
+        <img [src]="libro.imagen_url" alt="Portada del libro">
+      </div>
+      <div class="content">
+        <h3>{{ libro.titulo }}</h3>
+        <p>{{ libro.descripcion }}</p>
+        <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
+        <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
+        <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
+        <div class="icons">
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorLibros()" [disabled]="paginaActualLibros === 1">Anterior</button>
+      <span>Página {{ paginaActualLibros }} de {{ numeroTotalPaginasLibros }}</span>
+      <button class="btn2" (click)="paginaSiguienteLibros()" [disabled]="paginaActualLibros === librosPorPagina">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noLibrosMessage>
+    <p style="font-size: 1rem;">No se encontraron libros para esta materia.</p>
+  </ng-template>
+</section>
+<!-- LIBROS SECTION END -->
+

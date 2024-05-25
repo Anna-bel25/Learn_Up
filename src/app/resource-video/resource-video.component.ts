@@ -5,30 +5,33 @@ import { ResourceMenuComponent } from '../resource-menu/resource-menu.component'
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoListModel, VideoModel } from '../models/video.model';
+import { FormsModule } from '@angular/forms';
 //import { VideosService } from '../services/recursos.services';
 
 
 @Component({
   selector: 'app-resource-video',
   standalone: true,
-  imports: [RouterLink, ResourceVideoComponent, ResourceMenuComponent, CommonModule],
+  imports: [RouterLink, ResourceVideoComponent, ResourceMenuComponent, CommonModule, FormsModule],
   templateUrl: './resource-video.component.html',
   styleUrl: './resource-video.component.css'
 })
 export class ResourceVideoComponent implements OnInit {
 
-  paginaPorPagina: number = 5;
-  paginaActual: number = 1;
-
   @Output() nivelLoaded: EventEmitter<string> = new EventEmitter<string>();
-
   @Input() mostrarVideos: boolean = false;
   @Input() materiaId: number | undefined;
   @Input() nivel: string | undefined;
   @Input() materia: string | undefined;
 
   videos: VideoModel[] = [];
+  videosMostrados: VideoModel[] = [];
+  videosPaginados: VideoModel[] = [];
+  filtroBusqueda: string = '';
   sanitizedUrls: { [key: string]: SafeResourceUrl } = {};
+
+  videosPorPagina: number = 5;
+  paginaActualVideos: number = 1;
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
@@ -36,13 +39,14 @@ export class ResourceVideoComponent implements OnInit {
     this.fetchVideos();
   }
 
-  private fetchVideos() {
-    this.http.get<VideoListModel>('http://127.0.0.1:8090/api/collections/recurso_video/records')
+  private fetchVideos(): void {
+    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
       .subscribe(
         response => {
-          console.log('Videos recuperados:', response);
-          this.videos = response.items.filter(video => video.materia_id === this.materiaId);
+          this.videos = response.filter(video => video.materia_id === this.materiaId);
           this.sanitizeUrls();
+          this.videosMostrados = this.videos;
+          this.actualizarVideosPaginados();
           if (this.videos.length === 0) {
             console.log('No se encontraron videos para este materia_id.');
           } else {
@@ -52,45 +56,72 @@ export class ResourceVideoComponent implements OnInit {
           }
         },
         error => {
-          console.error('Error al recuperar los videos:', error);
+          console.error('Error al recuperar los videos:', error.message);
         }
       );
-  }
-
-  private sanitizeUrls() {
-    this.videos.forEach(video => {
-      this.sanitizedUrls[video.id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
-    });
-  }
-
-  getSafeUrl(id: string): SafeResourceUrl | undefined {
-    return this.sanitizedUrls[id];
   }
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  paginaAnterior(): void {
-    if (this.paginaActual > 1) {
-      this.paginaActual--;
+  private sanitizeUrls() {
+    this.videos.forEach(video => {
+      this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
+    });
+  }
+
+  getSafeUrl(video_id: number): SafeResourceUrl | undefined {
+    return this.sanitizedUrls[video_id];
+  }
+
+  filtrarRecursos(): void {
+    const filtro = this.filtroBusqueda.trim().toLowerCase();
+
+    if (filtro === '') {
+      this.restablecerRecursos();
+    } else {
+      this.videosMostrados = this.filtrarPorTituloYDescripcion(this.videos, filtro);
+      this.actualizarVideosPaginados();
+    }
+
+    this.paginaActualVideos = 1;
+  }
+
+  private filtrarPorTituloYDescripcion(recursos: any[], filtro: string): any[] {
+    return recursos.filter(recurso => {
+      const titulo = recurso.titulo ? recurso.titulo.toLowerCase() : '';
+      const descripcion = recurso.descripcion ? recurso.descripcion.toLowerCase() : '';
+      return titulo.includes(filtro) || descripcion.includes(filtro);
+    });
+  }
+
+  private actualizarVideosPaginados() {
+    const startIndex = (this.paginaActualVideos - 1) * this.videosPorPagina;
+    this.videosPaginados = this.videosMostrados.slice(startIndex, startIndex + this.videosPorPagina);
+  }
+
+  get numeroTotalPaginasVideos(): number {
+    return Math.ceil(this.videosMostrados.length / this.videosPorPagina);
+  }
+
+  paginaAnteriorVideos() {
+    if (this.paginaActualVideos > 1) {
+      this.paginaActualVideos--;
+      this.actualizarVideosPaginados();
     }
   }
 
-  paginaSiguiente(): void {
-    const numeroTotalPaginas = Math.ceil(this.videos.length / this.paginaPorPagina);
-    if (this.paginaActual < numeroTotalPaginas) {
-      this.paginaActual++;
+  paginaSiguienteVideos() {
+    if (this.paginaActualVideos * this.videosPorPagina < this.videosMostrados.length) {
+      this.paginaActualVideos++;
+      this.actualizarVideosPaginados();
     }
   }
 
-  get videosPaginados(): VideoModel[] {
-    const inicio = (this.paginaActual - 1) * this.paginaPorPagina;
-    return this.videos.slice(inicio, inicio + this.paginaPorPagina);
-  }
-
-  get numeroTotalPaginas(): number {
-    return Math.ceil(this.videos.length / this.paginaPorPagina);
+  restablecerRecursos(): void {
+    this.videosMostrados = this.videos.slice();
+    this.actualizarVideosPaginados();
   }
 
 }
