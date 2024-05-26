@@ -1,0 +1,136 @@
+form{
+    align-items: center;
+    margin-top: 10%;
+    margin-left: 35%;
+    margin-right: 34%;
+}
+h1, .letras-terminos{
+    color: #343a40;
+    
+}
+a{
+    text-decoration: underline;
+}
+.contenedor{
+    background-image: url(/assets/img/aula-trans.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    align-items: center;
+    padding: 5%;
+    border-radius: 10PX;
+    height: 86vh;
+    margin: 0%;
+    
+}
+.contenedor-inputs{
+    background-color: #f8edeb;
+    padding: 10px;
+    border-radius: 10px;    
+}
+
+
+/*------------INPUT--------------*/
+.input{
+    position: absolute;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    padding: 0 25px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    transition: 0.1s ease;
+    background: transparent;
+    z-index: 1111;
+
+}
+input:focus, input:valid{
+    color: #ff8fa3;
+    border: 3px solid #ff8fa3;
+}
+input:focus + .letras,
+input:valid + .letras{
+    color: #ff8fa3;
+    height: 30px;
+    line-height: 30px;
+    transform: translate(-8px,-22px) scale(0.88);
+    z-index: 1111;
+}
+
+ .contenedor-tipocuenta{
+    display: flex;
+    position: relative;
+    margin-top: 10px;
+    height: 30px;
+}
+
+/*---------LETRAS DE CORREO Y CONTRA---------*/
+.letras{
+    position: absolute;
+    font-size: 0.9rem;
+    color: #495057;
+    padding: 10px;
+    margin-left: 5%;
+    transition: 0.2s ease;
+    pointer-events: none;
+    background-color: #f8edeb;
+}
+/**-----------CONTRASEÑA-----*/
+.contenedor-correo, .contenedor-nombre,.contenedor-contra, .contenedor-repeatcontra {
+    display: flex;
+    position: relative;
+    margin-top: 30px;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+/*-------------TERMINOS Y CONDICIONES------*/
+.checkbox{
+    width: 5%;
+}
+.contenedor-check{
+    margin-left: 5%;
+    margin-top: 10%;
+    display: flex;
+}
+.letras-terminos {
+    margin-left: 2%;
+}
+
+/*-----------LETRAS--------*/
+.letras-iniciar{
+    margin-top: 10px;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+button{
+    background: #f6efee;
+    padding: 2%;
+    margin-top: 3%;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/*-----------------MENSAJES DE ERROR----------*/
+.error {
+    color: red;
+    font-size: x-small; 
+    position: relative;
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-left: 5%;
+    transition: 0.2s ease;
+    pointer-events: none;
+    background-color: #f8edeb; 
+  }
+  
+  
+  .letras {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  

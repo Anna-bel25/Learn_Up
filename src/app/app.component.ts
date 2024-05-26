@@ -8,6 +8,9 @@ import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
 import { ResourceFullComponent } from './resource-full/resource-full.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 //import { routes } from './app.routes';
 
 @Component({
@@ -17,11 +20,14 @@ import { ResourceFullComponent } from './resource-full/resource-full.component';
     RouterOutlet,
     CommonModule,
     RouterLink,
+    ReactiveFormsModule,
     //routes,
 
     //GENERAL COMPONENTS
     HeaderComponent,
     FooterComponent,
+    LoginComponent,
+    RegisterComponent,
 
     //MODULO NIVEL & TEMA
     LevelComponent,
@@ -29,6 +35,7 @@ import { ResourceFullComponent } from './resource-full/resource-full.component';
     ResourceMenuComponent,
     ResourceVideoComponent,
     ResourceFullComponent,
+    
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

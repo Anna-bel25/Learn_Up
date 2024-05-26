@@ -5,6 +5,8 @@ import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
 import { ResourceFullComponent } from './resource-full/resource-full.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes =
 [
@@ -16,6 +18,8 @@ export const routes: Routes =
   { path: 'menu-recurso', component: ResourceMenuComponent },
   { path: 'video', component: ResourceVideoComponent },
   { path: 'recursos', component: ResourceFullComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
   // Ruta para el menú de recursos con parámetros de nivel y materia
   //{ path: 'menu-recurso/:nivel/:materia', component: ResourceMenuComponent },
