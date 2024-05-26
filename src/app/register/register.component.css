@@ -1,21 +1,44 @@
+/*body{
+    /*background: url('/assets/img/esqueleto.jpg') no-repeat center center fixed; 
+    background-size: 20% 60%;*/
+
+
+/*---------------IMAGENES-----------------*/
+.imagen-esqueleto{
+    width: 30%;
+
+}
+.imagen-ola{
+    width: 50%;
+    position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
+    top: 70%; /* Ajusta la posición superior */
+    left: -7%; /* Ajusta la posición izquierda */
+    z-index: -1; /
+}
+.chico-surf{
+    width: 20%;
+    position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
+    top: 70%; /* Ajusta la posición superior */
+    left: 5%; /* Ajusta la posición izquierda */
+    z-index: -1; /
+}
 form{
     align-items: center;
     margin-top: 10%;
     margin-left: 35%;
     margin-right: 34%;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    background: #495057;
+    border-radius: 10px;
 }
 h1, .letras-terminos{
-    color: #343a40;
+    color: #adb5bd;
     
 }
 a{
     text-decoration: underline;
 }
 .contenedor{
-    background-image: url(/assets/img/aula-trans.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
     text-align: center;
     align-items: center;
     padding: 5%;
@@ -25,14 +48,14 @@ a{
     
 }
 .contenedor-inputs{
-    background-color: #f8edeb;
     padding: 10px;
     border-radius: 10px;    
 }
 
 
 /*------------INPUT--------------*/
-.input{
+/* Estilos base para los inputs */
+.input {
     position: absolute;
     width: 100%;
     outline: none;
@@ -40,48 +63,36 @@ a{
     padding: 0 25px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #ffffff;
-    transition: 0.1s ease;
+    border: 1px solid white;
+    transition: border-color 0.2s ease; 
     background: transparent;
-    z-index: 1111;
+}
 
+/* Estilo para cuando hay un error */
+.input.error {
+    border-color: #e09f3e; /* Cambia el color del borde si hay un error */
 }
-input:focus, input:valid{
-    color: #ff8fa3;
-    border: 3px solid #ff8fa3;
+
+/* Estilo para cuando el input está enfocado */
+.input:focus {
+    color: white; /* Cambia el color del texto cuando el input está enfocado */
+    border: 1px solid black; /* Cambia el color del borde cuando el input está enfocado */
 }
-input:focus + .letras,
-input:valid + .letras{
-    color: #ff8fa3;
-    height: 30px;
-    line-height: 30px;
-    transform: translate(-8px,-22px) scale(0.88);
-    z-index: 1111;
-}
+
 
  .contenedor-tipocuenta{
     display: flex;
     position: relative;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     height: 30px;
 }
 
-/*---------LETRAS DE CORREO Y CONTRA---------*/
-.letras{
-    position: absolute;
-    font-size: 0.9rem;
-    color: #495057;
-    padding: 10px;
-    margin-left: 5%;
-    transition: 0.2s ease;
-    pointer-events: none;
-    background-color: #f8edeb;
-}
+
 /**-----------CONTRASEÑA-----*/
 .contenedor-correo, .contenedor-nombre,.contenedor-contra, .contenedor-repeatcontra {
     display: flex;
     position: relative;
-    margin-top: 30px;
+    margin-top: 35px;
     height: 30px;
     margin-bottom: 20px;
 }
@@ -104,33 +115,33 @@ input:valid + .letras{
     margin-top: 10px;
     font-size: 20px;
     margin-bottom: 15px;
+    color: #adb5bd;
 }
 button{
-    background: #f6efee;
+    color: #343a40;
+    font-weight: bold;
+    background: #adb5bd;
     padding: 2%;
     margin-top: 3%;
-    width: 100%;
-    border-radius: 10px;
+    width: 95%;
+    border-radius: 20px;
     cursor: pointer;
 }
 
 /*-----------------MENSAJES DE ERROR----------*/
 .error {
-    color: red;
+    color: #e09f3e;
     font-size: x-small; 
-    position: relative;
+    position: absolute;
+    margin: 0%;
     font-size: 0.9rem;
-    padding: 10px;
+    padding: 0px;
     margin-left: 5%;
     transition: 0.2s ease;
     pointer-events: none;
-    background-color: #f8edeb; 
+    background-color: transparent; 
+    margin-bottom: 0; /* Ajusta si es necesario */
+    top: 40px; /* Ajusta este valor según tus necesidades */
   }
   
-  
-  .letras {
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 0.25rem;
-  }
   
