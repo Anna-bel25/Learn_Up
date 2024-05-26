@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { OnInit } from '@angular/core';import { MateriaListModel } from '../models/materia.model';
+import { OnInit } from '@angular/core';import { MateriaListModel, MateriaModel } from '../models/materia.model';
 @Component({
   selector: 'app-themed',
   standalone: true,
@@ -36,15 +36,20 @@ export class ThemedComponent implements OnInit {
   }
 
   obtenerMaterias() {
-    this.http.get<MateriaListModel>('http://localhost:8090/api/collections/materia_nivel/records')
+    this.http.get<MateriaModel[]>('http://localhost:3000/api/materias')
       .subscribe(response => {
-        this.materiasPreescolar = response.items.filter(materia => materia.nivel_id === 1);
-        this.materiasPrimaria = response.items.filter(materia => materia.nivel_id === 2);
-        this.materiasSecundaria = response.items.filter(materia => materia.nivel_id === 3);
-        this.materiasBachillerato = response.items.filter(materia => materia.nivel_id === 4);
+        if (response && response.length > 0) {
+          this.materiasPreescolar = response.filter(materia => materia.nivel_id === 1);
+          this.materiasPrimaria = response.filter(materia => materia.nivel_id === 2);
+          this.materiasSecundaria = response.filter(materia => materia.nivel_id === 3);
+          this.materiasBachillerato = response.filter(materia => materia.nivel_id === 4);
+        } else {
+          console.error('La respuesta del servidor no contiene los datos esperados.');
+        }
+      }, error => {
+        console.error('Error al obtener las materias:', error);
       });
   }
-
 
 
   //@Input() mostrarNiveles: { [key: string]: boolean } = {};

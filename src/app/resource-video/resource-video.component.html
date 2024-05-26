@@ -2,17 +2,27 @@
 
 <!-- VIDEOS SECTION START -->
 <section #videoSection class="about" *ngIf="mostrarVideos">
+
+  <!-- START FILTER -->
+<div class="filtro">
+  <div class="search-wrapper">
+    <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
+    <i class="fas fa-search"></i>
+  </div>
+</div>
+<!-- END FILTER -->
+
   <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
   <div *ngIf="videos.length > 0; else noVideosMessage">
-    <div class="row" *ngFor="let video of videos">
+    <div class="row" *ngFor="let video of videosPaginados">
       <div class="video-container">
-        <iframe *ngIf="getSafeUrl(video.id)" [src]="getSafeUrl(video.id)" width="100%" height="315" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+        <iframe *ngIf="getSafeUrl(video.video_id)" [src]="getSafeUrl(video.video_id)" width="100%" height="315" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
       </div>
       <div class="content">
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
         <div class="icons">
-          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
@@ -21,13 +31,13 @@
   </div>
   <div class="pagination-container">
     <div class="pagination">
-      <button class="btn2" (click)="paginaAnterior()" [disabled]="paginaActual === 1">Anterior</button>
-      <span>Página {{ paginaActual }} de {{ numeroTotalPaginas }}</span>
-      <button class="btn2" (click)="paginaSiguiente()" [disabled]="paginaActual === numeroTotalPaginas">Siguiente</button>
+      <button class="btn2" (click)="paginaAnteriorVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Anterior</button>
+      <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
+      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
     </div>
   </div>
   <ng-template #noVideosMessage>
-    <p>No se encontraron videos para esta materia.</p>
+    <p style="font-size: 1rem;">No se encontraron videos para esta materia.</p>
   </ng-template>
 </section>
 <!-- VIDEOS SECTION END -->

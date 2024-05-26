@@ -10,15 +10,16 @@
 
     <nav class="navbar">
       <a routerLink="/" [class.active]="isActiveLink(0)" (click)="setActiveLink(0)">Inicio</a>
-      <a routerLink="/colecciones" [class.active]="isActiveLink(1)" (click)="setActiveLink(1)">Colecciones</a>
+      <a routerLink="/colecciones" [class.active]="isActiveLink(1)" (click)="setActiveLink(1)">Subir recursos</a>
       <a routerLink="/nivel" [class.active]="isActiveLink(2)" (click)="setActiveLink(2)">Categoria</a>
       <a routerLink="/recursos" [class.active]="isActiveLink(3)" (click)="setActiveLink(3)">Recursos</a>
       <!-- <a routerLink="/menu-recurso" (click)="setActiveLink(4)">Contactanos</a> -->
     </nav>
 
     <div class="icons">
-        <a href="#" class="fas fa-search" title="Buscar"></a>
-        <a href="#" class="fas fa-heart" title="Favoritos"></a>
+        <!-- <a href="#" class="fas fa-search" title="Buscar"></a>
+        <a href="#" class="fas fa-heart" title="Favoritos"></a> -->
+        <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
         <a href="#" class="fas fa-user" title="Usuario"></a>
     </div>
 </header>

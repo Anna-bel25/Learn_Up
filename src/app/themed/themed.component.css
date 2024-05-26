@@ -1,9 +1,11 @@
 
 
 section {
-    padding: 3rem 5%;
-    text-transform: capitalize;
+  /* font-size: 62.5%; */
+  padding: 2rem 9%;
+  text-transform: capitalize;
 }
+
 
 .title {
   display: flex;
@@ -193,9 +195,9 @@ section {
   color: var(--dark-gray);
 }
 
-.blogs .box .content .icons a:hover {
+/* .blogs .box .content .icons a:hover {
   color: var(--pink);
-}
+} */
 
 .blogs .box .content .icons a i {
   color: var(--pink);

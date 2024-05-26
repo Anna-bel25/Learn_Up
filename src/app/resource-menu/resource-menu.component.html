@@ -28,7 +28,7 @@
   <div class="swiper-container review-slider">
     <div class="swiper-wrapper">
 
-        <div class="swiper-slide" #videoSlide (click)="toggleVideos(videoSlide)">
+        <div class="swiper-slide" #videoSlide (click)="toggleResource('videos')">
         <div class="box">
             <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmlkZW9zfGVufDB8fDB8fHww" alt="" />
             <h3>videos</h3>
@@ -45,12 +45,12 @@
         </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide" #libroSlide (click)="toggleResource('libros')">
         <div class="box">
             <img src="https://plus.unsplash.com/premium_photo-1676422355165-d809008b8342?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bGlicm9zfGVufDB8fDB8fHww" alt="" />
             <h3>libros</h3>
             <p>
-              En esta sección, pueden encontrar una colección de libros digitales relacionados con diferentes áreas de estudio y otros materiales de lectura académica.
+              En esta sección, pueden encontrar una colección de obras digitales relacionados con diferentes áreas de estudio.
             </p>
             <div class="stars">
             <i class="fas fa-star"></i>
@@ -62,12 +62,12 @@
         </div>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide" #actividadSlide (click)="toggleResource('actividades')">
         <div class="box">
             <img src="https://images.unsplash.com/photo-1541692641319-981cc79ee10a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWN0aXZpZGFkZXN8ZW58MHx8MHx8fDA%3D" alt="" />
             <h3>actividades</h3>
             <p>
-              Aquí se ofrecen una variedad de actividades interactivas diseñadas para fortalecer el aprendizaje y la comprensión de conceptos académicos.
+              Aquí se ofrecen una variedad de actividades interactivas diseñadas para fortalecer el aprendizaje.
             </p>
             <div class="stars">
             <i class="fas fa-star"></i>
@@ -79,12 +79,12 @@
         </div>
         </div>
 
-        <div class="swiper-slide">
+        <!-- <div class="swiper-slide">
         <div class="box">
             <img src="https://images.unsplash.com/photo-1635942046031-041e9baea8bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGFydGljdWxvc3xlbnwwfHwwfHx8MA%3D%3D" alt="" />
             <h3>articulos</h3>
             <p>
-              Esta sección contiene una selección de artículos académicos, informes de investigación, ensayos y otros documentos escritos sobre temas específicos.
+              Esta sección contiene una selección de artículos académicos, informes de investigación, ensayos y otros documentos.
             </p>
             <div class="stars">
             <i class="fas fa-star"></i>
@@ -94,7 +94,7 @@
             <i class="fas fa-star"></i>
             </div>
         </div>
-        </div>
+        </div> -->
     </div>
     </div>
 </section>
@@ -102,10 +102,27 @@
 
 
 
-<app-resource-video
-  [mostrarVideos]="mostrarVideos"
-  [materiaId]="materiaId"
-  [nivel]="nivel">
-</app-resource-video>
+<ng-container *ngIf="resourceToShow === 'videos'">
+  <app-resource-video
+    [mostrarVideos]="mostrarVideos"
+    [materiaId]="materiaId"
+    [nivel]="nivel">
+  </app-resource-video>
+</ng-container>
 
+<ng-container *ngIf="resourceToShow === 'libros'">
+  <app-resouce-libro
+    [mostrarLibros]="mostrarLibros"
+    [materiaId]="materiaId"
+    [nivel]="nivel">
+  </app-resouce-libro>
+</ng-container>
+
+<ng-container *ngIf="resourceToShow === 'actividades'">
+  <app-resource-actividad
+    [mostrarActividades]="mostrarActividades"
+    [materiaId]="materiaId"
+    [nivel]="nivel">
+  </app-resource-actividad>
+</ng-container>
 

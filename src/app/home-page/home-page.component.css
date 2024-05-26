@@ -1,109 +1,113 @@
 
 
 section {
-  padding: 3rem 5%;
+  font-size: 62.5%;
+  padding: 2rem 9%;
 }
 
-.heading{
+.heading {
   text-align: center;
   font-size: 2rem;
   color: var(--light-gray);
-  padding:.7rem;
-  margin:.8rem 0;
-  background:rgba(255, 51, 153,.05);
+  padding: .7rem;
+  margin: .8rem 0;
+  background: rgba(255, 51, 153, .05);
 }
 
-.heading span{
-  color:var(--pink);
+.heading span {
+  color: var(--pink);
 }
-
 
 
 /* Home */
-.home{
+.home {
   display: flex;
   align-items: center;
   min-height: 100vh;
   background: url(/assets/img/home.jpg) no-repeat;
   background-size: cover;
   background-position: center;
-  /* background-attachment: fixed; */
-  /* background: #eeeeee89; */
 }
 
-.home .content{
+.home .content {
   max-width: 50rem;
 }
 
-.home .content h3{
+.home .content h3 {
   font-size: 4rem;
-  color:var(--medium-gray);
+  color: var(--medium-gray);
 }
 
-.home .content span{
-  font-size: 2.5rem;
+.home .content span {
+  text-transform: none;
+  font-size: 2rem;
   font-weight: 500;
-  color:var(--pink);
-  padding:1rem 0;
+  color: var(--pink);
+  padding: 1rem 0;
   line-height: 1.5;
 }
 
-.home .content p{
+.home .content p {
+  text-transform: none;
   font-size: 1rem;
   color: var(--dark-gray);
-  padding:1rem 0;
+  padding: 1rem 0;
   line-height: 1.5;
 }
 
 
 /* About */
-.about .row{
+.about .row {
   display: flex;
   align-items: center;
-  gap:1rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  padding:1rem 0;
-  padding-bottom: 2rem;
+  padding: 2rem 0;
+  padding-bottom: 3rem;
 }
 
-.about .row .video-container{
-  flex:1 1 40rem;
+.about .row .video-container {
+  flex: 1 1 40%;
   position: relative;
+  max-width: 40%;
 }
 
-.about .row .video-container video{
-  width:100%;
-  border:1.5rem solid white;
+.about .row .video-container video {
+  width: 100%;
+  border: 1rem solid white;
   border-radius: .5rem;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-  height: 100%;
-  object-fit: cover;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+  height: auto;
 }
 
-.about .row .video-container h3{
+.about .row .video-container h3 {
   position: absolute;
-  top:50%; transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 1.5rem;
-  background:white;
-  width:100%;
-  padding:1rem 2rem;
+  background: white;
+  width: 100%;
+  padding: 1rem 2rem;
   text-align: center;
   mix-blend-mode: screen;
 }
 
-.about .row .content{
-  flex:1 1 40rem;
+.about .row .content {
+  flex: 1 1 55%;
+  max-width: 55%;
 }
 
-.about .row .content h3{
-  font-size: 1.5rem;
-  color:var(--light-gray);
+.about .row .content h3 {
+  text-transform: none;
+  font-size: 1.8rem;
+  color: var(--light-gray);
 }
 
-.about .row .content p{
-  font-size: .8rem;
-  color: var(--black);
-  padding:.3rem 0;
+.about .row .content p {
+  text-transform: none;
+  font-size: 1rem;
+  color: var(--light-gray);
+  padding: .3rem 0;
   padding-top: 1rem;
   line-height: 1.5;
 }

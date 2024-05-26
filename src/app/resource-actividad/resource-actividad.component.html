@@ -1,0 +1,45 @@
+
+
+<!-- ACTIVIDADES SECTION START -->
+<section #actividadSection class="about" *ngIf="mostrarActividades">
+
+  <!-- START FILTER -->
+  <div class="filtro">
+    <div class="search-wrapper">
+      <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
+      <i class="fas fa-search"></i>
+    </div>
+  </div>
+  <!-- END FILTER -->
+
+  <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
+  <div *ngIf="actividades.length > 0; else noActividadesMessage">
+    <div class="row" *ngFor="let actividad of actividadesPaginadas">
+      <div class="-container">
+        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+      </div>
+      <div class="content">
+        <h3>{{ actividad.titulo }}</h3>
+        <p>{{ actividad.descripcion }}</p>
+        <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <div class="icons">
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Anterior</button>
+      <span>Página {{ paginaActualActividades }} de {{ numeroTotalPaginasActividades }}</span>
+      <button class="btn2" (click)="paginaSiguienteActividades(); scrollToTop();" [disabled]="paginaActualActividades === actividadesPorPagina">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noActividadesMessage>
+    <p style="font-size: 1rem;">No se encontraron actividades para esta materia.</p>
+  </ng-template>
+</section>
+<!-- ACTIVIDADES SECTION END -->
+

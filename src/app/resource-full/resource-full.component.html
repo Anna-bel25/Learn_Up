@@ -27,7 +27,12 @@
   <a class="btn3" [class.active]="filtroActivo === 'videos'" (click)="mostrarVideos()">Videos</a>
   <a class="btn3" [class.active]="filtroActivo === 'libros'" (click)="mostrarLibros()">Libros</a>
   <a class="btn3" [class.active]="filtroActivo === 'actividades'" (click)="mostrarActividades()"> Actividades </a>
-  <a class="btn3" > Artículos </a>
+
+  <div class="search-wrapper">
+    <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
+    <i class="fas fa-search"></i>
+  </div>
+
 </div>
 <!-- END FILTER -->
 
@@ -37,12 +42,12 @@
 <section *ngIf="mostrarVideo" class="about">
   <h1 class="title2">Recursos de <span>Videos</span></h1>
   <div>
-    <div class="row" *ngFor="let video of videos">
-      <div class="video-container">
+    <div class="row" *ngFor="let video of videosPaginados">
+      <div class="recurso-container">
         <iframe
           width="100%"
           height="315"
-          [src]="getSafeUrl(video.id)"
+          [src]="getSafeUrl(video.video_id)"
           title="Reproductor de video de YouTube"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -55,7 +60,7 @@
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
         <div class="icons">
-          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
@@ -64,20 +69,58 @@
   </div>
   <div class="pagination-container">
     <div class="pagination">
-      <button class="btn2" (click)="paginaAnteriorVideos()" [disabled]="paginaActualVideos === 1">Anterior</button>
+      <button class="btn2" (click)="paginaAnteriorVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Anterior</button>
       <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
-      <button class="btn2" (click)="paginaSiguienteVideos()" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
     </div>
   </div>
   <ng-template #noVideosMessage>
-    <p>No se encontraron videos.</p>
+    <p style="font-size: 1rem;">No se encontraron videos.</p>
   </ng-template>
 </section>
 <!-- VIDEOS SECTION END -->
 
 
+
 <!-- LIBROS SECTION START -->
 <section *ngIf="mostrarLibro" class="about">
+  <h1 class="title2">Recursos de <span>Libros</span></h1>
+  <div>
+    <div class="row" *ngFor="let libro of librosPaginados">
+      <div class="-container">
+        <img [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+      </div>
+      <div class="content">
+        <h3>{{ libro.titulo }}</h3>
+        <p>{{ libro.descripcion }}</p>
+        <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
+        <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
+        <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
+        <div class="icons">
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-container">
+    <div class="pagination">
+      <button class="btn2" (click)="paginaAnteriorLibros(); scrollToTop();" [disabled]="paginaActualLibros === 1">Anterior</button>
+      <span>Página {{ paginaActualLibros }} de {{ numeroTotalPaginasLibros }}</span>
+      <button class="btn2" (click)="paginaSiguienteLibros(); scrollToTop();" [disabled]="paginaActualLibros === librosPorPagina">Siguiente</button>
+    </div>
+  </div>
+  <ng-template #noLibrosMessage>
+    <p style="font-size: 1rem;">No se encontraron libros.</p>
+  </ng-template>
+</section>
+<!-- LIBROS SECTION END -->
+
+
+
+<!-- LIBROS SECTION START -->
+<!-- <section *ngIf="mostrarLibro" class="about">
   <h1 class="title2">Recursos de<span>Libros</span></h1>
 
   <div>
@@ -107,7 +150,7 @@
   <ng-template #noLibrosMessage>
     <p>No se encontraron libros.</p>
   </ng-template>
-</section>
+</section> -->
 <!-- LIBROS SECTION END -->
 
 
@@ -116,15 +159,15 @@
   <h1 class="title2">Recursos de<span>Actividades</span></h1>
   <div>
     <div class="row" *ngFor="let actividad of actividadesPaginados">
-      <div class="video-container">
-        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="315" style="border-radius: 1.5rem;">
+      <div class="-container">
+        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
         <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
         <div class="icons">
-          <a href="#" class="fas fa-heart" title="Favorito"></a>
+          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
@@ -133,13 +176,13 @@
   </div>
   <div class="pagination-container">
     <div class="pagination">
-      <button class="btn2" (click)="paginaAnteriorActividades()" [disabled]="paginaActualActividades === 1">Anterior</button>
+      <button class="btn2" (click)="paginaAnteriorActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Anterior</button>
       <span>Página {{ paginaActualActividades }} de {{ numeroTotalPaginasActividades }}</span>
-      <button class="btn2" (click)="paginaSiguienteActividades()" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteActividades(); scrollToTop();" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Siguiente</button>
     </div>
   </div>
   <ng-template #noActividadesMessage>
-    <p>No se encontraron actividades.</p>
+    <p style="font-size: 1rem;">No se encontraron actividades.</p>
   </ng-template>
 </section>
 <!-- ACTIVIDADES SECTION END -->

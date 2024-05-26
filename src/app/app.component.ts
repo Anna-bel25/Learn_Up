@@ -7,6 +7,8 @@ import { LevelComponent } from './level/level.component';
 import { ThemedComponent } from './themed/themed.component';
 import { ResourceMenuComponent } from './resource-menu/resource-menu.component';
 import { ResourceVideoComponent } from './resource-video/resource-video.component';
+import { ResouceLibroComponent } from './resouce-libro/resouce-libro.component';
+import { ResourceActividadComponent } from './resource-actividad/resource-actividad.component';
 import { ResourceFullComponent } from './resource-full/resource-full.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -34,6 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ThemedComponent,
     ResourceMenuComponent,
     ResourceVideoComponent,
+    ResourceActividadComponent,
+    ResouceLibroComponent,
     ResourceFullComponent,
     
   ],
