@@ -176,12 +176,13 @@ section {
 
 
 /* About */
-.about .row{
+.about .row {
   display: flex;
   align-items: center;
-  gap:2rem;
+  justify-content: center;
+  gap: 2rem;
   flex-wrap: wrap;
-  padding:1rem 1rem;
+  padding: 1rem 1rem;
   padding-bottom: 1rem;
   border: .3rem solid #fff;
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
@@ -189,29 +190,46 @@ section {
   margin-top: 1.5rem;
 }
 
-.about .row .video-container{
-  flex:1 1 30rem;
+.about .row .recurso-container {
+  flex: 1 1 30rem;
   position: relative;
 }
 
-.about .row .video-container video{
-  width:100%;
-  border:1.5rem solid white;
+.about .row .recurso-container video {
+  width: 100%;
+  border: .3rem solid white;
   border-radius: .5rem;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
   height: 100%;
   object-fit: cover;
 }
 
-.about .row .video-container h3{
+.about .row .recurso-container h3 {
   position: absolute;
-  top:50%; transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 1.5rem;
-  background:white;
-  width:100%;
-  padding:1rem 2rem;
+  background: white;
+  width: 100%;
+  padding: 1rem 2rem;
   text-align: center;
   mix-blend-mode: screen;
+}
+
+.about .row .img-container {
+  flex: 0 0 auto;
+  position: relative;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.about .row .img-container img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  border-radius: .5rem;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+  object-fit: cover;
 }
 
 .about .row .content{
@@ -219,14 +237,27 @@ section {
 }
 
 .about .row .content h3{
+  text-transform: none !important;
   font-size: 1.5rem;
   color:var(--light-gray);
 }
 
 .about .row .content p{
+  text-transform: none !important;
   font-size: .8rem;
   color: var(--black);
   padding:.3rem 0;
   padding-top: 1rem;
   line-height: 1.5;
+}
+
+
+.about .row .content .libro-titulo {
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.libro-dato {
+  font-weight: normal;
+  color: var(--light-gray);
 }

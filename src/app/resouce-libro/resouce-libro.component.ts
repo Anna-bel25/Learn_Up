@@ -59,6 +59,9 @@ export class ResouceLibroComponent implements OnInit {
       );
   }
 
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   filtrarRecursos(): void {
     const filtro = this.filtroBusqueda.trim().toLowerCase();

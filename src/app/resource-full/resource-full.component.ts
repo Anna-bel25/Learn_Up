@@ -274,4 +274,9 @@ export class ResourceFullComponent implements OnInit  {
     this.actualizarLibrosPaginados();
     this.actualizarActividadesPaginadas();
   }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
 }

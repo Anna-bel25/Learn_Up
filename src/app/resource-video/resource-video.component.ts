@@ -123,5 +123,5 @@ export class ResourceVideoComponent implements OnInit {
     this.videosMostrados = this.videos.slice();
     this.actualizarVideosPaginados();
   }
-
+  
 }

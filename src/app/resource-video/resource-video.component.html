@@ -31,9 +31,9 @@
   </div>
   <div class="pagination-container">
     <div class="pagination">
-      <button class="btn2" (click)="paginaAnteriorVideos()" [disabled]="paginaActualVideos === 1">Anterior</button>
+      <button class="btn2" (click)="paginaAnteriorVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Anterior</button>
       <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
-      <button class="btn2" (click)="paginaSiguienteVideos()" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
     </div>
   </div>
   <ng-template #noVideosMessage>
