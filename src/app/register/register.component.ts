@@ -14,6 +14,7 @@ import { MustMatch, noSpecialCharactersValidator } from './MustMatch';
 export class RegisterComponent implements OnInit {
 
   FormularioRegistro: FormGroup;
+  mostrar: boolean = false;
   
   constructor(private router: Router, private fb: FormBuilder) {
     this.FormularioRegistro = this.fb.group({
@@ -63,5 +64,27 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  
+  /*---METODO PARA MOSTRAR OPCIONES DE "TIPO DE CUENTA------"*/ 
+  mostrarOpciones() {
+    const opcionesElement = document.getElementById('opciones');
+    const contenidoSelect = document.querySelector('#select .contenedor-tipocuenta');
+
+    document.querySelectorAll('.opcion').forEach((opcion) => {
+        opcion.addEventListener('click', (e) => {
+            e.preventDefault();
+            const textoOpcion = (e.currentTarget as HTMLElement).textContent;
+            if (contenidoSelect) {
+                const parrafo = contenidoSelect.querySelector('p');
+                if (parrafo) {
+                  parrafo.textContent = textoOpcion || "";
+                  parrafo.classList.add('blanco');
+                }
+            }
+        });
+    });
+
+    if (opcionesElement) {
+        opcionesElement.classList.toggle('active');
+    }
+}
 }

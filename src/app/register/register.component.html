@@ -10,9 +10,28 @@
         <h1 class="letras-iniciar">Formulario de Registro</h1>
         <!-- <img class="imagen-esqueleto" src="/assets/img/esqueleto-2.png" alt=""> -->
         <div class="contenedor-inputs">
-          <div class="contenedor-tipocuenta">
-            <input class="input" type="text" placeholder="Tipo de Cuenta">
+          <!-- TIPO DE CUENTA -->
+          <div>
+            <div class="input" id="select" (click)="mostrarOpciones()" >
+              <div class="contenedor-tipocuenta">
+                <p>Tipo de Cuenta</p>
+              </div>
+              <div class="icono-flecha">
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <!-- OPCIONES DE SELECT -->
+            <div class="opciones" id="opciones">
+              <div class="contenedor-a">
+                <p class="opcion">Estudiante</p>
+              </div>
+              <div  class="contenedor-a">
+                <p class="opcion">Profesor</p>
+              </div>
+            </div>
           </div>
+          <input type="hidden" name="tipo-cuenta" id="inputSelect" value="">
+          <!-- NOMBRE DE USUARIO-->
           <div class="input-container">
             <input formControlName="nombre" class="input" type="text" placeholder="Nombre de Usuario">
             <div class="contenedor-error" *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)">
@@ -20,6 +39,7 @@
               <div class="error" *ngIf="nombre?.errors?.['minlength']">* El nombre debe tener al menos 4 caracteres.</div>
             </div>
           </div>
+          <!-- CORREO -->
           <div class="input-container">
             <input formControlName="correo" class="input" type="text" placeholder="Correo">
             <div class="contenedor-error" *ngIf="correo?.invalid && (correo?.dirty || correo?.touched)" >
@@ -27,6 +47,7 @@
               <div class="error"  *ngIf="correo?.errors?.['email']">* El correo no es válido.</div>
             </div>
           </div>
+          <!-- CONTRASEÑA -->
           <div class="input-container">
             <input formControlName="password" class="input" type="password" placeholder="Contraseña">
             <div class="contenedor-error" *ngIf="f['password'].invalid && (f['password'].dirty || f['password'].touched)">
@@ -35,6 +56,7 @@
               <div class="error" *ngIf="f['password'].errors?.['specialCharacters']">* La contraseña no debe contener caracteres especiales.</div>
             </div>
           </div>
+          <!-- REPETIR CONTRASEÑA -->
           <div class="input-container">
             <input formControlName="repeatpassword" class="input" type="password" placeholder="Repetir Contraseña">
             <div class="contenedor-error" *ngIf="f['repeatpassword'].invalid && (f['repeatpassword'].dirty || f['repeatpassword'].touched)">

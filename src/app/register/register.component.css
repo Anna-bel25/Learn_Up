@@ -5,9 +5,9 @@
 
 /*---------------IMAGENES-----------------*/
 .imagen-ola{
-    width: 50%;
+    width: 54%;
     position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
-    top: 51%; /* Ajusta la posición superior */
+    top: 53%; /* Ajusta la posición superior */
     left: -7%; /* Ajusta la posición izquierda */
     z-index: -1; /
 }
@@ -16,7 +16,7 @@
     position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
     top: 55%; /* Ajusta la posición superior */
     left: 4%; /* Ajusta la posición izquierda */
-    z-index: -1; /
+    z-index: -1; 
 }
 form{
     align-items: center;
@@ -46,15 +46,73 @@ a{
     padding: 10px;
     border-radius: 10px;    
 }
-
-
-/*------------INPUT--------------*/
-.contenedor-tipocuenta{
-    position: relative;
+/*------------TIPO DE CUENTA--------*/
+#select{
+    display: flex;
+    text-align: left;
     /*margin-top: 10px;*/
-    height: 30px;
-    margin-bottom: 20px;
+    cursor: pointer;
 }
+#select i {
+    margin-left: 25%;
+}
+#select.active, #select:hover{
+    box-shadow: 0px 5px 5px rgb(65, 64, 64);
+    border: 2px solid #e09f3e;
+}
+.contenedor-tipocuenta{
+    width: 100%;
+    padding: 2%;
+    
+}
+.contenedor-tipocuenta p {
+    margin-right: 2%;
+    color: #6c757d;
+}
+.contenedor-tipocuenta p.blanco {
+    color: white; /* Color blanco para el texto */
+}
+.icono-flecha{
+    position: relative;
+    margin-top: 2%;
+    left: 32%;
+    width: 100%;
+}
+/*---------OPCINES DE SELECT------*/
+.opciones{
+    background: #adb5bd;
+    border-radius: 10px;
+    z-index: 100;
+    width: 100%;
+    display: none;
+    text-align: right;
+    flex-direction:column;
+    margin-top: 1%;
+}
+.opciones.active{
+    display: block;
+    
+}
+.opcion {
+    display: block;
+    width: 100%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 5px; 
+    transition: .2s ease all;
+    padding: 3% 5% 3% 0;
+}
+.contenedor-a {
+    border-radius: 10px;
+    cursor: pointer;
+}
+.contenedor-a:hover{
+    width: 100%;
+    background: white ;
+}
+/*------------INPUT--------------*/
+
 .input-container{
     margin-top: 10px;
 }
