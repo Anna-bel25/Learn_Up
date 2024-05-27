@@ -13,6 +13,8 @@ import { ResourceFullComponent } from './resource-full/resource-full.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
+import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
 //import { routes } from './app.routes';
 
 @Component({
@@ -30,6 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    PublicasColeccionesComponent,
+    PrivadasColeccionesComponent,
 
     //MODULO NIVEL & TEMA
     LevelComponent,

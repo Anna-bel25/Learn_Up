@@ -1,0 +1,25 @@
+.title {
+    background: url("/assets/img/coleccion.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding-top: 15rem;
+    margin-bottom: 8rem;
+}
+
+h1{
+    color:black;
+    margin-top: -50px;
+    margin-bottom: 1rem;
+    font-size: 35px;
+}
+
+a{
+   color: rgb(97, 94, 94);
+   margin-bottom: 1rem;
+   font-size: 1rem;
+}
+
+a:hover{
+    color: rgb(253, 83, 111);
+}

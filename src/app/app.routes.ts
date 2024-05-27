@@ -9,6 +9,8 @@ import { ResourceActividadComponent } from './resource-actividad/resource-activi
 import { ResourceFullComponent } from './resource-full/resource-full.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
+import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
 
 
 export const routes: Routes =
@@ -25,7 +27,9 @@ export const routes: Routes =
   { path: 'recursos', component: ResourceFullComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
+  {path:'colecciones', component:PublicasColeccionesComponent},
+  {path:'privadasColecciones',component:PrivadasColeccionesComponent},
+  
   { path: '**', redirectTo: '/home' }
 
 ];
