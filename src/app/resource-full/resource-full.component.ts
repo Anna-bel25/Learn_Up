@@ -107,7 +107,7 @@ export class ResourceFullComponent implements OnInit  {
   }
 
   private fetchVideos(): void {
-    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
+    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
       .subscribe(
         response => {
           this.videos = response;
@@ -132,7 +132,7 @@ export class ResourceFullComponent implements OnInit  {
   }
 
   private fetchActivities(): void {
-    this.http.get<ActividadModel[]>('http://localhost:3000/api/actividades')
+    this.http.get<ActividadModel[]>('https://apiresources-production-ba1f.up.railway.app/api/actividades')
       .subscribe(
         response => {
           this.actividades = response;
@@ -147,7 +147,7 @@ export class ResourceFullComponent implements OnInit  {
 
 
   private fetchLibros(): void {
-    this.http.get<LibroModel[]>('http://localhost:3000/api/libros')
+    this.http.get<LibroModel[]>('https://apiresources-production-ba1f.up.railway.app/api/libros')
       .subscribe(
         response => {
           this.libros = response;
@@ -278,5 +278,5 @@ export class ResourceFullComponent implements OnInit  {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
+
 }

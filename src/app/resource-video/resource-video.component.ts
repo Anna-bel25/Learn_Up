@@ -40,7 +40,7 @@ export class ResourceVideoComponent implements OnInit {
   }
 
   private fetchVideos(): void {
-    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
+    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
       .subscribe(
         response => {
           this.videos = response.filter(video => video.materia_id === this.materiaId);
@@ -123,5 +123,5 @@ export class ResourceVideoComponent implements OnInit {
     this.videosMostrados = this.videos.slice();
     this.actualizarVideosPaginados();
   }
-  
+
 }
