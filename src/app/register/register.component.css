@@ -4,22 +4,18 @@
 
 
 /*---------------IMAGENES-----------------*/
-.imagen-esqueleto{
-    width: 30%;
-
-}
 .imagen-ola{
     width: 50%;
     position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
-    top: 70%; /* Ajusta la posición superior */
+    top: 51%; /* Ajusta la posición superior */
     left: -7%; /* Ajusta la posición izquierda */
     z-index: -1; /
 }
 .chico-surf{
     width: 20%;
     position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
-    top: 70%; /* Ajusta la posición superior */
-    left: 5%; /* Ajusta la posición izquierda */
+    top: 55%; /* Ajusta la posición superior */
+    left: 4%; /* Ajusta la posición izquierda */
     z-index: -1; /
 }
 form{
@@ -43,7 +39,6 @@ a{
     align-items: center;
     padding: 5%;
     border-radius: 10PX;
-    height: 86vh;
     margin: 0%;
     
 }
@@ -54,47 +49,47 @@ a{
 
 
 /*------------INPUT--------------*/
+.contenedor-tipocuenta{
+    position: relative;
+    /*margin-top: 10px;*/
+    height: 30px;
+    margin-bottom: 20px;
+}
+.input-container{
+    margin-top: 10px;
+}
+
+
 /* Estilos base para los inputs */
 .input {
-    position: absolute;
+    color: white;
+    /* display: block; */
     width: 100%;
     outline: none;
     font-size: 1rem;
     padding: 0 25px;
     height: 40px;
     border-radius: 10px;
-    border: 1px solid white;
-    transition: border-color 0.2s ease; 
+    border: 2px solid white;
     background: transparent;
 }
 
 /* Estilo para cuando hay un error */
-.input.error {
-    border-color: #e09f3e; /* Cambia el color del borde si hay un error */
-}
+.contenedor-error {
+    bottom: -40px;
+    left: 0;
+  }
+  .error {
+    color: #e09f3e;
+    font-size: 0.9rem;
+    margin-left: 5%;
+    text-align: left;
+  }
 
 /* Estilo para cuando el input está enfocado */
 .input:focus {
     color: white; /* Cambia el color del texto cuando el input está enfocado */
-    border: 1px solid black; /* Cambia el color del borde cuando el input está enfocado */
-}
-
-
- .contenedor-tipocuenta{
-    display: flex;
-    position: relative;
-    /*margin-top: 10px;*/
-    height: 30px;
-}
-
-
-/**-----------CONTRASEÑA-----*/
-.contenedor-correo, .contenedor-nombre,.contenedor-contra, .contenedor-repeatcontra {
-    display: flex;
-    position: relative;
-    margin-top: 35px;
-    height: 30px;
-    margin-bottom: 20px;
+    border-color: #e09f3e; /* Cambia el color del borde cuando el input está enfocado */
 }
 
 /*-------------TERMINOS Y CONDICIONES------*/
@@ -128,20 +123,5 @@ button{
     cursor: pointer;
 }
 
-/*-----------------MENSAJES DE ERROR----------*/
-.error {
-    color: #e09f3e;
-    font-size: x-small; 
-    position: absolute;
-    margin: 0%;
-    font-size: 0.9rem;
-    padding: 0px;
-    margin-left: 5%;
-    transition: 0.2s ease;
-    pointer-events: none;
-    background-color: transparent; 
-    margin-bottom: 0; /* Ajusta si es necesario */
-    top: 40px; /* Ajusta este valor según tus necesidades */
-  }
-  
+
   

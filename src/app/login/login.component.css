@@ -4,25 +4,40 @@ body{
     margin-left: 35%;
     margin-right: 34%;
 }
+/*---------IMAGINES*/
+.img-chicoSkate{
+    width: 20%;
+    position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
+    top: 55%; /* Ajusta la posición superior */
+    left: 4%; /* Ajusta la posición izquierda */
+}
+.img-chicoSkate2{
+    width: 17%;
+    position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
+    top: 65%; /* Ajusta la posición superior */
+    left: 83%; /* Ajusta la posición izquierda */
+}
+.img-chicaSkate{
+    width: 17%;
+    position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
+    top: 70%; /* Ajusta la posición superior */
+    left: 40%; /* Ajusta la posición izquierda */
+}
+/*--------------------*/
 h1, .letras-terminos{
-    color: #343a40;
+    color: #adb5bd;
     
 }
 .contenedor{
-    background-image: url(/assets/img/aula-trans.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background: #495057;
     text-align: center;
     align-items: center;
     padding: 5%;
     border-radius: 10PX;
-    height: 60vh;
     margin: 0%;
     
 }
 .contenedor-inputs{
-    background-color: #f8edeb;
     padding: 10px;
     border-radius: 10px;    
 }
@@ -30,22 +45,18 @@ h1, .letras-terminos{
 
 /*------------INPUT--------------*/
 .input{
-    position: absolute;
     width: 100%;
     outline: none;
     font-size: 1rem;
     padding: 0 25px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #ffffff;
-    transition: 0.1s ease;
+    border: 2px solid white;
     background: transparent;
-    z-index: 1111;
 
 }
-input:focus, input:valid{
-    color: #ff8fa3;
-    border: 3px solid #ff8fa3;
+input:focus{
+    color: white; 
 }
 input:focus + .letras,
 input:valid + .letras{
@@ -89,13 +100,15 @@ input:valid + .letras{
     margin-left: 1%;
     margin-top: 5%;
     display: flex;
+    margin-bottom: 5%;
 }
 .letras-registrar {
     margin-left: 2%;
+    color: #adb5bd;
 }
 .btn-registro{
     margin-left: 2%;
-    color: #1d3557;
+    color: white;
     text-decoration: underline;
     background: transparent;
     cursor: pointer;
@@ -108,9 +121,12 @@ input:valid + .letras{
     margin-bottom: 15px;
 }
 .btn-ingresar{
-    background: #f6efee;
+    background: #adb5bd;
+    color: #343a40;
+    font-weight: bold;
     padding: 2%;
     margin-top: 7%;
     width: 100%;
     border-radius: 10px;
+    cursor: pointer;
 }

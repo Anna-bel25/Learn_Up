@@ -39,5 +39,11 @@ export class HeaderComponent {
   isActiveLink(index: number): boolean {
     return this.activeLinkIndex === index;
   }
+  
+
+  // ir a la pagina de login --- Maria
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 
 }

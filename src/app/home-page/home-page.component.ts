@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -10,9 +10,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
+  
 
   //@ViewChild('videoPlayer') videoPlayer!: ElementRef;
   //quitarAudio() {
   //  this.videoPlayer.nativeElement.muted = true;
   //}
+
 }

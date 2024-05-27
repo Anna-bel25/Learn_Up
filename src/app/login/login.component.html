@@ -1,23 +1,26 @@
 <html>
     <body>
-        <div class="contenedor">
-            <h1 class="letras-iniciar">Iniciar Sesión</h1>
-            <div class="contenedor-inputs">
-                <div class="contenedor-correo">
-                    <input class="input" type="text" required>
-                    <label class="letras">Correo o Usuario</label>
+        <img class="img-chicoSkate" src="/assets/img/chico2-skate.jpg" alt="">
+        <img class="img-chicoSkate2" src="/assets/img/chico3-skate.PNG" alt="">
+        <img class="img-chicaSkate" src="/assets/img/chica-skate.PNG" alt="">
+        <form class="contenedor">
+            <div>
+                <h1 class="letras-iniciar">INICIAR SESIÓN</h1>
+                <div class="contenedor-inputs">
+                    <div class="contenedor-correo">
+                        <input class="input" type="text" required placeholder="Correo">
+                    </div>
+        
+                    <div class="contenedor-contra">
+                        <input class="input" type="password" required placeholder="Contraseña">
+                    </div>
                 </div>
-    
-                <div class="contenedor-contra">
-                    <input class="input" type="password" required>
-                    <label class="letras">Contraseña</label>
+                <button class="btn-ingresar">Ingresar</button>
+                <div class="contenedor-registrar">
+                    <span class="letras-registrar">No tienes cuenta? </span>
+                    <button class="btn-registro" type="button" (click)="navigateToRegister()">Registrarse</button>
                 </div>
             </div>
-            <button class="btn-ingresar">Ingresar</button>
-            <div class="contenedor-registrar">
-                <span class="letras-registrar">No tienes cuenta? </span>
-                <button class="btn-registro" type="button" (click)="navigateToRegister()">Registrarse</button>
-            </div>
-        </div>
+        </form>
     </body>
 </html>
