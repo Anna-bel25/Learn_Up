@@ -15,7 +15,7 @@
   <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
   <div *ngIf="actividades.length > 0; else noActividadesMessage">
     <div class="row" *ngFor="let actividad of actividadesPaginadas">
-      <div class="-container">
+      <div class="img-container">
         <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
       </div>
       <div class="content">

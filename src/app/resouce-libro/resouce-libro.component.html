@@ -16,7 +16,7 @@
   <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
   <div *ngIf="libros.length > 0; else noLibrosMessage">
     <div class="row" *ngFor="let libro of librosPaginados">
-      <div class="-container">
+      <div class="img-container">
         <img [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
       </div>
       <div class="content">
