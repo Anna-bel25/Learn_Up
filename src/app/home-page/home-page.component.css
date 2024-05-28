@@ -27,10 +27,12 @@ section {
   background: url(/assets/img/home.jpg) no-repeat;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .home .content {
-  max-width: 50rem;
+  max-width: 80%;
+  /* margin-right: 4rem; */
 }
 
 .home .content h3 {
@@ -53,6 +55,8 @@ section {
   color: var(--dark-gray);
   padding: 1rem 0;
   line-height: 1.5;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 
@@ -83,12 +87,15 @@ section {
 .about .row .video-container h3 {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 1.5rem;
   background: white;
   width: 100%;
-  padding: .1rem .1rem;
+  padding: .1rem .5rem;
   text-align: center;
+  width: calc(100% - 2rem);
+  box-sizing: border-box;
   mix-blend-mode: screen;
 }
 
@@ -114,6 +121,11 @@ section {
 
 
 @media screen and (max-width: 968px) {
+
+  section {
+    font-size: 12.5%; /* Establece un tamaño de fuente base */
+  }
+
   .about .row {
     flex-direction: column;
   }
@@ -128,4 +140,33 @@ section {
     order: 2;
     margin-top: 2rem;
   }
+
+  .home .content {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+}
+
+
+
+@media screen and (max-width: 968px) {
+
+  .home .content h3 {
+    font-size: 2.5rem;
+    overflow-wrap: break-word;
+  }
+
+  .home .content span {
+    font-size: 1.2rem;
+  }
+
+}
+
+@media screen and (max-width: 668px) {
+
+  .about .row .video-container h3 {
+    font-size: 1rem;
+  }
+
 }
