@@ -87,7 +87,7 @@ section {
   font-size: 1.5rem;
   background: white;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: .1rem .1rem;
   text-align: center;
   mix-blend-mode: screen;
 }
@@ -110,4 +110,22 @@ section {
   padding: .3rem 0;
   padding-top: 1rem;
   line-height: 1.5;
+}
+
+
+@media screen and (max-width: 968px) {
+  .about .row {
+    flex-direction: column;
+  }
+
+  .about .row .video-container,
+  .about .row .content {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .about .row .video-container {
+    order: 2;
+    margin-top: 2rem;
+  }
 }

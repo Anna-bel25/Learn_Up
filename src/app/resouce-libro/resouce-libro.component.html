@@ -25,6 +25,7 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
+        <h3><a [href]="libro.url" target="_blank"><span class="link-span">Leer</span></a></h3>
         <div class="icons">
           <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>

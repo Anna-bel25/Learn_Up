@@ -1,7 +1,7 @@
 
 section {
   font-size: 62.5%;
-  padding: 2rem 9%;
+  padding: 3rem 9%;
   /* padding: 0 3rem 0 9%; */
 }
 
@@ -150,7 +150,7 @@ section {
 }
 
 
-@media screen and (max-width: 668px) {
+@media screen and (max-width: 768px) {
   .pagination {
     flex-direction: column;
     align-items: center;
@@ -164,6 +164,11 @@ section {
     max-width: 300px;
     text-align: center;
   }
+
+  .btn3 {
+    margin-top: .7rem;
+  }
+
 }
 
 
@@ -173,38 +178,42 @@ section {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
-  padding: 2rem 9%;
+  padding: 3.6rem 9% 1%;
 }
 
 .search-wrapper {
-  position: relative;
   margin-left: auto;
   margin-right: 0;
-}
-
-.search-wrapper input {
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  border-radius: 3rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.1);
-  /* width: calc(100% - 2rem); */
   width: 100%;
   max-width: 20rem;
 }
 
-.search-wrapper i {
-  position: absolute;
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-container input {
+  padding: 0.5rem 2rem;
   font-size: 1rem;
-  top: 50%;
+  border-radius: 3rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding-right: 2.5rem;
+  box-sizing: border-box;
+}
+
+.input-container i {
+  position: absolute;
   right: 1rem;
-  transform: translateY(-50%);
+  font-size: 1rem;
   color: var(--pink);
   cursor: pointer;
 }
 
-
-
-@media screen and (max-width: 668px) {
+@media screen and (max-width: 768px) {
   .filtro {
     display: block;
     text-align: center;
@@ -214,18 +223,6 @@ section {
     margin: 1rem auto;
     width: calc(100% - 4rem);
   }
-
-  .search-wrapper i {
-    right: 1rem;
-    transform: translateY(-50%);
-  }
-
-  .search-wrapper input {
-    width: 100%;
-    padding-right: 2.5rem;
-    box-sizing: border-box;
-  }
-
 }
 
 
@@ -263,6 +260,7 @@ section {
   font-size: 1rem;
   cursor: pointer;
   border-radius: 5rem;
+  margin-right: .3rem;
 }
 
 
@@ -391,6 +389,7 @@ section {
 .about .row .content .libro-titulo {
   color: var(--pink);
   font-weight: 600;
+  margin-top: -.8rem;
 }
 
 .libro-dato {

@@ -18,6 +18,9 @@ export class HeaderComponent {
     { path: '/colecciones', label: 'Colecciones', active: false },
     { path: '/nivel', label: 'Categoria', active: false },
     { path: '/recursos', label: 'Recursos', active: false },
+    
+    { path: '/login', label: 'Usuario', active: false },
+    { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
     // { path: '/menu-recurso', label: 'Contactanos', active: false },
   ];
 
@@ -39,7 +42,7 @@ export class HeaderComponent {
   isActiveLink(index: number): boolean {
     return this.activeLinkIndex === index;
   }
-  
+
 
   // ir a la pagina de login --- Maria
   navigateToLogin() {

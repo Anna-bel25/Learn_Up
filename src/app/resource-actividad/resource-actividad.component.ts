@@ -58,7 +58,11 @@ export class ResourceActividadComponent implements OnInit {
   }
 
   scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    //window.scrollTo({ top: 50, behavior: 'smooth' });
+    const offset = 350;
+    const halfWindowHeight = window.innerHeight / 2;
+    const scrollToPosition = halfWindowHeight + offset;
+    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
   filtrarRecursos(): void {

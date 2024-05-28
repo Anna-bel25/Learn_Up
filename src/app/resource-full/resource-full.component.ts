@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { HttpClient } from '@angular/common/http';
@@ -10,13 +10,18 @@ import { Observable, map } from 'rxjs';
 import { ActividadModel } from '../models/actividad.model';
 import { FormsModule } from '@angular/forms';
 import { LibroModel } from '../models/lirbo.model';
+import { ResourceActividadComponent } from '../resource-actividad/resource-actividad.component';
+import { ResourceVideoComponent } from '../resource-video/resource-video.component';
+import { ResouceLibroComponent } from '../resouce-libro/resouce-libro.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-resource-full',
   standalone: true,
-  imports: [RouterLink, HomePageComponent, CommonModule, FormsModule],
+  imports: [RouterLink, HomePageComponent, ResourceActividadComponent, ResourceVideoComponent, ResouceLibroComponent, CommonModule, FormsModule],
   templateUrl: './resource-full.component.html',
-  styleUrl: './resource-full.component.css'
+  styleUrl: './resource-full.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class ResourceFullComponent implements OnInit  {
@@ -31,6 +36,7 @@ export class ResourceFullComponent implements OnInit  {
 
   sanitizedUrls: { [id: string]: SafeResourceUrl } = {}
 
+
   videosMostrados: VideoModel[] = [];
   librosMostrados: LibroModel[] = [];
   actividadesMostradas: ActividadModel[] = [];
@@ -39,33 +45,44 @@ export class ResourceFullComponent implements OnInit  {
   librosPaginados: LibroModel[] = [];
   actividadesPaginados: ActividadModel[] = [];
 
+  todosLosRecursos: any[] = [];
+  todosPaginados: any[] = [];
+
   filtroBusqueda: string = '';
 
   videosPorPagina: number = 5;
   librosPorPagina: number = 5;
   actividadesPorPagina: number = 5;
+  recursosPorPagina: number = 5;
 
   paginaActualVideos: number = 1;
   paginaActualLibros: number = 1;
   paginaActualActividades: number = 1;
+  paginaActualTodos: number = 1;
 
+  //mostrarTodosLosRecursos = false;
+  mostrarTodosLosRecursos: boolean = false;
   mostrarVideo = true;
   mostrarLibro = true;
   mostrarActividad = true;
 
   filtroActivo: string | null = null
 
+
   mostrarTodo() {
-    this.mostrarVideo = true;
-    this.mostrarLibro = true;
-    this.mostrarActividad = true;
+    this.mostrarTodosLosRecursos = true;
+    this.mostrarVideo = false;
+    this.mostrarLibro = false;
+    this.mostrarActividad = false;
     this.filtroActivo = null;
   }
+
 
   mostrarVideos() {
     this.mostrarVideo = true;
     this.mostrarLibro = false;
     this.mostrarActividad = false;
+    this.mostrarTodosLosRecursos = false;
     this.filtroActivo = 'videos';
   }
 
@@ -73,6 +90,7 @@ export class ResourceFullComponent implements OnInit  {
     this.mostrarVideo = false;
     this.mostrarLibro = true;
     this.mostrarActividad = false;
+    this.mostrarTodosLosRecursos = false;
     this.filtroActivo = 'libros';
   }
 
@@ -80,6 +98,7 @@ export class ResourceFullComponent implements OnInit  {
     this.mostrarVideo = false;
     this.mostrarLibro = false;
     this.mostrarActividad = true;
+    this.mostrarTodosLosRecursos = false;
     this.filtroActivo = 'actividades';
   }
 
@@ -92,6 +111,17 @@ export class ResourceFullComponent implements OnInit  {
     //this.fetchObras();
 
     this.mostrarVideos();
+    //this.mostrarTodo();
+    //this.determinarMostrarTodosLosRecursos();
+  }
+
+
+  determinarMostrarTodosLosRecursos(): void {
+    this.mostrarTodosLosRecursos = this.mostrarVideo || this.mostrarLibro || this.mostrarActividad;
+  }
+
+  get numeroTotalPaginasTodos(): number {
+    return Math.ceil(this.todosLosRecursos.length / this.recursosPorPagina);
   }
 
   get numeroTotalPaginasVideos(): number {
@@ -195,17 +225,22 @@ export class ResourceFullComponent implements OnInit  {
     this.paginaActualVideos = 1;
     this.paginaActualLibros = 1;
     this.paginaActualActividades = 1;
+    this.paginaActualTodos = 1;
 
     this.actualizarVideosPaginados();
     this.actualizarLibrosPaginados();
     this.actualizarActividadesPaginadas();
+    this.actualizarTodosPaginados();
   }
 
   private filtrarPorTituloYDescripcion(recursos: any[], filtro: string): any[] {
     return recursos.filter(recurso => {
       const titulo = recurso.titulo ? recurso.titulo.toLowerCase() : '';
+      const autor = recurso.autor ? recurso.autor.toLowerCase() : '';
       const descripcion = recurso.descripcion ? recurso.descripcion.toLowerCase() : '';
-      return titulo.includes(filtro) || descripcion.includes(filtro);
+      return titulo.includes(filtro)  || descripcion.includes(filtro) || autor.includes(filtro);
+      //return titulo.includes(filtro) || descripcion.includes(filtro);
+      //return titulo.includes(filtro) || autor.includes(filtro);
     });
   }
 
@@ -222,6 +257,11 @@ export class ResourceFullComponent implements OnInit  {
   private actualizarActividadesPaginadas() {
     const startIndex = (this.paginaActualActividades - 1) * this.actividadesPorPagina;
     this.actividadesPaginados = this.actividadesMostradas.slice(startIndex, startIndex + this.actividadesPorPagina);
+  }
+
+  actualizarTodosPaginados() {
+    const startIndex = (this.paginaActualTodos - 1) * this.recursosPorPagina;
+    this.todosPaginados = this.todosLosRecursos.slice(startIndex, startIndex + this.recursosPorPagina);
   }
 
   paginaAnteriorVideos() {
@@ -266,6 +306,20 @@ export class ResourceFullComponent implements OnInit  {
     }
   }
 
+  paginaAnteriorTodos() {
+    if (this.paginaActualTodos > 1) {
+      this.paginaActualTodos--;
+      this.actualizarTodosPaginados();
+    }
+  }
+
+  paginaSiguienteTodos() {
+    if (this.paginaActualTodos < this.numeroTotalPaginasTodos) {
+      this.paginaActualTodos++;
+      this.actualizarTodosPaginados();
+    }
+  }
+
   restablecerRecursos(): void {
     this.videosMostrados = this.videos.slice();
     this.actividadesMostradas = this.actividades.slice();
@@ -275,8 +329,13 @@ export class ResourceFullComponent implements OnInit  {
     this.actualizarActividadesPaginadas();
   }
 
+
   scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    //window.scrollTo({ top: 50, behavior: 'smooth' });
+    const offset = -75; // Aumenta este valor para desplazar más hacia arriba
+    const halfWindowHeight = window.innerHeight / 2;
+    const scrollToPosition = halfWindowHeight + offset;
+    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
 }

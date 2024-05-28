@@ -134,6 +134,7 @@ section {
   border-radius: 3rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  margin: 1rem;
 }
 
 .search-wrapper i {

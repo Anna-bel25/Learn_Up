@@ -134,6 +134,7 @@ section {
   border-radius: 3rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  margin: 1rem;
 }
 
 .search-wrapper i {
@@ -257,9 +258,21 @@ section {
 .about .row .content .libro-titulo {
   color: var(--pink);
   font-weight: 600;
+  margin-top: -.8rem;
 }
 
 .libro-dato {
   font-weight: normal;
   color: var(--light-gray);
+}
+
+.link-span {
+  font-size: 1.2rem;
+  color:var(--dark-gray);
+}
+
+.link-span:hover {
+  color:var(--pink);
+  transition: text-decoration 0.3s ease;
+  text-decoration: underline;
 }

@@ -1,20 +1,24 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ApplicationRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-  
 
-  //@ViewChild('videoPlayer') videoPlayer!: ElementRef;
-  //quitarAudio() {
-  //  this.videoPlayer.nativeElement.muted = true;
-  //}
+  mostrarSegundoParrafo: boolean = false;
+
+  constructor(private appRef: ApplicationRef) { }
+
+  toggleSegundoParrafo() {
+    this.mostrarSegundoParrafo = !this.mostrarSegundoParrafo;
+  }
+
 
 }

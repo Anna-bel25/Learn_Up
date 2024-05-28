@@ -2,7 +2,7 @@
 
 section {
   /* font-size: 62.5%; */
-  padding: 2rem 9%;
+  padding: 3.6rem 9%;
   text-transform: capitalize;
 }
 
@@ -178,7 +178,7 @@ section {
 }
 
 .blogs .box .content {
-  padding: 1rem 1rem;
+  padding: 1.3rem 1rem;
 }
 
 .blogs .box .content .icons {

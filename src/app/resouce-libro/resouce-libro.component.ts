@@ -60,7 +60,11 @@ export class ResouceLibroComponent implements OnInit {
   }
 
   scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    //window.scrollTo({ top: 50, behavior: 'smooth' });
+    const offset = 350;
+    const halfWindowHeight = window.innerHeight / 2;
+    const scrollToPosition = halfWindowHeight + offset;
+    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
   filtrarRecursos(): void {
@@ -80,7 +84,9 @@ export class ResouceLibroComponent implements OnInit {
     return recursos.filter(recurso => {
       const titulo = recurso.titulo ? recurso.titulo.toLowerCase() : '';
       const descripcion = recurso.descripcion ? recurso.descripcion.toLowerCase() : '';
-      return titulo.includes(filtro) || descripcion.includes(filtro);
+      const autor = recurso.autor ? recurso.autor.toLowerCase() : '';
+      return titulo.includes(filtro) || descripcion.includes(filtro) || autor.includes(filtro);
+      //return titulo.includes(filtro) || autor.includes(filtro);
     });
   }
 

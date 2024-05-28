@@ -69,12 +69,12 @@
 }
 
 .header .fa-bars{
-  font-size: 3rem;
+  font-size: 1.2rem;
   color:var(--black-suit);
   border-radius: .5rem;
-  padding: .5rem 1.5rem;
+  padding: .4rem .7rem;
   cursor: pointer;
-  border:.1rem solid rgba(0,0,0,.3);
+  border: .1rem solid rgba(0,0,0,.3);
   display: none;
 }
 
@@ -84,6 +84,12 @@
   font-weight: 500;
 }
 
+.header .icons a.active {
+  background-color: var(--pink);
+  color: var(--white-suit);
+  /* border-bottom: 2px solid var(--pink);
+  font-weight: 500; */
+}
 
 /* Media Queries */
 @media (max-width:963.39px){
@@ -92,7 +98,7 @@
   }
 }
 
-@media (max-width:768px){
+@media (max-width:868px){
   .header .fa-bars{
     display: block;
   }
