@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
 
   FormularioRegistro: FormGroup;
   mostrar: boolean = false;
+  checkboxError: boolean = false;
   
   constructor(private router: Router, private fb: FormBuilder) {
     this.FormularioRegistro = this.fb.group({
@@ -25,7 +26,8 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
         noSpecialCharactersValidator()
       ]],
-      repeatpassword: ['', [Validators.required, Validators.minLength(8)]]
+      repeatpassword: ['', [Validators.required, Validators.minLength(8)]],
+      termsCheckbox: [false, Validators.requiredTrue] // Agregamos el control del checkbox al formulario
     }, {
       validator: MustMatch('password', 'repeatpassword')
     });
@@ -50,21 +52,39 @@ export class RegisterComponent implements OnInit {
   get repeatpassword() {
     return this.FormularioRegistro.get('repeatpassword');
   }
-
+  /*------------- CHECKBOX ----------------*/  
+  markAllFieldsAsTouched() {
+    Object.keys(this.FormularioRegistro.controls).forEach(field => {
+      const control = this.FormularioRegistro.get(field);
+      control?.markAsTouched({ onlySelf: true });
+    });
+  }
   onSubmit() {
-    // Detén la ejecución si el formulario es inválido
+    // Marcar todos los campos como tocados para mostrar los errores de validación
+    //this.FormularioRegistro.markAllAsTouched();
+    // Marcar todos los campos como tocados para mostrar los errores de validación
+    this.markAllFieldsAsTouched();
+  
+    const checkbox = document.getElementById('termsCheckbox') as HTMLInputElement | null;
+    if (checkbox && checkbox.checked) {
+      this.checkboxError = false;
+    } else {
+      this.checkboxError = true;
+      return;
+    }
+    // Detener la ejecución si el formulario es inválido
     if (this.FormularioRegistro.valid) {
       // Procesar el formulario
+      console.log('Formulario Enviado', this.FormularioRegistro.value);
       return;
+    } 
   }
-   // Procesa el formulario
-   console.log('Formulario Enviado', this.FormularioRegistro.value);
-  }
+  
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
 
-  /*---METODO PARA MOSTRAR OPCIONES DE "TIPO DE CUENTA------"*/ 
+  /*---METODO PARA MOSTRAR OPCIONES DE "TIPO DE CUENTA"-------*/ 
   mostrarOpciones() {
     const opcionesElement = document.getElementById('opciones');
     const contenidoSelect = document.querySelector('#select .contenedor-tipocuenta');
@@ -86,5 +106,5 @@ export class RegisterComponent implements OnInit {
     if (opcionesElement) {
         opcionesElement.classList.toggle('active');
     }
-}
+  }
 }

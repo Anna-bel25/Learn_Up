@@ -112,7 +112,16 @@ a{
     background: white ;
 }
 /*------------INPUT--------------*/
-
+.input-icon{
+    position: relative;
+}
+.input-icon i{
+    position: absolute;
+    color: white;
+    right: 7%;
+    bottom: 5%;
+    transform: translateY(-50%);
+}
 .input-container{
     margin-top: 10px;
 }

@@ -5,7 +5,7 @@
   <body>
     <img class="imagen-ola" src="/assets/img/Recurso 1.png" alt="">
     <img class="chico-surf" src="/assets/img/surf.png" alt="">
-    <form [formGroup]="FormularioRegistro" (ngSubmit)="onSubmit()">
+    <form [formGroup]="FormularioRegistro">
       <div class="contenedor">
         <h1 class="letras-iniciar">Formulario de Registro</h1>
         <!-- <img class="imagen-esqueleto" src="/assets/img/esqueleto-2.png" alt=""> -->
@@ -33,18 +33,24 @@
           <input type="hidden" name="tipo-cuenta" id="inputSelect" value="">
           <!-- NOMBRE DE USUARIO-->
           <div class="input-container">
-            <input formControlName="nombre" class="input" type="text" placeholder="Nombre de Usuario">
-            <div class="contenedor-error" *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)">
-              <div class="error" *ngIf="nombre?.errors?.['required']">* Campo requerido</div>
-              <div class="error" *ngIf="nombre?.errors?.['minlength']">* El nombre debe tener al menos 4 caracteres.</div>
+            <div class="input-icon">
+              <input formControlName="nombre" class="input" type="text" placeholder="Nombre de Usuario">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="contenedor-error" *ngIf="f['nombre'].invalid && (f['nombre'].touched || f['nombre'].dirty)">
+              <div class="error" *ngIf="f['nombre'].errors?.['required']">* Campo requerido</div>
+              <div class="error" *ngIf="f['nombre'].errors?.['minlength']">* El nombre debe tener al menos 3 caracteres.</div>
             </div>
           </div>
           <!-- CORREO -->
           <div class="input-container">
-            <input formControlName="correo" class="input" type="text" placeholder="Correo">
-            <div class="contenedor-error" *ngIf="correo?.invalid && (correo?.dirty || correo?.touched)" >
-              <div class="error"  *ngIf="correo?.errors?.['required']">* Campo requerido</div>
-              <div class="error"  *ngIf="correo?.errors?.['email']">* El correo no es válido.</div>
+            <div  class="input-icon">
+              <input formControlName="correo" class="input" type="text" placeholder="Correo">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="contenedor-error" *ngIf="f['correo'].invalid && (f['correo'].touched || f['correo'].dirty)">
+              <div class="error" *ngIf="f['correo'].errors?.['required']">* Campo requerido</div>
+              <div class="error" *ngIf="f['correo'].errors?.['email']">* Debe ser un correo válido.</div>
             </div>
           </div>
           <!-- CONTRASEÑA -->
@@ -65,13 +71,16 @@
             </div>
           </div>
         </div>
-    
+        <!-- CHECKBOX -->
         <div class="contenedor-check">
-          <input class="checkbox" type="checkbox">
+          <input id="termsCheckbox" class="checkbox" type="checkbox">
           <a href="https://www.google.com/?hl=es" class="letras-terminos">Términos y condiciones</a> 
         </div>
+        <div class="contenedor-error" *ngIf="f['termsCheckbox'].invalid && (f['termsCheckbox'].touched || f['termsCheckbox'].dirty)">
+          <div class="error">* Debe marcar para seguir.</div>
+        </div>        
     
-        <button [disabled]="FormularioRegistro.invalid" type="submit">Registrar</button>
+        <button [disabled]="FormularioRegistro.invalid" type="submit" (click)="onSubmit()">Registrar</button>
         <button class="btn-registro" type="button" (click)="navigateToLogin()">Cancelar</button>
       </div>
     </form>
