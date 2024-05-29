@@ -14,6 +14,9 @@
   --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
 }
 
+html {
+  font-size: 90.3%;
+}
 
 * {
   margin: 0;

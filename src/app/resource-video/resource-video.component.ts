@@ -63,7 +63,7 @@ export class ResourceVideoComponent implements OnInit {
 
   scrollToTop(): void {
     //window.scrollTo({ top: 50, behavior: 'smooth' });
-    const offset = 350;
+    const offset = 290;
     const halfWindowHeight = window.innerHeight / 2;
     const scrollToPosition = halfWindowHeight + offset;
     window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });

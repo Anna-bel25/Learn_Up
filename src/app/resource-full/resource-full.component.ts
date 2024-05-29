@@ -332,7 +332,7 @@ export class ResourceFullComponent implements OnInit  {
 
   scrollToTop(): void {
     //window.scrollTo({ top: 50, behavior: 'smooth' });
-    const offset = -75; // Aumenta este valor para desplazar más hacia arriba
+    const offset = -138; // más hacia arriba
     const halfWindowHeight = window.innerHeight / 2;
     const scrollToPosition = halfWindowHeight + offset;
     window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });

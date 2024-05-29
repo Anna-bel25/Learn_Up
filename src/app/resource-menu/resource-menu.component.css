@@ -3,7 +3,7 @@
 
 section {
   font-size: 62.5%;
-  padding: 2rem 9%;
+  padding: 3rem 9%;
   /* padding: 0 4rem 0 9%; */
 }
 
@@ -13,8 +13,8 @@ section {
   background-size: cover;
   background-position: center;
   text-align: center;
-  padding-top: 10rem;
-  margin-bottom: 2rem;
+  padding-top: 8rem;
+  margin-bottom: 4rem;
 }
 
 .title h1 {
@@ -97,6 +97,23 @@ section {
 .heading span.space{
   background: none;
 }
+
+
+
+@media screen and (max-width: 790px) {
+  .heading {
+    text-align: center;
+    padding: .3rem 0 .1rem 0;
+  }
+
+  .heading span {
+    font-size: 1rem;
+    margin: 0 .2rem;
+    padding: .7rem;
+    overflow-wrap: break-word;
+  }
+}
+
 
 /* Estilos de los botones */
 .btn {
