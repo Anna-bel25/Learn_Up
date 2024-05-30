@@ -16,6 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
 import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
+import { HttpClientModule } from '@angular/common/http';
 //import { routes } from './app.routes';
 
 @Component({
@@ -26,6 +27,7 @@ import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-co
     CommonModule,
     RouterLink,
     ReactiveFormsModule,
+    HttpClientModule,
     //routes,
 
     //GENERAL COMPONENTS
