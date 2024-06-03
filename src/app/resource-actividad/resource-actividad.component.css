@@ -247,7 +247,7 @@ section {
 
 .about .row .content p{
   text-transform: none !important;
-  font-size: .8rem;
+  font-size: .9rem;
   color: var(--black);
   padding:.3rem 0;
   padding-top: 1rem;

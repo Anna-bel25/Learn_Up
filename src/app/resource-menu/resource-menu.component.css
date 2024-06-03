@@ -163,7 +163,7 @@ section {
 
 .review .box p{
   color: var(--dark-gray);
-  font-size: 0.8rem;
+  font-size: .9rem;
   padding: .8rem 0;
   text-transform: none !important;
 }

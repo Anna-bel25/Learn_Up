@@ -211,7 +211,7 @@ section {
 
 .blogs .box .content p {
   text-transform: none !important;
-  font-size: .8rem;
+  font-size: .9rem;
   color: var(--light-color);
   line-height: 2;
   padding: .4rem 0;
