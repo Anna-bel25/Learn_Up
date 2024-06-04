@@ -39,9 +39,10 @@ export class ResouceLibroComponent implements OnInit {
   }
 
   private fetchLibros(): void {
-    this.http.get<LibroModel[]>('https://apiresources-production-ba1f.up.railway.app/api/libros')
+    this.http.get<LibroModel[]>('http://localhost:3000/api/libros')
       .subscribe(
         response => {
+          console.log('Response from API:', response);
           this.libros = response.filter(libro => libro.materia_id === this.materiaId);
           this.librosMostrados = this.libros;
           this.actualizarLibrosPaginados();

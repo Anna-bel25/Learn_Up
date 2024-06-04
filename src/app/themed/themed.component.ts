@@ -36,8 +36,9 @@ export class ThemedComponent implements OnInit {
   }
 
   obtenerMaterias() {
-    this.http.get<MateriaModel[]>('https://apiresources-production-ba1f.up.railway.app/api/materias')
+    this.http.get<MateriaModel[]>('http://localhost:3000/api/materias')
       .subscribe(response => {
+        console.log('Response from API:', response);
         if (response && response.length > 0) {
           this.materiasPreescolar = response.filter(materia => materia.nivel_id === 1);
           this.materiasPrimaria = response.filter(materia => materia.nivel_id === 2);

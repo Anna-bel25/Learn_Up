@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoListModel, VideoModel } from '../models/video.model';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../api.service';
 //import { VideosService } from '../services/recursos.services';
 
 
@@ -33,16 +34,17 @@ export class ResourceVideoComponent implements OnInit {
   videosPorPagina: number = 5;
   paginaActualVideos: number = 1;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.fetchVideos();
   }
 
   private fetchVideos(): void {
-    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
+    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
       .subscribe(
         response => {
+          console.log('Response from API:', response);
           this.videos = response.filter(video => video.materia_id === this.materiaId);
           this.sanitizeUrls();
           this.videosMostrados = this.videos;
@@ -61,14 +63,6 @@ export class ResourceVideoComponent implements OnInit {
       );
   }
 
-  scrollToTop(): void {
-    //window.scrollTo({ top: 50, behavior: 'smooth' });
-    const offset = 290;
-    const halfWindowHeight = window.innerHeight / 2;
-    const scrollToPosition = halfWindowHeight + offset;
-    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
-  }
-
   private sanitizeUrls() {
     this.videos.forEach(video => {
       this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
@@ -77,6 +71,14 @@ export class ResourceVideoComponent implements OnInit {
 
   getSafeUrl(video_id: number): SafeResourceUrl | undefined {
     return this.sanitizedUrls[video_id];
+  }
+
+  scrollToTop(): void {
+    //window.scrollTo({ top: 50, behavior: 'smooth' });
+    const offset = 290;
+    const halfWindowHeight = window.innerHeight / 2;
+    const scrollToPosition = halfWindowHeight + offset;
+    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
   filtrarRecursos(): void {
