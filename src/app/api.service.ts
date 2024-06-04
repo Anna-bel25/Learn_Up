@@ -9,6 +9,7 @@ export class ApiService {
   private actividadesUrl = 'https://apiresources-production-ba1f.up.railway.app/api/actividades';
   private videosUrl = 'https://apiresources-production-ba1f.up.railway.app/api/videos';
   private librosUrl='https://apiresources-production-ba1f.up.railway.app/api/libros';
+  private userUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -23,4 +24,13 @@ export class ApiService {
   getLibros(): Observable<any>{
     return this.http.get<any>(this.librosUrl);
   }
+  /*---------------MARIA------------------------*/
+  postUsers(userData: any): Observable<any> {
+    return this.http.post(`${this.userUrl}/users`, userData);
+  }
+
+  postUsersLogin(userData: any): Observable<any> {
+    return this.http.post(`${this.userUrl}/login`, userData);
+  }
+  /*--------------------------------------------*/
 }

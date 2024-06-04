@@ -1,29 +1,35 @@
-<html>
-    <body>
-        <img class="img-chicoSkate" src="/assets/img/chico2-skate.jpg" alt="">
-        <img class="img-chicoSkate2" src="/assets/img/chico3-skate.PNG" alt="">
-        <img class="img-chicaSkate" src="/assets/img/chica-skate.PNG" alt="">
-        <form class="contenedor">
-            <div>
-                <h1 class="letras-iniciar">INICIAR SESIÓN</h1>
-                <div class="contenedor-inputs">
-                    <div class="contenedor-correo">
-                        <div class="input-icon">
-                            <input class="input" type="text" required placeholder="Correo">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
+<body>
+    <img class="img-chicoSkate" src="/assets/img/chico2-skate.jpg" alt="">
+    <img class="img-chicoSkate2" src="/assets/img/chico3-skate.PNG" alt="">
+    <img class="img-chicaSkate" src="/assets/img/chica-skate.PNG" alt="">
+    <form [formGroup]="FormularioLogin">
+        <div class="contenedor">
+            <h1 class="letras-iniciar">INICIAR SESIÓN</h1>
+            <div class="contenedor-inputs">
+                <div class="contenedor-correo">
+                    <div class="input-icon">
+                        <input formControlName="correo" class="input" type="text" required placeholder="Correo" name="correo">
+                        <i class="fa-solid fa-envelope"></i>
                     </div>
-        
-                    <div class="contenedor-contra">
-                        <input class="input" type="password" required placeholder="Contraseña">
+                    <div *ngIf="f['correo'].touched && f['correo'].invalid">
+                        <div *ngIf="f['correo'].errors?.['required']">Correo es requerido.</div>
+                        <div *ngIf="f['correo'].errors?.['email']">Correo no es válido.</div>
                     </div>
                 </div>
-                <button class="btn-ingresar">Ingresar</button>
-                <div class="contenedor-registrar">
-                    <span class="letras-registrar">No tienes cuenta? </span>
-                    <button class="btn-registro" type="button" (click)="navigateToRegister()">Registrarse</button>
+    
+                <div class="contenedor-contra">
+                    <input formControlName="password" class="input" type="password" required placeholder="Contraseña" name="password">
+                    <div *ngIf="f['password'].touched && f['password'].invalid">
+                        <div *ngIf="f['password'].errors?.['required']">Contraseña es requerida.</div>
+                        <div *ngIf="f['password'].errors?.['minlength']">Contraseña debe tener al menos 8 caracteres.</div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </body>
-</html>
+            <button class="btn-ingresar" type="button" (click)="onSubmit()">Ingresar</button>
+            <div class="contenedor-registrar">
+                <span class="letras-registrar">No tienes cuenta? </span>
+                <button class="btn-registro" type="button" (click)="navigateToRegister()">Registrarse</button>
+            </div>
+        </div>
+    </form>
+</body>

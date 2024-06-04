@@ -1,8 +1,10 @@
+// src/app/register/register.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MustMatch, noSpecialCharactersValidator } from './MustMatch';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +18,12 @@ export class RegisterComponent implements OnInit {
   FormularioRegistro: FormGroup;
   mostrar: boolean = false;
   checkboxError: boolean = false;
+  users: any[] = [];
   
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router, private fb: FormBuilder, private apiservice: ApiService) {
     this.FormularioRegistro = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      tipocuenta: [''], 
+      username: ['', [Validators.required, Validators.minLength(3)]],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required, 
@@ -32,36 +36,25 @@ export class RegisterComponent implements OnInit {
       validator: MustMatch('password', 'repeatpassword')
     });
   }
+
   // Agrega un getter para acceder fácilmente a los campos del formulario
   get f() { return this.FormularioRegistro.controls; }
 
-  ngOnInit(): void {}
-
-  get nombre() {
-    return this.FormularioRegistro.get('nombre');
+  ngOnInit() {
+    const userData = {}; // Aquí debes crear un objeto con los datos del usuario
+    this.apiservice.postUsers(userData).subscribe(data => {
+      this.users = data;
+    });
   }
 
-  get correo() {
-    return this.FormularioRegistro.get('correo');
-  }
-
-  get password() {
-    return this.FormularioRegistro.get('password');
-  }
-
-  get repeatpassword() {
-    return this.FormularioRegistro.get('repeatpassword');
-  }
-  /*------------- CHECKBOX ----------------*/  
   markAllFieldsAsTouched() {
     Object.keys(this.FormularioRegistro.controls).forEach(field => {
       const control = this.FormularioRegistro.get(field);
       control?.markAsTouched({ onlySelf: true });
     });
   }
+
   onSubmit() {
-    // Marcar todos los campos como tocados para mostrar los errores de validación
-    //this.FormularioRegistro.markAllAsTouched();
     // Marcar todos los campos como tocados para mostrar los errores de validación
     this.markAllFieldsAsTouched();
   
@@ -72,19 +65,39 @@ export class RegisterComponent implements OnInit {
       this.checkboxError = true;
       return;
     }
+
     // Detener la ejecución si el formulario es inválido
     if (this.FormularioRegistro.valid) {
       // Procesar el formulario
       console.log('Formulario Enviado', this.FormularioRegistro.value);
+
+      const user = {
+        username: this.f['username'].value,
+        correo: this.f['correo'].value,
+        password: this.f['password'].value,
+        tipocuenta: this.getTipoCuenta()
+      };
+
+      this.apiservice.postUsers(user).subscribe(response => {
+        console.log('Usuario registrado exitosamente', response);
+        this.router.navigate(['/login']); // Navega a la página de login tras el registro exitoso
+      }, error => {
+        console.error('Error registrando el usuario', error);
+      });
+
       return;
-    } 
+    }
   }
-  
+
+  getTipoCuenta() {
+    const contenidoSelect = document.querySelector('#select .contenedor-tipocuenta p');
+    return contenidoSelect ? contenidoSelect.textContent : '';
+  }
+
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
 
-  /*---METODO PARA MOSTRAR OPCIONES DE "TIPO DE CUENTA"-------*/ 
   mostrarOpciones() {
     const opcionesElement = document.getElementById('opciones');
     const contenidoSelect = document.querySelector('#select .contenedor-tipocuenta');

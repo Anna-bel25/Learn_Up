@@ -1,18 +1,15 @@
 <html>
-  <head>
-    
-  </head>
+  <head></head>
   <body>
     <img class="imagen-ola" src="/assets/img/Recurso 1.png" alt="">
     <img class="chico-surf" src="/assets/img/surf.png" alt="">
-    <form [formGroup]="FormularioRegistro">
+    <form [formGroup]="FormularioRegistro" (ngSubmit)="onSubmit()">
       <div class="contenedor">
         <h1 class="letras-iniciar">Formulario de Registro</h1>
-        <!-- <img class="imagen-esqueleto" src="/assets/img/esqueleto-2.png" alt=""> -->
         <div class="contenedor-inputs">
           <!-- TIPO DE CUENTA -->
           <div>
-            <div class="input" id="select" (click)="mostrarOpciones()" >
+            <div class="input" id="select" (click)="mostrarOpciones()">
               <div class="contenedor-tipocuenta">
                 <p>Tipo de Cuenta</p>
               </div>
@@ -22,29 +19,29 @@
             </div>
             <!-- OPCIONES DE SELECT -->
             <div class="opciones" id="opciones">
-              <div class="contenedor-a">
+              <div class="contenedor-a" (click)="f['tipocuenta'].setValue('Estudiante')">
                 <p class="opcion">Estudiante</p>
               </div>
-              <div  class="contenedor-a">
+              <div class="contenedor-a" (click)="f['tipocuenta'].setValue('Profesor')">
                 <p class="opcion">Profesor</p>
               </div>
             </div>
           </div>
-          <input type="hidden" name="tipo-cuenta" id="inputSelect" value="">
+          <input type="hidden" name="tipo-cuenta" formControlName="tipoCuenta" value="">
           <!-- NOMBRE DE USUARIO-->
           <div class="input-container">
             <div class="input-icon">
-              <input formControlName="nombre" class="input" type="text" placeholder="Nombre de Usuario">
+              <input formControlName="username" class="input" type="text" placeholder="Nombre de Usuario">
               <i class="fa-solid fa-user"></i>
             </div>
-            <div class="contenedor-error" *ngIf="f['nombre'].invalid && (f['nombre'].touched || f['nombre'].dirty)">
-              <div class="error" *ngIf="f['nombre'].errors?.['required']">* Campo requerido</div>
-              <div class="error" *ngIf="f['nombre'].errors?.['minlength']">* El nombre debe tener al menos 3 caracteres.</div>
+            <div class="contenedor-error" *ngIf="f['username'].invalid && (f['username'].touched || f['username'].dirty)">
+              <div class="error" *ngIf="f['username'].errors?.['required']">* Campo requerido</div>
+              <div class="error" *ngIf="f['username'].errors?.['minlength']">* El nombre debe tener al menos 3 caracteres.</div>
             </div>
           </div>
           <!-- CORREO -->
           <div class="input-container">
-            <div  class="input-icon">
+            <div class="input-icon">
               <input formControlName="correo" class="input" type="text" placeholder="Correo">
               <i class="fa-solid fa-envelope"></i>
             </div>
@@ -73,14 +70,14 @@
         </div>
         <!-- CHECKBOX -->
         <div class="contenedor-check">
-          <input id="termsCheckbox" class="checkbox" type="checkbox">
+          <input id="termsCheckbox" formControlName="termsCheckbox" class="checkbox" type="checkbox">
           <a href="https://www.google.com/?hl=es" class="letras-terminos">Términos y condiciones</a> 
         </div>
         <div class="contenedor-error" *ngIf="f['termsCheckbox'].invalid && (f['termsCheckbox'].touched || f['termsCheckbox'].dirty)">
           <div class="error">* Debe marcar para seguir.</div>
         </div>        
     
-        <button [disabled]="FormularioRegistro.invalid" type="submit" (click)="onSubmit()">Registrar</button>
+        <button [disabled]="FormularioRegistro.invalid" type="submit">Registrar</button>
         <button class="btn-registro" type="button" (click)="navigateToLogin()">Cancelar</button>
       </div>
     </form>
