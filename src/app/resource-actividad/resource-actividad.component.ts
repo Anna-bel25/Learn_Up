@@ -37,7 +37,7 @@ export class ResourceActividadComponent implements OnInit {
   }
 
   private fetchActividades(): void {
-    this.http.get<ActividadModel[]>('http://localhost:3000/api/actividades')
+    this.http.get<ActividadModel[]>('https://apiresources-production-ba1f.up.railway.app/api/actividades')
       .subscribe(
         response => {
           console.log('Response from API:', response);

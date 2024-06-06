@@ -41,7 +41,7 @@ export class ResourceVideoComponent implements OnInit {
   }
 
   private fetchVideos(): void {
-    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
+    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
       .subscribe(
         response => {
           console.log('Response from API:', response);

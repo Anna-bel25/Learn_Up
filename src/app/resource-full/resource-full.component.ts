@@ -137,7 +137,7 @@ export class ResourceFullComponent implements OnInit  {
   }
 
   private fetchVideos(): void {
-    this.http.get<VideoModel[]>('http://localhost:3000/api/videos')
+    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
       .subscribe(
         response => {
           console.log('Response from API:', response);
@@ -163,7 +163,7 @@ export class ResourceFullComponent implements OnInit  {
   }
 
   private fetchActivities(): void {
-    this.http.get<ActividadModel[]>('http://localhost:3000/api/actividades')
+    this.http.get<ActividadModel[]>('https://apiresources-production-ba1f.up.railway.app/api/actividades')
       .subscribe(
         response => {
           console.log('Response from API:', response);
@@ -179,7 +179,7 @@ export class ResourceFullComponent implements OnInit  {
 
 
   private fetchLibros(): void {
-    this.http.get<LibroModel[]>('http://localhost:3000/api/libros')
+    this.http.get<LibroModel[]>('https://apiresources-production-ba1f.up.railway.app/api/libros')
       .subscribe(
         response => {
           console.log('Response from API:', response);
