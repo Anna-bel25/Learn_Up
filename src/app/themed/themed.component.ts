@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { OnInit } from '@angular/core';import { MateriaListModel, MateriaModel } from '../models/materia.model';
+import { ApiService } from '../api.service';
 @Component({
   selector: 'app-themed',
   standalone: true,
@@ -29,15 +30,15 @@ export class ThemedComponent implements OnInit {
   nivelSeleccionado: string = '';
   materiaSeleccionada: string = '';
 
-  constructor(private http: HttpClient,  private router: Router) {}
+  constructor(private apiService: ApiService, private http: HttpClient,  private router: Router) {}
 
   ngOnInit() {
     this.obtenerMaterias();
   }
 
-  obtenerMaterias() {
-    this.http.get<MateriaModel[]>('https://apiresources-production-ba1f.up.railway.app/api/materias')
-      .subscribe(response => {
+  obtenerMaterias(): void {
+    this.apiService.getMaterias().subscribe(
+      (response: MateriaModel[]) => {
         console.log('Response from API:', response);
         if (response && response.length > 0) {
           this.materiasPreescolar = response.filter(materia => materia.nivel_id === 1);
@@ -47,9 +48,11 @@ export class ThemedComponent implements OnInit {
         } else {
           console.error('La respuesta del servidor no contiene los datos esperados.');
         }
-      }, error => {
+      },
+      error => {
         console.error('Error al obtener las materias:', error);
-      });
+      }
+    );
   }
 
 

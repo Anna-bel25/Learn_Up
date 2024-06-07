@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
+  private materiasUrl = 'https://apiresources-production-ba1f.up.railway.app/api/materias';
   private actividadesUrl = 'https://apiresources-production-ba1f.up.railway.app/api/actividades';
   private videosUrl = 'https://apiresources-production-ba1f.up.railway.app/api/videos';
   private librosUrl='https://apiresources-production-ba1f.up.railway.app/api/libros';
@@ -13,6 +14,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
+  getMaterias(): Observable<any> {
+    return this.http.get<any>(this.materiasUrl);
+  }
   getActividades(): Observable<any> {
     return this.http.get<any>(this.actividadesUrl);
   }

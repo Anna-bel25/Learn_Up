@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-resouce-libro',
@@ -32,33 +33,33 @@ export class ResouceLibroComponent implements OnInit {
   librosPorPagina: number = 5;
   paginaActualLibros: number = 1;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.fetchLibros();
   }
 
-  private fetchLibros(): void {
-    this.http.get<LibroModel[]>('https://apiresources-production-ba1f.up.railway.app/api/libros')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.libros = response.filter(libro => libro.materia_id === this.materiaId);
-          this.librosMostrados = this.libros;
-          this.actualizarLibrosPaginados();
-          if (this.libros.length === 0) {
-            console.log('No se encontraron libros para este materia_id.');
-          } else {
-            const firstLibro = this.libros[0];
-            this.nivel = firstLibro.nivel;
-            this.materia = firstLibro.materia;
-          }
-        },
-        error => {
-          console.error('Error al recuperar los libros:', error.message);
+  fetchLibros(): void {
+    this.apiService.getLibros().subscribe(
+      (response: LibroModel[]) => {
+        console.log('Response from API:', response);
+        this.libros = response.filter(libro => libro.materia_id === this.materiaId);
+        this.librosMostrados = this.libros;
+        this.actualizarLibrosPaginados();
+        if (this.libros.length === 0) {
+          console.log('No se encontraron libros para este materia_id.');
+        } else {
+          const firstLibro = this.libros[0];
+          this.nivel = firstLibro.nivel;
+          this.materia = firstLibro.materia;
         }
-      );
+      },
+      error => {
+        console.error('Error al recuperar los libros:', error.message);
+      }
+    );
   }
+
 
   scrollToTop(): void {
     //window.scrollTo({ top: 50, behavior: 'smooth' });

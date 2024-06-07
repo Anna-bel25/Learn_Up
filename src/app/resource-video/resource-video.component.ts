@@ -40,27 +40,26 @@ export class ResourceVideoComponent implements OnInit {
     this.fetchVideos();
   }
 
-  private fetchVideos(): void {
-    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.videos = response.filter(video => video.materia_id === this.materiaId);
-          this.sanitizeUrls();
-          this.videosMostrados = this.videos;
-          this.actualizarVideosPaginados();
-          if (this.videos.length === 0) {
-            console.log('No se encontraron videos para este materia_id.');
-          } else {
-            const firstVideo = this.videos[0];
-            this.nivel = firstVideo.nivel;
-            this.materia = firstVideo.materia;
-          }
-        },
-        error => {
-          console.error('Error al recuperar los videos:', error.message);
+  fetchVideos(): void {
+    this.apiService.getVideos().subscribe(
+      (response: VideoModel[]) => {
+        console.log('Response from API:', response);
+        this.videos = response.filter(video => video.materia_id === this.materiaId);
+        this.sanitizeUrls();
+        this.videosMostrados = this.videos;
+        this.actualizarVideosPaginados();
+        if (this.videos.length === 0) {
+          console.log('No se encontraron videos para este materia_id.');
+        } else {
+          const firstVideo = this.videos[0];
+          this.nivel = firstVideo.nivel;
+          this.materia = firstVideo.materia;
         }
-      );
+      },
+      error => {
+        console.error('Error al recuperar los videos:', error.message);
+      }
+    );
   }
 
   private sanitizeUrls() {

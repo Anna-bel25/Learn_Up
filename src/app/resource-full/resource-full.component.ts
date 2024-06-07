@@ -14,6 +14,7 @@ import { ResourceActividadComponent } from '../resource-actividad/resource-activ
 import { ResourceVideoComponent } from '../resource-video/resource-video.component';
 import { ResouceLibroComponent } from '../resouce-libro/resouce-libro.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-resource-full',
@@ -102,7 +103,7 @@ export class ResourceFullComponent implements OnInit  {
     this.filtroActivo = 'actividades';
   }
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -136,20 +137,19 @@ export class ResourceFullComponent implements OnInit  {
     return Math.ceil(this.actividadesMostradas.length / this.actividadesPorPagina);
   }
 
-  private fetchVideos(): void {
-    this.http.get<VideoModel[]>('https://apiresources-production-ba1f.up.railway.app/api/videos')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.videos = response;
-          this.sanitizeUrls();
-          this.videosMostrados = this.videos;
-          this.actualizarVideosPaginados();
-        },
-        error => {
-          console.error('Error al recuperar los videos:', error.message);
-        }
-      );
+  fetchVideos(): void {
+    this.apiService.getVideos().subscribe(
+      (response: VideoModel[]) => {
+        console.log('Response from API:', response);
+        this.videos = response;
+        this.sanitizeUrls();
+        this.videosMostrados = this.videos;
+        this.actualizarVideosPaginados();
+      },
+      error => {
+        console.error('Error al recuperar los videos:', error.message);
+      }
+    );
   }
 
   private sanitizeUrls() {
@@ -162,35 +162,33 @@ export class ResourceFullComponent implements OnInit  {
     return this.sanitizedUrls[videoId];
   }
 
-  private fetchActivities(): void {
-    this.http.get<ActividadModel[]>('https://apiresources-production-ba1f.up.railway.app/api/actividades')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.actividades = response;
-          this.actividadesMostradas = this.actividades;
-          this.actualizarActividadesPaginadas();
-        },
-        error => {
-          console.error('Error al recuperar las actividades:', error);
-        }
-      );
+  fetchActivities(): void {
+    this.apiService.getActividades().subscribe(
+      (response: ActividadModel[]) => {
+        console.log('Response from API:', response);
+        this.actividades = response;
+        this.actividadesMostradas = this.actividades;
+        this.actualizarActividadesPaginadas();
+      },
+      error => {
+        console.error('Error al recuperar las actividades:', error);
+      }
+    );
   }
 
 
-  private fetchLibros(): void {
-    this.http.get<LibroModel[]>('https://apiresources-production-ba1f.up.railway.app/api/libros')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.libros = response;
-          this.librosMostrados = this.libros;
-          this.actualizarLibrosPaginados();
-        },
-        error => {
-          console.error('Error al recuperar los libros:', error.message);
-        }
-      );
+  fetchLibros(): void {
+    this.apiService.getLibros().subscribe(
+      (response: LibroModel[]) => {
+        console.log('Response from API:', response);
+        this.libros = response;
+        this.librosMostrados = this.libros;
+        this.actualizarLibrosPaginados();
+      },
+      error => {
+        console.error('Error al recuperar los libros:', error.message);
+      }
+    );
   }
 
 

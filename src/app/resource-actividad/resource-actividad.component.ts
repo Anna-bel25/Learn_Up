@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActividadModel } from '../models/actividad.model';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
 import { RouterLink } from '@angular/router';
+import { ApiService } from '../api.service';
 
 
 @Component({
@@ -30,32 +31,31 @@ export class ResourceActividadComponent implements OnInit {
   actividadesPorPagina: number = 5;
   paginaActualActividades: number = 1;
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: ApiService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.fetchActividades();
   }
 
-  private fetchActividades(): void {
-    this.http.get<ActividadModel[]>('https://apiresources-production-ba1f.up.railway.app/api/actividades')
-      .subscribe(
-        response => {
-          console.log('Response from API:', response);
-          this.actividades = response.filter(actividad => actividad.materia_id === this.materiaId);
-          this.actividadesMostradas = this.actividades;
-          this.actualizarActividadesPaginadas();
-          if (this.actividades.length === 0) {
-            console.log('No se encontraron actividades para este materia_id.');
-          } else {
-            const firstActividad = this.actividades[0];
-            this.nivel = firstActividad.nivel;
-            this.materia = firstActividad.materia;
-          }
-        },
-        error => {
-          console.error('Error al recuperar las actividades:', error.message);
+  fetchActividades(): void {
+    this.apiService.getActividades().subscribe(
+      (response: ActividadModel[]) => {
+        console.log('Response from API:', response);
+        this.actividades = response.filter(actividad => actividad.materia_id === this.materiaId);
+        this.actividadesMostradas = this.actividades;
+        this.actualizarActividadesPaginadas();
+        if (this.actividades.length === 0) {
+          console.log('No se encontraron actividades para este materia_id.');
+        } else {
+          const firstActividad = this.actividades[0];
+          this.nivel = firstActividad.nivel;
+          this.materia = firstActividad.materia;
         }
-      );
+      },
+      error => {
+        console.error('Error al recuperar las actividades:', error.message);
+      }
+    );
   }
 
   scrollToTop(): void {
