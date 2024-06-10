@@ -26,11 +26,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.FormularioLogin.valid) {
+
       const formValue = this.FormularioLogin.value;
+      
       console.log('Inicio exitoso', formValue);
 
       this.apiService.postUsersLogin(formValue).subscribe(response => {
         console.log('Usuario logueado exitosamente', response);
+        localStorage.setItem('token', response.token);
         this.router.navigate(['/home']); // Navega a la página de home tras el login exitoso
       }, error => {
         console.error('Error iniciando sesión', error);

@@ -15,11 +15,14 @@ import { ResourceVideoComponent } from '../resource-video/resource-video.compone
 import { ResouceLibroComponent } from '../resouce-libro/resouce-libro.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ApiService } from '../api.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ColeccionesComponent } from '../colecciones/colecciones.component';
+
 
 @Component({
   selector: 'app-resource-full',
   standalone: true,
-  imports: [RouterLink, HomePageComponent, ResourceActividadComponent, ResourceVideoComponent, ResouceLibroComponent, CommonModule, FormsModule],
+  imports: [RouterLink, HomePageComponent, ResourceActividadComponent, ResourceVideoComponent, ResouceLibroComponent, CommonModule, FormsModule,MatDialogModule],
   templateUrl: './resource-full.component.html',
   styleUrl: './resource-full.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -103,7 +106,7 @@ export class ResourceFullComponent implements OnInit  {
     this.filtroActivo = 'actividades';
   }
 
-  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -337,6 +340,16 @@ export class ResourceFullComponent implements OnInit  {
     const halfWindowHeight = window.innerHeight / 2;
     const scrollToPosition = halfWindowHeight + offset;
     window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
+  }
+
+  openDialog(event: Event) {
+    event.preventDefault();
+    console.log("Método openDialog llamado correctamente.");
+    const dialogRef = this.dialog.open(ColeccionesComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

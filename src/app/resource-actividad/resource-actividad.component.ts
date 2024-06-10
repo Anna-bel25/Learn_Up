@@ -6,12 +6,14 @@ import { ActividadModel } from '../models/actividad.model';
 import { ResourceMenuComponent } from '../resource-menu/resource-menu.component';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../api.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ColeccionesComponent } from '../colecciones/colecciones.component';
 
 
 @Component({
   selector: 'app-resource-actividad',
   standalone: true,
-  imports: [RouterLink, CommonModule, ResourceActividadComponent, ResourceMenuComponent, FormsModule] ,
+  imports: [RouterLink, CommonModule, ResourceActividadComponent, ResourceMenuComponent, FormsModule,MatDialogModule] ,
   templateUrl: './resource-actividad.component.html',
   styleUrl: './resource-actividad.component.css'
 })
@@ -31,7 +33,7 @@ export class ResourceActividadComponent implements OnInit {
   actividadesPorPagina: number = 5;
   paginaActualActividades: number = 1;
 
-  constructor(private apiService: ApiService, private http: HttpClient) { }
+  constructor(private apiService: ApiService, private http: HttpClient,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchActividades();
@@ -113,6 +115,15 @@ export class ResourceActividadComponent implements OnInit {
   restablecerRecursos(): void {
     this.actividadesMostradas = this.actividades.slice();
     this.actualizarActividadesPaginadas();
+  }
+
+  openDialog(event: Event) {
+    event.preventDefault();
+    const dialogRef = this.dialog.open(ColeccionesComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

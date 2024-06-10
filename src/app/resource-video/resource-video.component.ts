@@ -7,13 +7,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoListModel, VideoModel } from '../models/video.model';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../api.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { ColeccionesComponent } from '../colecciones/colecciones.component';
 //import { VideosService } from '../services/recursos.services';
 
 
 @Component({
   selector: 'app-resource-video',
   standalone: true,
-  imports: [RouterLink, ResourceVideoComponent, ResourceMenuComponent, CommonModule, FormsModule],
+  imports: [RouterLink, ResourceVideoComponent, ResourceMenuComponent, CommonModule, FormsModule,MatDialogModule],
   templateUrl: './resource-video.component.html',
   styleUrl: './resource-video.component.css'
 })
@@ -34,7 +36,7 @@ export class ResourceVideoComponent implements OnInit {
   videosPorPagina: number = 5;
   paginaActualVideos: number = 1;
 
-  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -127,6 +129,15 @@ export class ResourceVideoComponent implements OnInit {
   restablecerRecursos(): void {
     this.videosMostrados = this.videos.slice();
     this.actualizarVideosPaginados();
+  }
+
+  openDialog(event: Event) {
+    event.preventDefault();
+    const dialogRef = this.dialog.open(ColeccionesComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

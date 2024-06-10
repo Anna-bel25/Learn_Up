@@ -23,7 +23,7 @@
         <p>{{ video.descripcion }}</p>
         <div class="icons">
           <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -37,4 +37,22 @@ export class ApiService {
     return this.http.post(`${this.userUrl}/login`, userData);
   }
   /*--------------------------------------------*/
+
+  /*------------Ivette--------------*/
+  crearColeccion(nombre: string, esPrivado: boolean): Observable<any> {
+    const body = { nombre, es_privado: esPrivado };
+    const token = localStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>(`${this.userUrl}/colecciones`, body, { headers });
+  }
+
+  obtenerColecciones(): Observable<{ nombre: string, selected: boolean }[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<{ nombre: string, selected: boolean }[]>(`${this.userUrl}/colecciones`, { headers });
+  }
 }

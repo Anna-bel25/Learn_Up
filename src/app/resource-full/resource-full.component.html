@@ -140,7 +140,7 @@
         <p>{{ video.descripcion }}</p>
         <div class="icons">
           <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
@@ -179,7 +179,7 @@
         <h3><a [href]="libro.url" target="_blank"><span class="link-span">Leer</span></a></h3>
         <div class="icons">
           <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
@@ -215,7 +215,7 @@
         <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
         <div class="icons">
           <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
           <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
