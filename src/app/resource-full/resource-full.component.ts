@@ -150,7 +150,10 @@ export class ResourceFullComponent implements OnInit  {
         this.actualizarVideosPaginados();
       },
       error => {
-        console.error('Error al recuperar los videos:', error.message);
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar los videos:', error.message);
+        }
+        //console.error('Error al recuperar los videos:', error.message);
       }
     );
   }
@@ -174,7 +177,10 @@ export class ResourceFullComponent implements OnInit  {
         this.actualizarActividadesPaginadas();
       },
       error => {
-        console.error('Error al recuperar las actividades:', error);
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar las actividades:', error.message);
+        }
+        //console.error('Error al recuperar las actividades:', error);
       }
     );
   }

@@ -52,7 +52,7 @@ export class LevelComponent {
       setTimeout(() => {
         const sectionElement = document.getElementById(`${nivel}-section`);
         if (sectionElement) {
-          const offsetTop = sectionElement.offsetTop - 50;
+          const offsetTop = sectionElement.offsetTop - 75;
           window.scrollTo({ top: offsetTop, behavior: 'smooth' });
         }
       }, 0);
