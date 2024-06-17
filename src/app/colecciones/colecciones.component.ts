@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,8 +11,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ApiService } from '../api.service';
-import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
+
+interface Nombre {
+  nombre: string;
+  selected: boolean;
+  coleccion_id?: number; 
+}
 
 @Component({
   selector: 'app-colecciones',
@@ -29,30 +37,38 @@ import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
     FormsModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatSnackBarModule,
   ],
   templateUrl: './colecciones.component.html',
   styleUrls: ['./colecciones.component.css']
 })
 export class ColeccionesComponent implements OnInit {
   frmLista!: FormGroup;
-  nombres: { nombre: string, selected: boolean }[] = [];
+  @Input() nombres: Nombre[] = [];
+  selectedResource: any;
 
-  constructor(private formBuilder: FormBuilder, private apiService:ApiService,private snackBar: MatSnackBar) {}
+
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ColeccionesComponent>,) {
+    this.selectedResource = data.recurso;
+    console.log('Recurso seleccionado:', this.data.recurso);
+  }
 
   ngOnInit(): void {
     this.frmLista = this.formBuilder.group({
       nombre: ['', [Validators.required]],
       privacidad: ['', [Validators.required]],
-      nombres: this.formBuilder.array([]) 
+      nombres: this.formBuilder.array([])
     });
     this.obtenerNombresColecciones();
   }
 
   obtenerNombresColecciones(): void {
     this.apiService.obtenerColecciones().subscribe(
-      (colecciones) => {
-        this.nombres = colecciones;
+      (colecciones: { nombre: string; selected: boolean; coleccion_id: number }[]) => {
+        this.nombres = colecciones.map(coleccion => ({
+          nombre: coleccion.nombre,
+          selected: false,
+          coleccion_id: coleccion.coleccion_id
+        }));
         this.actualizarCheckboxes();
       },
       (error) => {
@@ -64,7 +80,7 @@ export class ColeccionesComponent implements OnInit {
   onSubmit(): void {
     if (this.frmLista.valid) {
       const nombre = this.frmLista.get('nombre')?.value;
-      const esPrivado = this.frmLista.get('privacidad')?.value === 'true'; 
+      const esPrivado = this.frmLista.get('privacidad')?.value === 'true';
 
       this.apiService.crearColeccion(nombre, esPrivado).subscribe(
         (response) => {
@@ -86,7 +102,7 @@ export class ColeccionesComponent implements OnInit {
     const nombresArray = this.frmLista.get('nombres') as FormArray;
     nombresArray.clear();
     this.nombres.forEach(nombre => {
-      nombresArray.push(this.formBuilder.control(false)); 
+      nombresArray.push(this.formBuilder.control(false));
     });
   }
 
@@ -97,4 +113,79 @@ export class ColeccionesComponent implements OnInit {
   getNombreControl(index: number): FormControl {
     return this.nombresArray.at(index) as FormControl;
   }
+
+  selectedCollection: any = null; 
+
+  onSelectCollection(collection: any) {
+    this.selectedCollection = collection;
+    console.log('Selected collection:', this.selectedCollection);
+  }
+
+  guardarRecurso(): void {
+    if (!this.nombresArray || !this.nombres) {
+      console.error('nombresArray or nombres is not defined');
+      return;
+    }
+  
+    const selectedCollections: number[] = this.nombresArray.controls
+      .map((control, i) => {
+        console.log(`Checkbox ${i} value: `, control.value); // Debugging log
+        if (control.value && this.nombres[i]) {
+          return this.nombres[i].coleccion_id;
+        }
+        return null;
+      })
+      .filter((value): value is number => value !== null && value !== undefined);
+  
+    if (selectedCollections.length === 0) {
+      console.error('No collections selected');
+      return;
+    }
+  
+    console.log('Selected collections:', selectedCollections);
+  
+    this.selectedResource = this.data.recurso;
+    console.log('Selected resource:', this.selectedResource);
+  
+    let resourceType: string | null = null;
+    let resourceId: number | null = null;
+  
+    if (this.selectedResource.video_id) {
+      resourceType = 'video';
+      resourceId = this.selectedResource.video_id;
+    } else if (this.selectedResource.actividad_id) {
+      resourceType = 'actividad';
+      resourceId = this.selectedResource.actividad_id;
+    } else if (this.selectedResource.libro_id) {
+      resourceType = 'libro';
+      resourceId = this.selectedResource.libro_id;
+    }
+  
+    if (!resourceType || !resourceId) {
+      console.error('Selected resource is missing a valid ID');
+      return;
+    }
+  
+    const resourceData = {
+      type: resourceType,
+      id: resourceId,
+      collections: selectedCollections 
+    };
+  
+    console.log('Resource data to send:', resourceData);
+  
+    this.apiService.guardarRecursoEnColeccion(resourceData, selectedCollections).subscribe(
+      (response) => {
+        console.log('Recurso guardado en la colección:', response);
+        this.dialogRef.close(); 
+        this.snackBar.open('Recurso guardado', 'Cerrar', {
+          duration: 3000, // Duración en milisegundos
+        });
+      },
+      (error) => {
+        console.error('Error al guardar el recurso en la colección:', error);
+      }
+    );
+  }
+  
 }

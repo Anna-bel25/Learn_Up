@@ -48,11 +48,19 @@ export class ApiService {
     return this.http.post<any>(`${this.userUrl}/colecciones`, body, { headers });
   }
 
-  obtenerColecciones(): Observable<{ nombre: string, selected: boolean }[]> {
+  obtenerColecciones(): Observable<{ nombre: string, selected: boolean, coleccion_id: number }[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<{ nombre: string, selected: boolean }[]>(`${this.userUrl}/colecciones`, { headers });
+    return this.http.get<{ nombre: string, selected: boolean, coleccion_id: number }[]>(`${this.userUrl}/colecciones`, { headers });
+  }
+
+  guardarRecursoEnColeccion(resource: any, colecciones: number[]): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(`${this.userUrl}/colecciones/guardar-recurso`, { resource, colecciones }, { headers });
   }
 }
