@@ -50,11 +50,15 @@ section {
   padding: .8rem 0;
   border-block: 0.1rem solid rgba(0, 0, 0, .1);
   color: var(--black-suit);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title span {
   color: var(--pink);
   padding-left: .7rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title a {
@@ -225,6 +229,8 @@ section {
   text-transform: none !important;
   font-size: 1.5rem;
   color:var(--light-gray);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 .about .row .content p{

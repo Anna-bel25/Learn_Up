@@ -2,7 +2,7 @@
 
 section {
   /* font-size: 62.5%; */
-  padding: 3.6rem 9%;
+  padding: 3.6rem 8%;
   text-transform: capitalize;
 }
 
@@ -15,11 +15,15 @@ section {
   padding: .8rem 0;
   border-block: 0.1rem solid rgba(0, 0, 0, .1);
   color:  #282424;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title span {
   color: var(--pink);
   padding-left: .7rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title a {
@@ -207,6 +211,8 @@ section {
 .blogs .box .content h3 {
   font-size: 1.2rem;
   color:  #282424;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 .blogs .box .content p {

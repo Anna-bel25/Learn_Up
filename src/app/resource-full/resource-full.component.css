@@ -8,7 +8,7 @@ section {
 
 .heading{
   text-align: center;
-  padding: .9rem 0 .6rem 0;
+  padding: 1.9rem 0 .6rem 0;
   border-block: 0.1rem solid rgba(0, 0, 0, .1);
   margin-bottom: 2rem;
   background:rgba(255, 51, 153,.05);
@@ -31,6 +31,8 @@ section {
   justify-content: space-between;
   margin: .2rem;
   text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
 }
 
 .heading span.space{
@@ -108,7 +110,7 @@ section {
 }
 
 .subtitle a {
-  padding-top: .5rem;
+  padding-top: 1.5rem;
   color: var(--dark-gray);
   font-size: 1rem;
 }
@@ -122,12 +124,16 @@ section {
   padding: .8rem 0;
   border-block: 0.1rem solid rgba(0, 0, 0, .1);
   color: var(--black-suit);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 
 .title2 span {
   color: var(--pink);
   padding-left: .7rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title2 a {
@@ -379,6 +385,8 @@ section {
   text-transform: none !important;
   font-size: 1.5rem;
   color:var(--light-gray);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 .about .row .content p {

@@ -59,7 +59,10 @@ export class ResourceVideoComponent implements OnInit {
         }
       },
       error => {
-        console.error('Error al recuperar los videos:', error.message);
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar los videos:', error.message);
+        }
+        //console.error('Error al recuperar los videos:', error.message);
       }
     );
   }

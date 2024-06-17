@@ -20,6 +20,8 @@ section {
 .title h1 {
   color: var(--black-suit);
   font-size: 2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title p {
@@ -27,6 +29,8 @@ section {
   padding-top: .4rem;
   font-size: 1.3rem;
   color: var(--dark-gray);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .title p a {
@@ -56,7 +60,7 @@ section {
 }
 
 .subtitle a {
-  padding-top: .5rem;
+  padding-top: 1.5rem;
   color: var(--dark-gray);
   font-size: 1rem;
 }
@@ -69,7 +73,7 @@ section {
 .heading{
   display: inline-block;
   text-align: center;
-  padding: .9rem 0 .6rem 0;
+  padding: 1.9rem 0 .6rem 0;
   border-block: 0.1rem solid rgba(0, 0, 0, .1);
   margin-bottom: 2rem;
   /* margin-top: 2rem; */
@@ -92,6 +96,8 @@ section {
   justify-content: space-between;
   margin: .2rem;
   text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
 }
 
 .heading span.space{
@@ -159,6 +165,8 @@ section {
 .review .box h3{
   color: var(--light-gray);
   font-size: 1.2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .review .box p{

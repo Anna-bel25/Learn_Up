@@ -48,6 +48,8 @@ section {
   color: var(--light-gray);
   margin-bottom: 3rem;
   position: relative;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .footer-col h3::before {
@@ -140,10 +142,14 @@ section {
   color: var(--medium-gray);
   border-top: .1rem solid rgba(0,0,0,.1);
   padding-bottom: 6rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 .footer .credit span{
   color:var(--pink);
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 
 

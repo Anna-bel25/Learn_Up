@@ -12,10 +12,14 @@ section {
   padding: .7rem;
   margin: .8rem 0;
   background: rgba(255, 51, 153, .05);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
 }
 
 .heading span {
   color: var(--pink);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
 }
 
 
@@ -38,6 +42,8 @@ section {
 .home .content h3 {
   font-size: 4rem;
   color: var(--medium-gray);
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
 }
 
 .home .content span {
@@ -97,6 +103,8 @@ section {
   width: calc(100% - 2rem);
   box-sizing: border-box;
   mix-blend-mode: screen;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
 }
 
 .about .row .content {
@@ -108,6 +116,8 @@ section {
   text-transform: none;
   font-size: 1.8rem;
   color: var(--light-gray);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
 }
 
 .about .row .content p {
