@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../api.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { CompartirDialogComponent } from '../compartir-dialog/compartir-dialog.component';
 
 @Component({
   selector: 'app-publicas-colecciones',
@@ -38,7 +40,7 @@ export class PublicasColeccionesComponent implements OnInit {
     }  
   }
 
-  constructor(private apiService: ApiService, private sanitizer: DomSanitizer) {}
+  constructor(private apiService: ApiService, private sanitizer: DomSanitizer, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.apiService.getActividades().subscribe((data: any[]) => {
@@ -82,5 +84,12 @@ export class PublicasColeccionesComponent implements OnInit {
 
   getSafeUrl2(video_id: number): SafeResourceUrl | undefined {
     return this.sanitizedUrls2[video_id];
+  }
+
+  openShareDialog(collectionName: string): void {
+    const shareLink = `https://Learnup.com/colecciones/${collectionName}`;
+    this.dialog.open(CompartirDialogComponent, {
+      data: { shareLink }
+    });
   }
 }

@@ -29,7 +29,7 @@
                     <p>By Francis </p>
                 </div>
                 <div class="icono">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" (click)="openShareDialog('Primavera')">
                         share
                     </span>
                 </div>
@@ -50,7 +50,7 @@
                     <p>By Diana </p>
                 </div>
                 <div class="icono">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" (click)="openShareDialog('Blossom')">
                         share
                     </span>
                 </div>
@@ -117,7 +117,7 @@
 
 
 <!--Colecccion Blossom-->
-<section *ngIf="mostrarContenido2">
+<section *ngIf="mostrarContenido2" class="publicol">
     <div class="titulo">
         <h3 class="Linea-efecto">Colección Blossom</h3>
         <a (click)="toggleContenido2()">Volver</a>
