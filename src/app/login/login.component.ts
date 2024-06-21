@@ -12,7 +12,6 @@ import { ApiService } from '../api.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   FormularioLogin: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService) {
@@ -25,22 +24,21 @@ export class LoginComponent implements OnInit {
   get f() { return this.FormularioLogin.controls; }
 
   onSubmit() {
-    if (this.FormularioLogin.valid) {
+    if (this.FormularioLogin.invalid) {
+      // Aquí no se necesita nada adicional ya que los errores serán manejados por el HTML con *ngIf
+      return;
+    }
 
-      const formValue = this.FormularioLogin.value;
-      
-      console.log('Inicio exitoso', formValue);
-
-      this.apiService.postUsersLogin(formValue).subscribe(response => {
+    const formValue = this.FormularioLogin.value;
+    this.apiService.postUsersLogin(formValue).subscribe(response => {
+      if (response && response.token) {
         console.log('Usuario logueado exitosamente', response);
         localStorage.setItem('token', response.token);
         this.router.navigate(['/home']); // Navega a la página de home tras el login exitoso
-      }, error => {
-        console.error('Error iniciando sesión', error);
-      });
-    } else {
-      console.error('Formulario inválido');
-    }
+      }
+    }, error => {
+      console.error('Error iniciando sesión', error);
+    });
   }
 
   navigateToRegister() {

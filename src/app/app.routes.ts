@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
 import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
+import { ProtectedComponent } from './protected/ProtectedComponent ';
+import { AuthGuard } from './AuthGuard';
 
 
 export const routes: Routes =
@@ -29,6 +31,7 @@ export const routes: Routes =
   { path: 'register', component: RegisterComponent },
   {path:'colecciones', component:PublicasColeccionesComponent},
   {path:'privadasColecciones',component:PrivadasColeccionesComponent},
+  { path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] },
   
   { path: '**', redirectTo: '/home' }
 

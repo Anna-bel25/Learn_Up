@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterLink,
     ReactiveFormsModule,
     HttpClientModule,
+    
     //routes,
 
     //GENERAL COMPONENTS
@@ -47,7 +48,6 @@ import { HttpClientModule } from '@angular/common/http';
     ResourceActividadComponent,
     ResouceLibroComponent,
     ResourceFullComponent,
-
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

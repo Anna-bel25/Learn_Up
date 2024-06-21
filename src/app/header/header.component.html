@@ -10,18 +10,22 @@
 
     <nav class="navbar">
       <a routerLink="/" [class.active]="isActiveLink(0)" (click)="setActiveLink(0)">Inicio</a>
-      <a href="#">Subir recursos</a>
+      <a href="#" *ngIf="userInfo?.tipocuenta === 'Profesor'">Subir recursos</a>
       <a routerLink="/colecciones" [class.active]="isActiveLink(1)" (click)="setActiveLink(1)">Colecciones</a>
       <a routerLink="/nivel" [class.active]="isActiveLink(2)" (click)="setActiveLink(2)">Categoria</a>
       <a routerLink="/recursos" [class.active]="isActiveLink(3)" (click)="setActiveLink(3)">Recursos</a>
       <!-- <a routerLink="/menu-recurso" (click)="setActiveLink(4)">Contactanos</a> -->
     </nav>
+    <div class="usuario-logeo" *ngIf="userInfo">
+      <span *ngIf="userInfo"> {{ userInfo.tipocuenta }}, {{ userInfo.username }}</span>
+    </div>
 
     <div class="icons">
         <!-- <a href="#" class="fas fa-search" title="Buscar"></a>
         <a href="#" class="fas fa-heart" title="Favoritos"></a> -->
         <a routerLink="/privadasColecciones" [class.active]="isActiveLink(4)" (click)="setActiveLink(4)" class="fa-solid fa-bookmark" title="Mis colecciones"></a>
-        <a [class.active]="isActiveLink(5)" (click)="navigateToLogin(); setActiveLink(5);" class="fas fa-user" title="Usuario"></a>
+        <a *ngIf="!userInfo" [class.active]="isActiveLink(5)" (click)="navigateToLogin(); setActiveLink(5);" class="fas fa-user" title="Usuario"></a>
+        <a *ngIf="userInfo" (click)="logout();" class="fas fa-sign-out-alt" title="Cerrar sesión"></a>
     </div>
 </header>
 

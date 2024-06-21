@@ -92,6 +92,11 @@
   /* border-bottom: 2px solid var(--pink);
   font-weight: 500; */
 }
+.usuario-logeo span{
+  font-size: 1rem;
+  padding: 0 1rem;
+  color: var(--medium-gray);
+}
 
 /* Media Queries */
 @media (max-width:963.39px){
