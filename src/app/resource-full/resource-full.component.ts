@@ -348,11 +348,12 @@ export class ResourceFullComponent implements OnInit  {
     window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
-  openDialog(event: Event) {
+  openDialog(event: Event, recurso: any) {
     event.preventDefault();
-    console.log("Método openDialog llamado correctamente.");
-    const dialogRef = this.dialog.open(ColeccionesComponent);
-
+    const dialogRef = this.dialog.open(ColeccionesComponent, {
+      data: { recurso }
+    });
+  
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
