@@ -37,6 +37,7 @@ html {
 .btn{
   display: inline-block;
   margin-top: 1rem;
+  margin: .8rem;
   border-radius: 5rem;
   background: var(--black-suit);
   color:white;
@@ -67,5 +68,43 @@ html {
   background:  #282424;
 }
 
+
+.btn3{
+  display: inline-block;
+  margin-top: 1rem;
+  border-radius: 5rem;
+  background: var(--black-suit);
+  color:white;
+  padding:.7rem 3.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn3:hover{
+  background:var(--pink);
+}
+
+.content:last-child .btn3 {
+  margin-left: auto;
+  display: block;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Regla antigua con -ms-high-contrast */
+@media screen and (-ms-high-contrast: active) {
+  body {
+      background-color: black;
+      color: white;
+  }
+}
+
+/* Nueva regla con Forced Colors Mode */
+@media (forced-colors: active) {
+  body {
+      background-color: Canvas;
+      color: CanvasText;
+  }
+}

@@ -24,7 +24,8 @@
       {
         "link-name": "off"
       }
-    ]
+    ],
+    "button-type": "off"
   },
   "browserslist": [
     "defaults",

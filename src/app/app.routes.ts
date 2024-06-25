@@ -11,6 +11,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
 import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
+import { UploadMenuComponent } from './upload-menu/upload-menu.component';
+import { UploadVideoComponent } from './upload-video/upload-video.component';
+import { UploadLibroComponent } from './upload-libro/upload-libro.component';
+import { UploadActividadComponent } from './upload-actividad/upload-actividad.component';
 
 
 export const routes: Routes =
@@ -25,11 +29,15 @@ export const routes: Routes =
   { path: 'actividad', component: ResourceActividadComponent },
   { path: 'libro', component: ResouceLibroComponent },
   { path: 'recursos', component: ResourceFullComponent },
+  { path: 'menu-subir', component: UploadMenuComponent },
+  { path: 'subir-video', component: UploadVideoComponent },
+  { path: 'subir-libro', component: UploadLibroComponent },
+  { path: 'subir-actiidad', component: UploadActividadComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {path:'colecciones', component:PublicasColeccionesComponent},
   {path:'privadasColecciones',component:PrivadasColeccionesComponent},
-  
+
   { path: '**', redirectTo: '/home' }
 
 ];

@@ -18,7 +18,8 @@ export class HeaderComponent {
     { path: '/colecciones', label: 'Colecciones', active: false },
     { path: '/nivel', label: 'Categoria', active: false },
     { path: '/recursos', label: 'Recursos', active: false },
-    
+    { path: '/menu-subir', label: 'Subir Recursos', active: false },
+
     { path: '/login', label: 'Usuario', active: false },
     { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
     // { path: '/menu-recurso', label: 'Contactanos', active: false },
