@@ -15,6 +15,8 @@ import { UploadMenuComponent } from './upload-menu/upload-menu.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { UploadLibroComponent } from './upload-libro/upload-libro.component';
 import { UploadActividadComponent } from './upload-actividad/upload-actividad.component';
+import { ProtectedComponent } from './protected/ProtectedComponent ';
+import { AuthGuard } from './AuthGuard';
 
 
 export const routes: Routes =
@@ -37,6 +39,8 @@ export const routes: Routes =
   { path: 'register', component: RegisterComponent },
   {path:'colecciones', component:PublicasColeccionesComponent},
   {path:'privadasColecciones',component:PrivadasColeccionesComponent},
+
+  { path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: '/home' }
 

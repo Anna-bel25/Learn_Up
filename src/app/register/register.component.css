@@ -9,7 +9,7 @@
     position: absolute; /* Esto permitirá mover la imagen sin afectar el flujo del documento */
     top: 53%; /* Ajusta la posición superior */
     left: -7%; /* Ajusta la posición izquierda */
-    z-index: -1; /
+    z-index: -1; 
 }
 .chico-surf{
     width: 20%;

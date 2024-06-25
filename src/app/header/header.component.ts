@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
+import { ApiService } from '../api.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  userInfo: { tipocuenta: string, username: string } | null = null; 
 
   activeLinkIndex = 0;
   links = [
@@ -25,7 +28,7 @@ export class HeaderComponent {
     // { path: '/menu-recurso', label: 'Contactanos', active: false },
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -33,6 +36,8 @@ export class HeaderComponent {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
+
+    this.getUserInfo();
   }
 
   setActiveLink(index: number) {
@@ -49,5 +54,15 @@ export class HeaderComponent {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
+  getUserInfo() {
+    this.userInfo = this.apiService.getUserInfoFromToken();
+    console.log('UserInfo:', this.userInfo); // Verificar en la consola
+  }
+  logout() {
+    this.userInfo = null;
+    this.apiService.logout();
+    this.router.navigate(['/home']); // Navega a la página de inicio o login después de cerrar sesión
+  }
+  //--------------------------------
 
 }
