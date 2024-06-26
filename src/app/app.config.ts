@@ -15,10 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       //withInterceptors(),
-<<<<<<< HEAD
     ), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
-=======
-    ), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
->>>>>>> e25656afd22290a38eaa4d8c6b32d3c65d5573e5
   ],
 };
