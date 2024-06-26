@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { ApiService } from '../api.service';
@@ -8,12 +8,12 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink,CommonModule],
+  imports: [ RouterLink, CommonModule ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  userInfo: { tipocuenta: string, username: string } | null = null; 
+export class HeaderComponent implements OnInit {
+  userInfo: { tipocuenta: string, username: string } | null = null;
 
   activeLinkIndex = 0;
   links = [
@@ -22,10 +22,10 @@ export class HeaderComponent {
     { path: '/nivel', label: 'Categoria', active: false },
     { path: '/recursos', label: 'Recursos', active: false },
     { path: '/menu-subir', label: 'Subir Recursos', active: false },
-
-    { path: '/login', label: 'Usuario', active: false },
     { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
-    // { path: '/menu-recurso', label: 'Contactanos', active: false },
+    { path: '/login', label: 'Usuario', active: false },
+
+    //{ path: '/menu-recurso', label: 'Contactanos', active: false },
   ];
 
   constructor(private router: Router,private apiService: ApiService) { }
@@ -38,6 +38,8 @@ export class HeaderComponent {
     });
 
     this.getUserInfo();
+    this.userInfo = this.apiService.getUserInfoFromToken();
+    console.log('userInfo:', this.userInfo);
   }
 
   setActiveLink(index: number) {

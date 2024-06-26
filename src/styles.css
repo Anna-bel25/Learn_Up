@@ -92,7 +92,6 @@ html {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-<<<<<<< HEAD
 
 /* Regla antigua con -ms-high-contrast */
 @media screen and (-ms-high-contrast: active) {
@@ -109,7 +108,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       color: CanvasText;
   }
 }
-=======
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
->>>>>>> c7c0d43466098f5e79128616bc23f897c128ad38
