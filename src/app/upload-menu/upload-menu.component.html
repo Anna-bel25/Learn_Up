@@ -1,0 +1,95 @@
+
+
+<!-- START HEADING -->
+<div class="title">
+  <div class="heading">
+    <h1>
+      <span>s</span>
+      <span>u</span>
+      <span>b</span>
+      <span>i</span>
+      <span>r</span>
+      <span class="space"> </span>
+      <span>r</span>
+      <span>e</span>
+      <span>c</span>
+      <span>u</span>
+      <span>r</span>
+      <span>s</span>
+      <span>o</span>
+      <span>s</span>
+    </h1>
+    <div class="subtitle"><a [routerLink]="'/recursos'" (click)="scrollToTop()">Suba sus recursos académicos</a></div>
+  </div>
+</div>
+<!-- END HEADING -->
+
+<!-- START RESOURCE MENU SECTION -->
+<section class="review" id="review">
+  <div class="swiper-container review-slider">
+    <div class="swiper-wrapper">
+
+      <!-- VIDEOS -->
+      <div class="swiper-slide" (click)="toggleResource('videos')">
+        <div class="box">
+          <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmlkZW9zfGVufDB8fDB8fHww" alt="" />
+          <h3>videos</h3>
+          <p>Esta sección es para subir recursos de video. Puedes subir videos que estén en formato URL o archivos en formato MP4.</p>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIBROS -->
+      <div class="swiper-slide" (click)="toggleResource('libros')">
+        <div class="box">
+          <img src="https://plus.unsplash.com/premium_photo-1676422355165-d809008b8342?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bGlicm9zfGVufDB8fDB8fHww" alt="" />
+          <h3>libros</h3>
+          <p>En esta sección, puedes subir libros académicos en formato URL, como enlaces a libros en línea, o archivos en formato PDF.</p>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVIDADES -->
+      <div class="swiper-slide" (click)="toggleResource('actividades')">
+        <div class="box">
+          <img src="https://images.unsplash.com/photo-1541692641319-981cc79ee10a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWN0aXZpZGFkZXN8ZW58MHx8MHx8fDA%3D" alt="" />
+          <h3>actividades</h3>
+          <p>Aquí se pueden subir actividades en formato URL, como enlaces a actividades en línea, o archivos en formato PDF.</p>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- END RESOURCE MENU SECTION -->
+
+<app-upload-video
+  [mostrarVideos]="mostrarVideos">
+</app-upload-video>
+
+<app-upload-libro
+  [mostrarLibros]="mostrarLibros">
+</app-upload-libro>
+
+<app-upload-actividad
+  [mostrarActividades]="mostrarActividades">
+</app-upload-actividad>

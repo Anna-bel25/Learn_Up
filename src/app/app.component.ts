@@ -11,6 +11,10 @@ import { ResourceVideoComponent } from './resource-video/resource-video.componen
 import { ResouceLibroComponent } from './resouce-libro/resouce-libro.component';
 import { ResourceActividadComponent } from './resource-actividad/resource-actividad.component';
 import { ResourceFullComponent } from './resource-full/resource-full.component';
+import { UploadMenuComponent } from './upload-menu/upload-menu.component';
+import { UploadVideoComponent } from './upload-video/upload-video.component';
+import { UploadLibroComponent } from './upload-libro/upload-libro.component';
+import { UploadActividadComponent } from './upload-actividad/upload-actividad.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterLink,
     ReactiveFormsModule,
     HttpClientModule,
-    
+
     //routes,
 
     //GENERAL COMPONENTS
@@ -40,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     PublicasColeccionesComponent,
     PrivadasColeccionesComponent,
 
-    //MODULO NIVEL & TEMA
+    //NIVEL & TEMA COMPONENTS
     LevelComponent,
     ThemedComponent,
     ResourceMenuComponent,
@@ -48,6 +52,13 @@ import { HttpClientModule } from '@angular/common/http';
     ResourceActividadComponent,
     ResouceLibroComponent,
     ResourceFullComponent,
+
+    //SUBIR RECURSO COMPONENTS
+    UploadMenuComponent,
+    UploadVideoComponent,
+    UploadLibroComponent,
+    UploadActividadComponent,
+
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

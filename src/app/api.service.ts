@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import jwt_decode from 'jwt-decode';
+//import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private materiasUrl = 'https://apiresources-production-ba1f.up.railway.app/api/materias';
-  private actividadesUrl = 'https://apiresources-production-ba1f.up.railway.app/api/actividades';
-  private videosUrl = 'https://apiresources-production-ba1f.up.railway.app/api/videos';
-  private librosUrl='https://apiresources-production-ba1f.up.railway.app/api/libros';
+  private materiasUrl = 'http://localhost:3000/api/materias';
+  private actividadesUrl = 'http://localhost:3000/api/actividades';
+  private videosUrl = 'http://localhost:3000/api/videos';
+  private librosUrl='http://localhost:3000/api/libros';
   private userUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
@@ -18,6 +18,7 @@ export class ApiService {
   getMaterias(): Observable<any> {
     return this.http.get<any>(this.materiasUrl);
   }
+
   getActividades(): Observable<any> {
     return this.http.get<any>(this.actividadesUrl);
   }
@@ -29,6 +30,27 @@ export class ApiService {
   getLibros(): Observable<any>{
     return this.http.get<any>(this.librosUrl);
   }
+
+  postActividades(data: any): Observable<any> {
+    return this.http.post<any>(this.actividadesUrl, data);
+  }
+
+  postVideos(data: any): Observable<any> {
+    return this.http.post<any>(this.videosUrl, data);
+  }
+
+  postLibros(data: any): Observable<any> {
+    return this.http.post<any>(this.librosUrl, data);
+  }
+
+
+  /*postVideo(formData: FormData): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'multipart/form-data');
+    return this.http.post<any>(this.videosUrl, formData, { headers: headers });
+  }*/
+
+
   /*---------------MARIA------------------------*/
   postUsers(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/users`, userData);
@@ -58,14 +80,14 @@ export class ApiService {
     });
     return this.http.get(`${this.userUrl}/protected`, { headers });
   }
-  
+
   // Método para obtener la información del usuario desde el token JWT
   getUserInfoFromToken(): { tipocuenta: string, username: string } | null {
     const token = localStorage.getItem('token');
     if (token) {
       try {
         const decoded: any = JSON.parse(atob(token.split('.')[1]));
-        
+
         // Verificar la expiración del token
         const currentTimestamp = new Date().getTime() / 1000; // Tiempo actual en segundos
         if (decoded.exp && decoded.exp < currentTimestamp) {
@@ -73,7 +95,7 @@ export class ApiService {
           // Realizar acciones de renovación de token o cierre de sesión aquí si es necesario
           return null;
         }
-        
+
         return {
           tipocuenta: decoded.tipocuenta,
           username: decoded.username
@@ -84,13 +106,13 @@ export class ApiService {
     }
     return null;
   }
-  
+
   /*--------------------------------------------*/
 
   /*------------Ivette--------------*/
   crearColeccion(nombre: string, esPrivado: boolean): Observable<any> {
     const body = { nombre, es_privado: esPrivado };
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
