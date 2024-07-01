@@ -4,27 +4,33 @@
 <section #videoSection class="about" *ngIf="mostrarVideos">
 
   <!-- START FILTER -->
-<div class="filtro">
-  <div class="search-wrapper">
-    <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
-    <i class="fas fa-search"></i>
+  <div class="filtro">
+    <div class="search-wrapper">
+      <input type="text" placeholder="Buscar..." [(ngModel)]="filtroBusqueda" (keyup)="filtrarRecursos()">
+      <i class="fas fa-search"></i>
+    </div>
   </div>
-</div>
-<!-- END FILTER -->
+  <!-- END FILTER -->
 
   <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
   <div *ngIf="videos.length > 0; else noVideosMessage">
     <div class="row" *ngFor="let video of videosPaginados">
       <div class="video-container">
-        <iframe *ngIf="getSafeUrl(video.video_id)" [src]="getSafeUrl(video.video_id)" width="100%" height="315" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+        <!-- Mostrar video de YouTube o similar -->
+        <iframe *ngIf="isYouTubeUrl(video.url)" [src]="getSafeUrl(video.url)" width="100%" height="315" title="Reproductor de video de YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
+        <!-- Mostrar archivo MP4 -->
+        <video *ngIf="isMp4Url(video.url)" [src]="getFullVideoUrl(video.url)" controls width="100%" height="315" style="border-radius: 1.5rem;">
+          Tu navegador no soporta el elemento de video.
+        </video>
+        <!-- Mostrar otro tipo de video URL -->
+        <iframe *ngIf="!isYouTubeUrl(video.url) && !isMp4Url(video.url)" [src]="getSafeUrl(video.url)" width="100%" height="315" title="Reproductor de video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 1.5rem;"></iframe>
       </div>
       <div class="content">
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a *ngIf="isMp4Url(video.url)" [href]="getFullVideoUrl(video.url)" download="video.mp4" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
@@ -33,7 +39,7 @@
     <div class="pagination">
       <button class="btn2" (click)="paginaAnteriorVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Anterior</button>
       <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
-      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === numeroTotalPaginasVideos">Siguiente</button>
     </div>
   </div>
   <ng-template #noVideosMessage>
@@ -41,6 +47,8 @@
   </ng-template>
 </section>
 <!-- VIDEOS SECTION END -->
+
+
 
 
 

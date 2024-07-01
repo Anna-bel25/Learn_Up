@@ -62,6 +62,54 @@ export class ResourceVideoComponent implements OnInit {
         if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
           console.error('Error al recuperar los videos:', error.message);
         }
+      }
+    );
+  }
+
+  private sanitizeUrls() {
+    this.videos.forEach(video => {
+      this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
+    });
+}
+
+getSafeUrl(url: string): SafeResourceUrl | undefined {
+    const videoId = this.videos.find(video => video.url === url)?.video_id;
+    return videoId ? this.sanitizedUrls[videoId] : undefined;
+}
+
+isYouTubeUrl(url: string): boolean {
+    return url.includes('youtube.com/watch') || url.includes('youtu.be/');
+}
+
+isMp4Url(url: string): boolean {
+    return url.endsWith('.mp4');
+}
+
+getFullVideoUrl(url: string): string {
+    return `http://localhost:3000${url}`;
+}
+
+
+  /*fetchVideos(): void {
+    this.apiService.getVideos().subscribe(
+      (response: VideoModel[]) => {
+        console.log('Response from API:', response);
+        this.videos = response.filter(video => video.materia_id === this.materiaId);
+        this.sanitizeUrls();
+        this.videosMostrados = this.videos;
+        this.actualizarVideosPaginados();
+        if (this.videos.length === 0) {
+          console.log('No se encontraron videos para este materia_id.');
+        } else {
+          const firstVideo = this.videos[0];
+          this.nivel = firstVideo.nivel;
+          this.materia = firstVideo.materia;
+        }
+      },
+      error => {
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar los videos:', error.message);
+        }
         //console.error('Error al recuperar los videos:', error.message);
       }
     );
@@ -75,7 +123,7 @@ export class ResourceVideoComponent implements OnInit {
 
   getSafeUrl(video_id: number): SafeResourceUrl | undefined {
     return this.sanitizedUrls[video_id];
-  }
+  }*/
 
   scrollToTop(): void {
     //window.scrollTo({ top: 50, behavior: 'smooth' });

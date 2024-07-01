@@ -34,7 +34,7 @@ export class ApiService {
   postActividades(data: any): Observable<any> {
     return this.http.post<any>(this.actividadesUrl, data);
   }
-
+  
   postVideos(data: any): Observable<any> {
     return this.http.post<any>(this.videosUrl, data);
   }

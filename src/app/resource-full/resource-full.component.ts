@@ -110,7 +110,7 @@ export class ResourceFullComponent implements OnInit  {
 
   ngOnInit(): void {
     this.fetchVideos();
-    this.fetchActivities();
+    this.fetchActividades();
     this.fetchLibros();
     //this.fetchObras();
 
@@ -153,12 +153,11 @@ export class ResourceFullComponent implements OnInit  {
         if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
           console.error('Error al recuperar los videos:', error.message);
         }
-        //console.error('Error al recuperar los videos:', error.message);
       }
     );
   }
 
-  private sanitizeUrls() {
+  sanitizeUrls() {
     this.videos.forEach(video => {
       this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
     });
@@ -168,23 +167,57 @@ export class ResourceFullComponent implements OnInit  {
     return this.sanitizedUrls[videoId];
   }
 
-  fetchActivities(): void {
+  isYouTubeUrl(url: string): boolean {
+    return url.includes('youtube.com') || url.includes('youtu.be');
+  }
+
+  isMp4Url(url: string): boolean {
+    return url.endsWith('.mp4');
+  }
+
+  getFullVideoUrl(url: string): string {
+    return `http://localhost:3000${url}`;
+  }
+
+
+
+  fetchActividades(): void {
     this.apiService.getActividades().subscribe(
       (response: ActividadModel[]) => {
         console.log('Response from API:', response);
         this.actividades = response;
         this.actividadesMostradas = this.actividades;
         this.actualizarActividadesPaginadas();
+        this.actividadesPaginados = this.actividades.slice(0, this.actividadesPorPagina);
+        //this.numeroTotalPaginasActividades = Math.ceil(this.actividades.length / this.actividadesPorPagina); // Total de páginas
       },
       error => {
         if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
           console.error('Error al recuperar las actividades:', error.message);
         }
-        //console.error('Error al recuperar las actividades:', error);
       }
     );
   }
 
+  isLocalImageActividad(url: string): boolean {
+    return url.startsWith('/uploads/actividades/imagenes/');
+  }
+
+  isExternalImageActividad(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
+  isPdfActividad(url: string): boolean {
+    return url.endsWith('.pdf');
+  }
+
+  getFullImageUrlActividad(url: string): string {
+    return this.isLocalImageActividad(url) ? `http://localhost:3000${url}` : url;
+  }
+
+  getFullPdfUrlActividad(url: string): string {
+    return `http://localhost:3000${url}`;
+  }
 
   fetchLibros(): void {
     this.apiService.getLibros().subscribe(
@@ -193,11 +226,34 @@ export class ResourceFullComponent implements OnInit  {
         this.libros = response;
         this.librosMostrados = this.libros;
         this.actualizarLibrosPaginados();
+        this.librosPaginados = this.libros.slice(0, this.librosPorPagina);
       },
       error => {
-        console.error('Error al recuperar los libros:', error.message);
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar los libros:', error.message);
+        }
       }
     );
+  }
+
+  isLocalImageLibro(url: string): boolean {
+    return url.startsWith('/uploads/libros/imagenes/');
+  }
+
+  isExternalImageLibro(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
+  isPdfLibro(url: string): boolean {
+    return url.endsWith('.pdf');
+  }
+
+  getFullImageUrlLibro(url: string): string {
+    return this.isLocalImageLibro(url) ? `http://localhost:3000${url}` : url;
+  }
+
+  getFullPdfUrlLibro(url: string): string {
+    return `http://localhost:3000${url}`;
   }
 
 
@@ -288,6 +344,16 @@ export class ResourceFullComponent implements OnInit  {
     }
   }
 
+  irPrimeraPaginaVideos() {
+    this.paginaActualVideos = 1;
+    this.actualizarVideosPaginados();
+  }
+
+  irUltimaPaginaVideos() {
+    this.paginaActualVideos = this.numeroTotalPaginasVideos;
+    this.actualizarVideosPaginados();
+  }
+
   paginaAnteriorLibros() {
     if (this.paginaActualLibros > 1) {
       this.paginaActualLibros--;
@@ -300,6 +366,16 @@ export class ResourceFullComponent implements OnInit  {
       this.paginaActualLibros++;
       this.actualizarLibrosPaginados();
     }
+  }
+
+  irPrimeraPaginaLibros() {
+    this.paginaActualLibros = 1;
+    this.actualizarLibrosPaginados();
+  }
+
+  irUltimaPaginaLibros() {
+    this.paginaActualLibros = this.numeroTotalPaginasLibros;
+    this.actualizarLibrosPaginados();
   }
 
   paginaAnteriorActividades() {
@@ -316,6 +392,16 @@ export class ResourceFullComponent implements OnInit  {
     }
   }
 
+  irPrimeraPaginaActividades() {
+    this.paginaActualActividades = 1;
+    this.actualizarActividadesPaginadas();
+  }
+
+  irUltimaPaginaActividades() {
+    this.paginaActualActividades = this.numeroTotalPaginasActividades;
+    this.actualizarActividadesPaginadas();
+  }
+
   paginaAnteriorTodos() {
     if (this.paginaActualTodos > 1) {
       this.paginaActualTodos--;
@@ -328,6 +414,16 @@ export class ResourceFullComponent implements OnInit  {
       this.paginaActualTodos++;
       this.actualizarTodosPaginados();
     }
+  }
+
+  irPrimeraPaginaTodos() {
+    this.paginaActualTodos = 1;
+    this.actualizarTodosPaginados();
+  }
+
+  irUltimaPaginaTodos() {
+    this.paginaActualTodos = this.numeroTotalPaginasTodos;
+    this.actualizarTodosPaginados();
   }
 
   restablecerRecursos(): void {
@@ -353,7 +449,7 @@ export class ResourceFullComponent implements OnInit  {
     const dialogRef = this.dialog.open(ColeccionesComponent, {
       data: { recurso }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

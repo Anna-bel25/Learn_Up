@@ -17,7 +17,15 @@
   <div *ngIf="libros.length > 0; else noLibrosMessage">
     <div class="row" *ngFor="let libro of librosPaginados">
       <div class="img-container">
-        <img [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+        <img *ngIf="isLocalImage(libro.imagen_url); else externalImage"
+             [src]="getFullImageUrl(libro.imagen_url)"
+             alt="Portada del libro"
+             width="100%"
+             height="300"
+             style="border-radius: 1.5rem;">
+        <ng-template #externalImage>
+          <img *ngIf="isExternalImage(libro.imagen_url)" [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+        </ng-template>
       </div>
       <div class="content">
         <h3>{{ libro.titulo }}</h3>
@@ -25,11 +33,11 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
-        <h3><a [href]="libro.url" target="_blank"><span class="link-span">Leer</span></a></h3>
+        <h3><a *ngIf="isPdf(libro.url)" [href]="getFullPdfUrl(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
+        <h3><a *ngIf="!isPdf(libro.url)" [href]="getFullPdfUrl(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a *ngIf="isPdf(libro.url)" [href]="getFullPdfUrl(libro.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
@@ -46,4 +54,5 @@
   </ng-template>
 </section>
 <!-- LIBROS SECTION END -->
+
 

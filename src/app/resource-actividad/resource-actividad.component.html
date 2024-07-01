@@ -16,16 +16,24 @@
   <div *ngIf="actividades.length > 0; else noActividadesMessage">
     <div class="row" *ngFor="let actividad of actividadesPaginadas">
       <div class="img-container">
-        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+        <img *ngIf="isLocalImage(actividad.imagen_url); else externalImage"
+             [src]="getFullImageUrl(actividad.imagen_url)"
+             alt="Imagen de la actividad"
+             width="100%"
+             height="300"
+             style="border-radius: 1.5rem;">
+        <ng-template #externalImage>
+          <img *ngIf="isExternalImage(actividad.imagen_url)" [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+        </ng-template>
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3><a *ngIf="isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3><a *ngIf="!isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a *ngIf="isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
@@ -42,4 +50,6 @@
   </ng-template>
 </section>
 <!-- ACTIVIDADES SECTION END -->
+
+
 

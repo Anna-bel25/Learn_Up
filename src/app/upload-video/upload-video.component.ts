@@ -33,9 +33,11 @@ export class UploadVideoComponent implements OnInit {
   selectedNivel: string = '';
   selectedMateriaId: number | null = null;
   selectedMateriaNombre: string | null = null;
+
   selectedVideoInput: 'url' | 'file' = 'url';
   selectedVideoFile: File | null = null;
   selectedVideoFileName: string = '';
+
   videoUrl: string = '';
   videoFile: File | null = null;
 
@@ -50,6 +52,50 @@ export class UploadVideoComponent implements OnInit {
   }
 
   subirVideo(form: NgForm): void {
+    if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
+      let nuevoVideo: any = {
+        materia_id: this.selectedMateriaId,
+        titulo: form.value.titulo,
+        descripcion: form.value.videoDescription,
+        nivel: this.selectedNivel,
+        materia: this.selectedMateriaNombre,
+        url: this.selectedVideoInput === 'url' ? form.value.videoUrl : null
+      };
+  
+      const formData = new FormData();
+      formData.append('materia_id', nuevoVideo.materia_id.toString());
+      formData.append('titulo', nuevoVideo.titulo);
+      formData.append('descripcion', nuevoVideo.descripcion);
+      formData.append('nivel', nuevoVideo.nivel);
+      formData.append('materia', nuevoVideo.materia);
+      formData.append('url', nuevoVideo.url || '');
+  
+      if (this.selectedVideoInput === 'file' && this.videoFile) {
+        formData.append('video', this.videoFile, this.videoFile.name);
+      }
+  
+      this.apiService.postVideos(formData).subscribe(
+        (response: any) => {
+          console.log('Video subido exitosamente:', response);
+          form.resetForm();
+          this.resetForm();
+        },
+        (error) => {
+          if (error.error instanceof ErrorEvent) {
+            console.error('Error de red:', error.error.message);
+          } else {
+            console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+          }
+          console.error('Error al subir el video:', error);
+        }
+      );
+    } else {
+      console.error('Formulario inválido o faltan datos necesarios.');
+    }
+  }
+  
+  
+  /*subirVideo(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
       let nuevoVideo: any = {
         materia_id: this.selectedMateriaId,
@@ -83,7 +129,7 @@ export class UploadVideoComponent implements OnInit {
     } else {
       console.error('Formulario inválido o faltan datos necesarios.');
     }
-  }
+  }*/
 
 
   selectVideoFile(): void {
@@ -91,9 +137,9 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onVideoFileChange(event: any): void {
-    this.videoFile = event.target.files[0];
-    console.log('Archivo de video seleccionado:', this.videoFile);
-    this.selectedVideoFileName = this.videoFile?.name || '';
+    this.selectedVideoFile = event.target.files[0];
+    console.log('Archivo de video seleccionado:', this.selectedVideoFile);
+    this.selectedVideoFileName = this.selectedVideoFile?.name || '';
   }
 
   isVideoFileSelected(): boolean {

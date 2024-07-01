@@ -33,17 +33,13 @@ export class UploadActividadComponent implements OnInit {
   selectedNivel: string = '';
   selectedMateriaId: number | null = null;
   selectedMateriaNombre: string | null = null;
-  
+
   selectedActivityInput: 'url' | 'file' = 'url';
   selectedActivityFile: File | null = null;
   selectedActivityFileName: string = '';
-
   selectedImageInput: 'url' | 'file' = 'url';
-  selectedImageFile: File | null = null;
-  selectedImageFileName: string = '';
 
   activityUrl: string = '';
-  activityFile: File | null = null;
   activityImageUrl: string = '';
   activityImageFile: File | null = null;
   activityImageFileName: string = '';
@@ -58,6 +54,53 @@ export class UploadActividadComponent implements OnInit {
   }
 
   subirActividad(form: NgForm): void {
+    if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
+      const nuevaActividad: any = {
+        materia_id: this.selectedMateriaId,
+        titulo: form.value.titulo,
+        descripcion: form.value.activityDescription,
+        nivel: this.selectedNivel,
+        materia: this.selectedMateriaNombre,
+        url: form.value.activityUrl || null,
+      };
+  
+      const formData = new FormData();
+      formData.append('materia_id', nuevaActividad.materia_id);
+      formData.append('titulo', nuevaActividad.titulo);
+      formData.append('descripcion', nuevaActividad.descripcion);
+      formData.append('nivel', nuevaActividad.nivel);
+      formData.append('materia', nuevaActividad.materia);
+      formData.append('url', nuevaActividad.url || '');
+  
+      if (this.selectedActivityInput === 'file' && this.selectedActivityFile) {
+        formData.append('pdf', this.selectedActivityFile, this.selectedActivityFile.name);
+      }
+  
+      if (this.selectedImageInput === 'file' && this.activityImageFile) {
+        formData.append('imagen', this.activityImageFile, this.activityImageFile.name);
+      }
+  
+      this.apiService.postActividades(formData).subscribe(
+        (response: any) => {
+          console.log('Actividad subida exitosamente:', response);
+          form.resetForm();
+          this.resetForm();
+        },
+        (error) => {
+          if (error.error instanceof ErrorEvent) {
+            console.error('Error de red:', error.error.message);
+          } else {
+            console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+          }
+          console.error('Error al subir la actividad:', error);
+        }
+      );
+    } else {
+      console.error('Formulario inválido o faltan datos necesarios.');
+    }
+  }
+
+  /*subirActividad(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
       let nuevaActividad: any = {
         materia_id: this.selectedMateriaId,
@@ -97,35 +140,36 @@ export class UploadActividadComponent implements OnInit {
     } else {
       console.error('Formulario inválido o faltan datos necesarios.');
     }
-  }
+  }*/
 
   selectActivityFile(): void {
     this.activityFileInput.nativeElement.click();
   }
-
+    
   onActivityFileChange(event: any): void {
-    this.activityFile = event.target.files[0];
-    console.log('Archivo de actividad seleccionado:', this.activityFile);
-    this.selectedActivityFileName = this.activityFile?.name || '';
+    this.selectedActivityFile = event.target.files[0];
+    console.log('Archivo de actividad seleccionado:', this.selectedActivityFile);
+    this.selectedActivityFileName = this.selectedActivityFile?.name || '';
   }
-
+    
   selectActivityImage(): void {
     this.activityImageInput.nativeElement.click();
   }
-
+    
   onActivityImageChange(event: any): void {
     this.activityImageFile = event.target.files[0];
     console.log('Imagen de actividad seleccionada:', this.activityImageFile);
     this.activityImageFileName = this.activityImageFile?.name || '';
   }
-
+    
   isActivityFileSelected(): boolean {
     return this.selectedActivityFile !== null;
   }
-
+    
   isActivityImageSelected(): boolean {
     return this.activityImageFile !== null;
   }
+    
 
   resetForm(): void {
     this.activityTitle = '';

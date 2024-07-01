@@ -60,6 +60,26 @@ export class ResourceActividadComponent implements OnInit {
     );
   }
 
+  isLocalImage(url: string): boolean {
+    return url.startsWith('/uploads/actividades/imagenes/');
+  }
+
+  isExternalImage(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
+  isPdf(url: string): boolean {
+    return url.endsWith('.pdf');
+  }
+
+  getFullImageUrl(url: string): string {
+    return this.isLocalImage(url) ? `http://localhost:3000${url}` : url;
+  }
+
+  getFullPdfUrl(url: string): string {
+    return `http://localhost:3000${url}`;
+  }
+
   scrollToTop(): void {
     //window.scrollTo({ top: 50, behavior: 'smooth' });
     const offset = 290;

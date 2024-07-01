@@ -21,7 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-colecciones.component';
 import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 //import { routes } from './app.routes';
 
 @Component({
@@ -33,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterLink,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
 
     //routes,
 

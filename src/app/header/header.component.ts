@@ -22,9 +22,9 @@ export class HeaderComponent {
     { path: '/nivel', label: 'Categoria', active: false },
     { path: '/recursos', label: 'Recursos', active: false },
     { path: '/menu-subir', label: 'Subir Recursos', active: false },
-
-    { path: '/login', label: 'Usuario', active: false },
     { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
+    { path: '/login', label: 'Usuario', active: false },
+
     // { path: '/menu-recurso', label: 'Contactanos', active: false },
   ];
 

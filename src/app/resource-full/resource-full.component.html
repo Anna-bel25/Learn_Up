@@ -106,9 +106,11 @@
 
   <div class="pagination-container">
     <div class="pagination">
+      <button class="btn2" (click)="irPrimeraPaginaTodos(); scrollToTop();" [disabled]="paginaActualTodos === 1">Ir al inicio</button>
       <button class="btn2" (click)="paginaAnteriorTodos(); scrollToTop();" [disabled]="paginaActualTodos === 1">Anterior</button>
       <span>Página {{ paginaActualTodos }} de {{ numeroTotalPaginasTodos }}</span>
-      <button class="btn2" (click)="paginaSiguienteTodos(); scrollToTop();" [disabled]="paginaActualTodos >= numeroTotalPaginasTodos">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteTodos(); scrollToTop();" [disabled]="paginaActualTodos === numeroTotalPaginasTodos">Siguiente</button>
+      <button class="btn2" (click)="irUltimaPaginaTodos(); scrollToTop();" [disabled]="paginaActualTodos === numeroTotalPaginasTodos">Ir al final</button>
     </div>
   </div>
 
@@ -120,10 +122,11 @@
 <!-- VIDEOS SECTION START -->
 <section *ngIf="mostrarVideo" class="about">
   <h1 class="title2">Recursos de <span>Videos</span></h1>
-  <div>
+  <div *ngIf="videosPaginados.length > 0; else noVideosMessage">
     <div class="row" *ngFor="let video of videosPaginados">
       <div class="recurso-container">
         <iframe
+          *ngIf="isYouTubeUrl(video.url)"
           width="100%"
           height="315"
           [src]="getSafeUrl(video.video_id)"
@@ -134,23 +137,33 @@
           allowfullscreen
           style="border-radius: 1.5rem;">
         </iframe>
+        <video
+          *ngIf="isMp4Url(video.url)"
+          [src]="getFullVideoUrl(video.url)"
+          controls
+          width="100%"
+          height="315"
+          style="border-radius: 1.5rem;">
+          Tu navegador no soporta el elemento de video.
+        </video>
       </div>
       <div class="content">
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event,video)"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, video)"></a>
+          <a *ngIf="isMp4Url(video.url)" [href]="getFullVideoUrl(video.url)" download="video.mp4" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
   </div>
   <div class="pagination-container">
     <div class="pagination">
+      <button class="btn2" (click)="irPrimeraPaginaVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Ir al inicio</button>
       <button class="btn2" (click)="paginaAnteriorVideos(); scrollToTop();" [disabled]="paginaActualVideos === 1">Anterior</button>
       <span>Página {{ paginaActualVideos }} de {{ numeroTotalPaginasVideos }}</span>
-      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === videosPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteVideos(); scrollToTop();" [disabled]="paginaActualVideos === numeroTotalPaginasVideos">Siguiente</button>
+      <button class="btn2" (click)="irUltimaPaginaVideos(); scrollToTop();" [disabled]="paginaActualVideos === numeroTotalPaginasVideos">Ir al final</button>
     </div>
   </div>
   <ng-template #noVideosMessage>
@@ -168,7 +181,15 @@
   <div>
     <div class="row" *ngFor="let libro of librosPaginados">
       <div class="img-container">
-        <img [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+        <img *ngIf="isLocalImageLibro(libro.imagen_url); else externalImage"
+             [src]="getFullImageUrlLibro(libro.imagen_url)"
+             alt="Portada del libro"
+             width="100%"
+             height="300"
+             style="border-radius: 1.5rem;">
+        <ng-template #externalImage>
+          <img *ngIf="isExternalImageLibro(libro.imagen_url)" [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+        </ng-template>
       </div>
       <div class="content">
         <h3>{{ libro.titulo }}</h3>
@@ -176,20 +197,22 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
-        <h3><a [href]="libro.url" target="_blank"><span class="link-span">Leer</span></a></h3>
+        <h3><a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
+        <h3><a *ngIf="!isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, libro)"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
   </div>
   <div class="pagination-container">
     <div class="pagination">
+      <button class="btn2" (click)="irPrimeraPaginaLibros(); scrollToTop();" [disabled]="paginaActualLibros === 1">Ir al inicio</button>
       <button class="btn2" (click)="paginaAnteriorLibros(); scrollToTop();" [disabled]="paginaActualLibros === 1">Anterior</button>
       <span>Página {{ paginaActualLibros }} de {{ numeroTotalPaginasLibros }}</span>
-      <button class="btn2" (click)="paginaSiguienteLibros(); scrollToTop();" [disabled]="paginaActualLibros === librosPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteLibros(); scrollToTop();" [disabled]="paginaActualLibros === numeroTotalPaginasLibros">Siguiente</button>
+      <button class="btn2" (click)="irUltimaPaginaLibros(); scrollToTop();" [disabled]="paginaActualLibros === numeroTotalPaginasLibros">Ir al final</button>
     </div>
   </div>
   <ng-template #noLibrosMessage>
@@ -207,25 +230,35 @@
   <div>
     <div class="row" *ngFor="let actividad of actividadesPaginados">
       <div class="img-container">
-        <img [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+        <img *ngIf="isLocalImageActividad(actividad.imagen_url); else externalImage"
+             [src]="getFullImageUrlActividad(actividad.imagen_url)"
+             alt="Imagen de la actividad"
+             width="100%"
+             height="300"
+             style="border-radius: 1.5rem;">
+        <ng-template #externalImage>
+          <img *ngIf="isExternalImageActividad(actividad.imagen_url)" [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+        </ng-template>
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3><a [href]="actividad.url" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3><a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3><a *ngIf="!isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
         <div class="icons">
-          <!-- <a href="#" class="fas fa-heart" title="Favorito"></a> -->
-          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event,actividad)"></a>
-          <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, actividad)"></a>
+          <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
         </div>
       </div>
     </div>
   </div>
   <div class="pagination-container">
     <div class="pagination">
+      <button class="btn2" (click)="irPrimeraPaginaActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Ir al inicio</button>
       <button class="btn2" (click)="paginaAnteriorActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Anterior</button>
       <span>Página {{ paginaActualActividades }} de {{ numeroTotalPaginasActividades }}</span>
       <button class="btn2" (click)="paginaSiguienteActividades(); scrollToTop();" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Siguiente</button>
+      <button class="btn2" (click)="irUltimaPaginaActividades(); scrollToTop();" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Ir al final</button>
     </div>
   </div>
   <ng-template #noActividadesMessage>

@@ -33,10 +33,12 @@ export class UploadLibroComponent implements OnInit {
   selectedNivel: string = '';
   selectedMateriaId: number | null = null;
   selectedMateriaNombre: string | null = null;
+
   selectedLibroInput: 'url' | 'file' = 'url';
   selectedLibroFile: File | null = null;
   selectedLibroFileName: string = '';
   selectedImageInput: 'url' | 'file' = 'url';
+
   libroUrl: string = '';
   libroImageUrl: string = '';
   libroImageFile: File | null = null;
@@ -55,6 +57,62 @@ export class UploadLibroComponent implements OnInit {
   }
 
   subirLibro(form: NgForm): void {
+    if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
+      const nuevoLibro: any = {
+        materia_id: this.selectedMateriaId,
+        titulo: form.value.titulo,
+        descripcion: form.value.libroDescription,
+        nivel: this.selectedNivel,
+        materia: this.selectedMateriaNombre,
+        autor: this.autor,
+        edicion: this.edicion,
+        fecha: this.fecha
+      };
+
+      const formData = new FormData();
+      formData.append('materia_id', nuevoLibro.materia_id);
+      formData.append('titulo', nuevoLibro.titulo);
+      formData.append('descripcion', nuevoLibro.descripcion);
+      formData.append('nivel', nuevoLibro.nivel);
+      formData.append('materia', nuevoLibro.materia);
+      formData.append('autor', nuevoLibro.autor);
+      formData.append('edicion', nuevoLibro.edicion);
+      formData.append('fecha', nuevoLibro.fecha);
+      if (this.selectedLibroInput === 'url') {
+        formData.append('url', this.libroUrl);
+      }
+      if (this.selectedImageInput === 'url') {
+        formData.append('imagen_url', this.libroImageUrl);
+      }
+      if (this.selectedLibroFile) {
+        formData.append('pdf', this.selectedLibroFile, this.selectedLibroFile.name);
+      }
+      if (this.libroImageFile) {
+        formData.append('imagen', this.libroImageFile, this.libroImageFile.name);
+      }
+
+      this.apiService.postLibros(formData).subscribe(
+        (response: any) => {
+          console.log('Libro subido exitosamente:', response);
+          form.resetForm();
+          this.resetForm();
+        },
+        (error) => {
+          if (error.error instanceof ErrorEvent) {
+            console.error('Error de red:', error.error.message);
+          } else {
+            console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+          }
+          console.error('Error al subir el libro:', error);
+        }
+      );
+    } else {
+      console.error('Formulario inválido o faltan datos necesarios.');
+    }
+  }
+
+
+  /*subirLibro(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
       let nuevoLibro: any = {
         materia_id: this.selectedMateriaId,
@@ -89,7 +147,7 @@ export class UploadLibroComponent implements OnInit {
           if (error.error instanceof ErrorEvent) {
             console.error('Error de red:', error.error.message);
           } else {
-            console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+            console.error(Error del servidor: ${error.status}, ${error.error.message});
           }
           console.error('Error al subir el libro:', error);
         }
@@ -97,7 +155,7 @@ export class UploadLibroComponent implements OnInit {
     } else {
       console.error('Formulario inválido o faltan datos necesarios.');
     }
-  }
+  }*/
 
   selectLibroFile(): void {
     this.libroFileInput.nativeElement.click();
