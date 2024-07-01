@@ -1,4 +1,7 @@
 
+*{
+    text-transform: none !important;
+}
 body{
     align-items: center;
     margin-top: 15%;
