@@ -1,7 +1,7 @@
-/*body{
-    /*background: url('/assets/img/esqueleto.jpg') no-repeat center center fixed; 
-    background-size: 20% 60%;*/
 
+*{
+    text-transform: none !important;
+}
 
 /*---------------IMAGENES-----------------*/
 .imagen-ola{
