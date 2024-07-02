@@ -36,7 +36,7 @@ export class ResourceVideoComponent implements OnInit {
   videosPorPagina: number = 5;
   paginaActualVideos: number = 1;
 
-  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer,public dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -70,24 +70,54 @@ export class ResourceVideoComponent implements OnInit {
     this.videos.forEach(video => {
       this.sanitizedUrls[video.video_id] = this.sanitizer.bypassSecurityTrustResourceUrl(video.url);
     });
-}
+  }
 
-getSafeUrl(url: string): SafeResourceUrl | undefined {
+  getSafeUrl(url: string): SafeResourceUrl | undefined {
     const videoId = this.videos.find(video => video.url === url)?.video_id;
     return videoId ? this.sanitizedUrls[videoId] : undefined;
-}
+  }
 
-isYouTubeUrl(url: string): boolean {
+  isYouTubeUrl(url: string): boolean {
     return url.includes('youtube.com/watch') || url.includes('youtu.be/');
-}
+  }
 
-isMp4Url(url: string): boolean {
+  isMp4Url(url: string): boolean {
     return url.endsWith('.mp4');
-}
+  }
 
-getFullVideoUrl(url: string): string {
+  getFullVideoUrl(url: string): string {
     return `http://localhost:3000${url}`;
-}
+  }
+
+  handleLinkClickVideo(event: Event, url: string) {
+    if (this.isMp4Url(url)) {
+      event.preventDefault();
+      this.downloadVideo(this.getFullVideoUrl(url), this.getFileNameVideo(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  downloadVideo(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
+  }
+
+  getFileNameVideo(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'download';
+  }
+
 
 
   /*fetchVideos(): void {
@@ -175,6 +205,16 @@ getFullVideoUrl(url: string): string {
       this.paginaActualVideos++;
       this.actualizarVideosPaginados();
     }
+  }
+
+  irPrimeraPaginaVideos() {
+    this.paginaActualVideos = 1;
+    this.actualizarVideosPaginados();
+  }
+
+  irUltimaPaginaVideos() {
+    this.paginaActualVideos = this.numeroTotalPaginasVideos;
+    this.actualizarVideosPaginados();
   }
 
   restablecerRecursos(): void {

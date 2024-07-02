@@ -16,37 +16,54 @@
   <div *ngIf="actividades.length > 0; else noActividadesMessage">
     <div class="row" *ngFor="let actividad of actividadesPaginadas">
       <div class="img-container">
-        <img *ngIf="isLocalImage(actividad.imagen_url); else externalImage"
-             [src]="getFullImageUrl(actividad.imagen_url)"
+        <img *ngIf="isLocalImageActividad(actividad.imagen_url); else externalImage"
+             [src]="getFullImageUrlActividad(actividad.imagen_url)"
              alt="Imagen de la actividad"
              width="100%"
              height="300"
              style="border-radius: 1.5rem;">
         <ng-template #externalImage>
-          <img *ngIf="isExternalImage(actividad.imagen_url)" [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+          <img *ngIf="isExternalImageActividad(actividad.imagen_url)" [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
         </ng-template>
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3><a *ngIf="isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
-        <h3><a *ngIf="!isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3>
+          <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank">
+            <span class="link-span">Resolver</span></a>
+        </h3>
+        <h3>
+          <a *ngIf="!isPdfActividad(actividad.url)" [href]="actividad.url" target="_blank">
+            <span class="link-span">Resolver</span> </a>
+        </h3>
         <div class="icons">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
-          <a *ngIf="isPdf(actividad.url)" [href]="getFullPdfUrl(actividad.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a
+            [href]="isPdfActividad(actividad.url) ? getFullPdfUrlActividad(actividad.url) : actividad.url"
+            (click)="handleLinkClickActividad($event, actividad.url)"
+            target="_blank"
+            class="fa-solid fa-circle-down"
+            [attr.title]="isPdfActividad(actividad.url) ? '' : ''">
+            <span class="link-span">{{ isPdfActividad(actividad.url) ? '' : '' }}</span>
+          </a>
+
         </div>
+
       </div>
     </div>
   </div>
   <div class="pagination-container">
     <div class="pagination">
+      <button class="btn2" (click)="irPrimeraPaginaActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Ir al inicio</button>
       <button class="btn2" (click)="paginaAnteriorActividades(); scrollToTop();" [disabled]="paginaActualActividades === 1">Anterior</button>
       <span>Página {{ paginaActualActividades }} de {{ numeroTotalPaginasActividades }}</span>
-      <button class="btn2" (click)="paginaSiguienteActividades(); scrollToTop();" [disabled]="paginaActualActividades === actividadesPorPagina">Siguiente</button>
+      <button class="btn2" (click)="paginaSiguienteActividades(); scrollToTop();" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Siguiente</button>
+      <button class="btn2" (click)="irUltimaPaginaActividades(); scrollToTop();" [disabled]="paginaActualActividades === numeroTotalPaginasActividades">Ir al final</button>
     </div>
   </div>
   <ng-template #noActividadesMessage>
-    <p style="font-size: 1rem;">No se encontraron actividades para esta materia.</p>
+    <p style="font-size: 1rem; text-transform: none !important;">No se encontraron actividades para esta materia.</p>
   </ng-template>
 </section>
 <!-- ACTIVIDADES SECTION END -->

@@ -60,24 +60,57 @@ export class ResourceActividadComponent implements OnInit {
     );
   }
 
-  isLocalImage(url: string): boolean {
+  isLocalImageActividad(url: string): boolean {
     return url.startsWith('/uploads/actividades/imagenes/');
   }
 
-  isExternalImage(url: string): boolean {
+  isExternalImageActividad(url: string): boolean {
     return url.startsWith('http://') || url.startsWith('https://');
   }
 
-  isPdf(url: string): boolean {
+  isPdfActividad(url: string): boolean {
     return url.endsWith('.pdf');
   }
 
-  getFullImageUrl(url: string): string {
-    return this.isLocalImage(url) ? `http://localhost:3000${url}` : url;
+  getFullImageUrlActividad(url: string): string {
+    return this.isLocalImageActividad(url) ? `http://localhost:3000${url}` : url;
   }
 
-  getFullPdfUrl(url: string): string {
+  getFullPdfUrlActividad(url: string): string {
     return `http://localhost:3000${url}`;
+  }
+
+  handleLinkClickActividad(event: Event, url: string) {
+    if (this.isPdfActividad(url)) {
+      event.preventDefault();
+      this.downloadActividad(this.getFullPdfUrlActividad(url), this.getFileNameActividad(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  downloadActividad(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
+  }
+
+  getFileNameActividad(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'actividad.pdf';
+  }
+
+  getDownloadUrlActividad(url: string): string {
+    return this.getFullPdfUrlActividad(url);
   }
 
   scrollToTop(): void {
@@ -130,6 +163,16 @@ export class ResourceActividadComponent implements OnInit {
       this.paginaActualActividades++;
       this.actualizarActividadesPaginadas();
     }
+  }
+
+  irPrimeraPaginaActividades() {
+    this.paginaActualActividades = 1;
+    this.actualizarActividadesPaginadas();
+  }
+
+  irUltimaPaginaActividades() {
+    this.paginaActualActividades = this.numeroTotalPaginasActividades;
+    this.actualizarActividadesPaginadas();
   }
 
   restablecerRecursos(): void {

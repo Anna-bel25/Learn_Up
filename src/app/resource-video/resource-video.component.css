@@ -203,7 +203,7 @@ section {
 
 .about .row .video-container video{
   width:100%;
-  border:1.5rem solid white;
+  /* border:1.5rem solid white; */
   border-radius: .5rem;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
   height: 100%;
@@ -240,4 +240,15 @@ section {
   padding:.3rem 0;
   padding-top: 1rem;
   line-height: 1.5;
+}
+
+.link-span {
+  font-size: 1.2rem;
+  color:var(--dark-gray);
+}
+
+.link-span:hover {
+  color:var(--pink);
+  transition: text-decoration 0.3s ease;
+  text-decoration: underline;
 }
