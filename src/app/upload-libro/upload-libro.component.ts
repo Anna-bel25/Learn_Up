@@ -112,6 +112,7 @@ export class UploadLibroComponent implements OnInit {
   }
 
 
+
   /*subirLibro(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
       let nuevoLibro: any = {
@@ -194,13 +195,21 @@ export class UploadLibroComponent implements OnInit {
     this.selectedLibroInput = 'url';
     this.libroUrl = '';
     this.selectedLibroFile = null;
-   this.selectedLibroFileName = '';
+    this.selectedLibroFileName = '';
+    this.selectedImageInput = 'url';
     this.libroImageUrl = '';
     this.libroImageFile = null;
     this.libroImageFileName = '';
     this.autor = '';
     this.edicion = '';
     this.fecha = null;
+
+    if (this.libroFileInput) {
+      this.libroFileInput.nativeElement.value = '';
+    }
+    if (this.libroImageInput) {
+      this.libroImageInput.nativeElement.value = '';
+    }
   }
 
   obtenerMaterias(): void {

@@ -64,7 +64,7 @@
             <div class="input-container" *ngIf="selectedVideoInput === 'url'">
               <label for="videoUrl">URL del video</label>
               <div class="input-wrapper">
-                <input type="url" id="videoUrl" [(ngModel)]="videoUrl" name="videoUrl" placeholder="Ingrese la URL del video" autocomplete="off">
+                <input type="url" id="videoUrl" [(ngModel)]="videoUrl" name="videoUrl" placeholder="Ingrese la URL del video" autocomplete="off" required>
               </div>
             </div>
 
