@@ -179,6 +179,112 @@ export class ResourceFullComponent implements OnInit  {
     return `http://localhost:3000${url}`;
   }
 
+  handleLinkClickVideo(event: Event, url: string) {
+    if (this.isMp4Url(url)) {
+      event.preventDefault();
+      this.downloadVideo(this.getFullVideoUrl(url), this.getFileNameVideo(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  downloadVideo(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
+  }
+
+  getFileNameVideo(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'video.mp4';
+  }
+
+  getDownloadUrlVideo(url: string): string {
+    return this.getFullVideoUrl(url);
+  }
+
+
+
+  fetchLibros(): void {
+    this.apiService.getLibros().subscribe(
+      (response: LibroModel[]) => {
+        console.log('Response from API:', response);
+        this.libros = response;
+        this.librosMostrados = this.libros;
+        this.actualizarLibrosPaginados();
+        this.librosPaginados = this.libros.slice(0, this.librosPorPagina);
+      },
+      error => {
+        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
+          console.error('Error al recuperar los libros:', error.message);
+        }
+      }
+    );
+  }
+
+  isLocalImageLibro(url: string): boolean {
+    return url.startsWith('/uploads/libros/imagenes/');
+  }
+
+  isExternalImageLibro(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
+  isPdfLibro(url: string): boolean {
+    return url.endsWith('.pdf');
+  }
+
+  getFullImageUrlLibro(url: string): string {
+    return this.isLocalImageLibro(url) ? `http://localhost:3000${url}` : url;
+  }
+
+  getFullPdfUrlLibro(url: string): string {
+    return `http://localhost:3000${url}`;
+  }
+
+  handleLinkClickLibro(event: Event, url: string) {
+    if (this.isPdfLibro(url)) {
+      event.preventDefault();
+      this.downloadLibro(this.getFullPdfUrlLibro(url), this.getFileNameLibro(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  downloadLibro(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
+  }
+
+  getFileNameLibro(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'libro.pdf';
+  }
+
+  getDownloadUrlLibro(url: string): string {
+    return this.getFullPdfUrlLibro(url);
+  }
+
+
 
 
   fetchActividades(): void {
@@ -219,42 +325,40 @@ export class ResourceFullComponent implements OnInit  {
     return `http://localhost:3000${url}`;
   }
 
-  fetchLibros(): void {
-    this.apiService.getLibros().subscribe(
-      (response: LibroModel[]) => {
-        console.log('Response from API:', response);
-        this.libros = response;
-        this.librosMostrados = this.libros;
-        this.actualizarLibrosPaginados();
-        this.librosPaginados = this.libros.slice(0, this.librosPorPagina);
-      },
-      error => {
-        if (!error.message.includes('ERR_BLOCKED_BY_CLIENT')) {
-          console.error('Error al recuperar los libros:', error.message);
-        }
-      }
-    );
+  handleLinkClickActividad(event: Event, url: string) {
+    if (this.isPdfActividad(url)) {
+      event.preventDefault();
+      this.downloadActividad(this.getFullPdfUrlActividad(url), this.getFileNameActividad(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   }
 
-  isLocalImageLibro(url: string): boolean {
-    return url.startsWith('/uploads/libros/imagenes/');
+  downloadActividad(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
   }
 
-  isExternalImageLibro(url: string): boolean {
-    return url.startsWith('http://') || url.startsWith('https://');
+  getFileNameActividad(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'actividad.pdf';
   }
 
-  isPdfLibro(url: string): boolean {
-    return url.endsWith('.pdf');
+  getDownloadUrlActividad(url: string): string {
+    return this.getFullPdfUrlActividad(url);
   }
 
-  getFullImageUrlLibro(url: string): string {
-    return this.isLocalImageLibro(url) ? `http://localhost:3000${url}` : url;
-  }
 
-  getFullPdfUrlLibro(url: string): string {
-    return `http://localhost:3000${url}`;
-  }
 
 
   /*private fetchObras(): void {

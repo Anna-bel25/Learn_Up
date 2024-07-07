@@ -7,11 +7,13 @@ import { ResourceMenuComponent } from '../resource-menu/resource-menu.component'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { ColeccionesComponent } from '../colecciones/colecciones.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-resouce-libro',
   standalone: true,
-  imports: [RouterLink, ResouceLibroComponent, ResourceMenuComponent, CommonModule, FormsModule],
+  imports: [RouterLink, ResouceLibroComponent, ResourceMenuComponent, CommonModule, FormsModule, MatDialogModule],
   templateUrl: './resouce-libro.component.html',
   styleUrls: ['./resouce-libro.component.css']
 })
@@ -33,7 +35,7 @@ export class ResouceLibroComponent implements OnInit {
   librosPorPagina: number = 5;
   paginaActualLibros: number = 1;
 
-  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchLibros();
@@ -60,24 +62,57 @@ export class ResouceLibroComponent implements OnInit {
     );
   }
 
-  isLocalImage(url: string): boolean {
+  isLocalImageLibro(url: string): boolean {
     return url.startsWith('/uploads/libros/imagenes/');
   }
 
-  isExternalImage(url: string): boolean {
+  isExternalImageLibro(url: string): boolean {
     return url.startsWith('http://') || url.startsWith('https://');
   }
 
-  isPdf(url: string): boolean {
+  isPdfLibro(url: string): boolean {
     return url.endsWith('.pdf');
   }
 
-  getFullImageUrl(url: string): string {
-    return this.isLocalImage(url) ? `http://localhost:3000${url}` : url;
+  getFullImageUrlLibro(url: string): string {
+    return this.isLocalImageLibro(url) ? `http://localhost:3000${url}` : url;
   }
 
-  getFullPdfUrl(url: string): string {
+  getFullPdfUrlLibro(url: string): string {
     return `http://localhost:3000${url}`;
+  }
+
+  handleLinkClickLibro(event: Event, url: string) {
+    if (this.isPdfLibro(url)) {
+      event.preventDefault();
+      this.downloadLibro(this.getFullPdfUrlLibro(url), this.getFileNameLibro(url));
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  downloadLibro(url: string, filename: string) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Error al descargar el archivo:', error));
+  }
+
+  getFileNameLibro(url: string): string {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1] || 'libro.pdf';
+  }
+
+  getDownloadUrlLibro(url: string): string {
+    return this.getFullPdfUrlLibro(url);
   }
 
   scrollToTop(): void {
@@ -134,9 +169,28 @@ export class ResouceLibroComponent implements OnInit {
     }
   }
 
+  irPrimeraPaginaLibros() {
+    this.paginaActualLibros = 1;
+    this.actualizarLibrosPaginados();
+  }
+
+  irUltimaPaginaLibros() {
+    this.paginaActualLibros = this.numeroTotalPaginasLibros;
+    this.actualizarLibrosPaginados();
+  }
+
   restablecerRecursos(): void {
     this.librosMostrados = this.libros.slice();
     this.actualizarLibrosPaginados();
+  }
+
+  openDialog(event: Event) {
+    event.preventDefault();
+    const dialogRef = this.dialog.open(ColeccionesComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

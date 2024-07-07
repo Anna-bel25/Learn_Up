@@ -35,7 +35,7 @@ export class ApiService {
   postActividades(data: any): Observable<any> {
     return this.http.post<any>(this.actividadesUrl, data);
   }
-  
+
   postVideos(data: any): Observable<any> {
     return this.http.post<any>(this.videosUrl, data);
   }
@@ -44,14 +44,7 @@ export class ApiService {
     return this.http.post<any>(this.librosUrl, data);
   }
 
-
-  /*postVideo(formData: FormData): Observable<any> {
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'multipart/form-data');
-    return this.http.post<any>(this.videosUrl, formData, { headers: headers });
-  }*/
-
-
+  
   /*---------------MARIA------------------------*/
   postUsers(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/users`, userData);

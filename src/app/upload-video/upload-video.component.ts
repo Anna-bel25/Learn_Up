@@ -59,21 +59,21 @@ export class UploadVideoComponent implements OnInit {
         descripcion: form.value.videoDescription,
         nivel: this.selectedNivel,
         materia: this.selectedMateriaNombre,
-        url: this.selectedVideoInput === 'url' ? form.value.videoUrl : null
+        url: this.selectedVideoInput === 'url' ? form.value.videoUrl : ''
       };
-  
+
       const formData = new FormData();
       formData.append('materia_id', nuevoVideo.materia_id.toString());
       formData.append('titulo', nuevoVideo.titulo);
       formData.append('descripcion', nuevoVideo.descripcion);
       formData.append('nivel', nuevoVideo.nivel);
       formData.append('materia', nuevoVideo.materia);
-      formData.append('url', nuevoVideo.url || '');
-  
-      if (this.selectedVideoInput === 'file' && this.videoFile) {
-        formData.append('video', this.videoFile, this.videoFile.name);
+      formData.append('url', nuevoVideo.url);
+
+      if (this.selectedVideoInput === 'file' && this.selectedVideoFile) {
+        formData.append('video', this.selectedVideoFile, this.selectedVideoFile.name);
       }
-  
+
       this.apiService.postVideos(formData).subscribe(
         (response: any) => {
           console.log('Video subido exitosamente:', response);
@@ -83,18 +83,17 @@ export class UploadVideoComponent implements OnInit {
         (error) => {
           if (error.error instanceof ErrorEvent) {
             console.error('Error de red:', error.error.message);
-          } else {
-            console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+            } else {
+              console.error(`Error del servidor: ${error.status}, ${error.error.message}`);
+            }
+            console.error('Error al subir el video:', error);
           }
-          console.error('Error al subir el video:', error);
-        }
-      );
-    } else {
-      console.error('Formulario inválido o faltan datos necesarios.');
+        );
+      } else {
+        console.error('Formulario inválido o faltan datos necesarios.');
+      }
     }
-  }
-  
-  
+
   /*subirVideo(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {
       let nuevoVideo: any = {

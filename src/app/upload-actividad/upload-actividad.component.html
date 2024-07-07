@@ -101,7 +101,7 @@
                 <input #activityImageInput type="file" id="imageFile" (change)="onActivityImageChange($event)" accept="image/png, image/jpeg, image/jpg" style="display: none;">
                 <button type="button" class="btn3" (click)="selectActivityImage()">Seleccionar archivo</button>
                 <span *ngIf="isActivityImageSelected()" class="file-selected">Archivo seleccionado: {{ activityImageFileName }}</span>
-                <span *ngIf="!isActivityImageSelected()" class="file-not-selected">No se ha seleccionado ningún archivo</span>
+                <span *ngIf="!isActivityImageSelected()" class="file-not-selected"></span>
               </div>
             </div>
           </div>

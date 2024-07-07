@@ -150,10 +150,26 @@
       <div class="content">
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
+        <h3>
+          <a *ngIf="isMp4Url(video.url)" [href]="getFullVideoUrl(video.url)" class="link-span" target="_blank">
+            <span class="link-span">Ver</span> </a>
+        </h3>
+        <h3>
+          <a *ngIf="!isMp4Url(video.url)" [href]="video.url" class="link-span" target="_blank">
+            <span class="link-span">Ver</span> </a>
+        </h3>
         <div class="icons">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, video)"></a>
-          <a *ngIf="isMp4Url(video.url)" [href]="getFullVideoUrl(video.url)" download="video.mp4" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a
+            [href]="isMp4Url(video.url) ? getFullVideoUrl(video.url) : video.url"
+            (click)="isMp4Url(video.url) ? handleLinkClickVideo($event, video.url) : null"
+            target="_blank"
+            class="fa-solid fa-circle-down"
+            [attr.title]="isMp4Url(video.url) ? '' : ''">
+            <span class="link-span">{{ isMp4Url(video.url) ? '' : '' }}</span>
+          </a>
         </div>
+
       </div>
     </div>
   </div>
@@ -167,7 +183,7 @@
     </div>
   </div>
   <ng-template #noVideosMessage>
-    <p style="font-size: 1rem;">No se encontraron videos.</p>
+    <p style="font-size: 1rem; text-transform: none !important;">No se encontraron videos.</p>
   </ng-template>
 </section>
 <!-- VIDEOS SECTION END -->
@@ -188,7 +204,12 @@
              height="300"
              style="border-radius: 1.5rem;">
         <ng-template #externalImage>
-          <img *ngIf="isExternalImageLibro(libro.imagen_url)" [src]="libro.imagen_url" alt="Portada del libro" width="100%" height="300" style="border-radius: 1.5rem;">
+          <img *ngIf="isExternalImageLibro(libro.imagen_url)"
+          [src]="libro.imagen_url"
+          alt="Portada del libro"
+          width="100%"
+          height="300"
+          style="border-radius: 1.5rem;">
         </ng-template>
       </div>
       <div class="content">
@@ -197,11 +218,25 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
-        <h3><a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
-        <h3><a *ngIf="!isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank"><span class="link-span">Leer</span></a></h3>
+        <h3>
+          <a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank">
+            <span class="link-span">Leer</span> </a>
+        </h3>
+        <h3>
+          <a *ngIf="!isPdfLibro(libro.url)" [href]="libro.url" class="link-span" target="_blank">
+            <span class="link-span">Leer</span> </a>
+        </h3>
         <div class="icons">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, libro)"></a>
-          <a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a
+            [href]="isPdfLibro(libro.url) ? getFullPdfUrlLibro(libro.url) : libro.url"
+            (click)="handleLinkClickLibro($event, libro.url)"
+            target="_blank"
+            class="fa-solid fa-circle-down"
+            [attr.title]="isPdfLibro(libro.url) ? '' : ''">
+            <span class="link-span">{{ isPdfLibro(libro.url) ? '' : '' }}</span>
+          </a>
+
         </div>
       </div>
     </div>
@@ -216,7 +251,7 @@
     </div>
   </div>
   <ng-template #noLibrosMessage>
-    <p style="font-size: 1rem;">No se encontraron libros.</p>
+    <p style="font-size: 1rem; text-transform: none !important;">No se encontraron libros.</p>
   </ng-template>
 </section>
 <!-- LIBROS SECTION END -->
@@ -237,17 +272,35 @@
              height="300"
              style="border-radius: 1.5rem;">
         <ng-template #externalImage>
-          <img *ngIf="isExternalImageActividad(actividad.imagen_url)" [src]="actividad.imagen_url" alt="Imagen de la actividad" width="100%" height="300" style="border-radius: 1.5rem;">
+          <img *ngIf="isExternalImageActividad(actividad.imagen_url)"
+          [src]="actividad.imagen_url"
+          alt="Imagen de la actividad"
+          width="100%" height="300"
+          style="border-radius: 1.5rem;">
         </ng-template>
       </div>
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3><a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
-        <h3><a *ngIf="!isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank"><span class="link-span">Resolver</span></a></h3>
+        <h3>
+          <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank">
+            <span class="link-span">Resolver</span> </a>
+        </h3>
+        <h3>
+          <a *ngIf="!isPdfActividad(actividad.url)" [href]="actividad.url" target="_blank">
+            <span class="link-span">Resolver</span> </a>
+        </h3>
         <div class="icons">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, actividad)"></a>
-          <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" download="nombre_del_archivo.pdf" class="fa-solid fa-circle-down" title="Descargar"></a>
+          <a
+            [href]="isPdfActividad(actividad.url) ? getFullPdfUrlActividad(actividad.url) : actividad.url"
+            (click)="handleLinkClickActividad($event, actividad.url)"
+            target="_blank"
+            class="fa-solid fa-circle-down"
+            [attr.title]="isPdfActividad(actividad.url) ? '' : ''">
+            <span class="link-span">{{ isPdfActividad(actividad.url) ? '' : '' }}</span>
+          </a>
+
         </div>
       </div>
     </div>
@@ -262,7 +315,7 @@
     </div>
   </div>
   <ng-template #noActividadesMessage>
-    <p style="font-size: 1rem;">No se encontraron actividades.</p>
+    <p style="font-size: 1rem; text-transform: none !important;">No se encontraron actividades.</p>
   </ng-template>
 </section>
 <!-- ACTIVIDADES SECTION END -->
