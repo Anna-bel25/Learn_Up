@@ -24,12 +24,9 @@
   <div class="icons">
     <a routerLink="/privadasColecciones" [class.active]="isActiveLink(5)" (click)="setActiveLink(5)" class="fa-solid fa-bookmark" title="Mis colecciones"></a>
 
-    <a *ngIf="!userInfo" (click)="navigateToLogin()" [class.active]="isActiveLink(6)" (click)="setActiveLink(6)" class="fas fa-user" title="Usuario"></a>
+    <a *ngIf="!userInfo" routerLink="/login" [class.active]="isActiveLink(6)" (click)="setActiveLink(6)" class="fas fa-user" title="Usuario"></a>
     <a *ngIf="userInfo" (click)="logout()" class="fas fa-sign-out-alt" title="Cerrar sesión"></a>
-
-    <!-- <a *ngIf="!userInfo" [class.active]="isActiveLink(5)" (click)="navigateToLogin(); setActiveLink(5);" class="fas fa-user" title="Usuario"></a>
-    <a *ngIf="userInfo" (click)="logout();" class="fas fa-sign-out-alt" title="Cerrar sesión"></a> -->
-
+    
   </div>
 </header>
 

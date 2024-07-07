@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 //import jwt_decode from 'jwt-decode';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class ApiService {
   private videosUrl = 'http://localhost:3000/api/videos';
   private librosUrl='http://localhost:3000/api/libros';
   private userUrl = 'http://localhost:3000/api';
+  private userInfoChanged$ = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -61,6 +62,8 @@ export class ApiService {
       tap((response: any) => {
         if (response.token) {
           localStorage.setItem('token', response.token);
+          this.userInfoChanged$.next(this.getUserInfoFromToken());
+          //this.userInfoChanged$.next(userInfo);
         }
       })
     );
@@ -72,6 +75,10 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.userInfoChanged$.next(null);
+  }
+  getUserInfo(): Observable<any> {
+    return this.userInfoChanged$.asObservable();
   }
 
   getProtectedResource(): Observable<any> {
