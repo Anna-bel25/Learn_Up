@@ -35,7 +35,6 @@
                     </div>
                     <div class="contenedor-error" *ngIf="f['password'].touched && f['password'].invalid">
                         <div class="error" *ngIf="f['password'].errors?.['required']">* Contraseña es requerida.</div>
-                        <div class="error" *ngIf="f['password'].errors?.['minlength']">* Contraseña debe tener al menos 8 caracteres.</div>
                     </div>
                 </div>
 

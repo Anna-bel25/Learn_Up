@@ -12,8 +12,8 @@
     <a routerLink="/colecciones" [class.active]="isActiveLink(1)" (click)="setActiveLink(1)">Colecciones</a>
     <a routerLink="/nivel" [class.active]="isActiveLink(2)" (click)="setActiveLink(2)">Categoría</a>
     <a routerLink="/recursos" [class.active]="isActiveLink(3)" (click)="setActiveLink(3)">Recursos</a>
-    <!-- <a routerLink="/menu-subir" *ngIf="userInfo && userInfo.tipocuenta === 'Profesor'" [class.active]="isActiveLink(4)" (click)="setActiveLink(4)">Subir recursos</a> -->
-    <a routerLink="/menu-subir" [class.active]="isActiveLink(4)" (click)="setActiveLink(4)">Subir recursos</a>
+    <a routerLink="/menu-subir" *ngIf="userInfo?.tipocuenta === 'Profesor'" [class.active]="isActiveLink(4)" (click)="setActiveLink(4)">Subir recursos</a>
+    <!-- <a routerLink="/menu-subir" [class.active]="isActiveLink(4)" (click)="setActiveLink(4)">Subir recursos</a> -->
   </nav>
 
   <div class="usuario-logeo" *ngIf="userInfo">

@@ -53,7 +53,9 @@ export class ApiService {
   postUsersLogin(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token) {
+        if (response.error) {
+          throw new Error(response.error);
+        } else if (response.token) {
           localStorage.setItem('token', response.token);
           this.userInfoChanged$.next(this.getUserInfoFromToken());
           //this.userInfoChanged$.next(userInfo);
