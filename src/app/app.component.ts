@@ -22,6 +22,7 @@ import { PublicasColeccionesComponent } from './publicas-colecciones/publicas-co
 import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-colecciones.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 //import { routes } from './app.routes';
 
 @Component({
@@ -34,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    MatSnackBarModule,
 
     //routes,
 

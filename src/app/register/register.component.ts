@@ -58,13 +58,15 @@ export class RegisterComponent implements OnInit {
     // Marcar todos los campos como tocados para mostrar los errores de validación
     this.markAllFieldsAsTouched();
   
-    const checkbox = document.getElementById('termsCheckbox') as HTMLInputElement | null;
-    if (checkbox && checkbox.checked) {
+    const checkbox = document.getElementById('termsCheckbox') as HTMLInputElement;
+    // Verificar si el checkbox no está marcado
+    if (checkbox.checked) {
       this.checkboxError = false;
     } else {
       this.checkboxError = true;
       return;
     }
+    
 
     // Detener la ejecución si el formulario es inválido
     if (this.FormularioRegistro.valid) {

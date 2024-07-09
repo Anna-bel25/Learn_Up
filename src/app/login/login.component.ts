@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,13 @@ import { ApiService } from '../api.service';
 export class LoginComponent implements OnInit {
   FormularioLogin: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService) {
+  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService,private snackBar: MatSnackBar) {
     this.FormularioLogin = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]
     });
+  }
+  ngOnInit(): void {
   }
 
   get f() { return this.FormularioLogin.controls; }
@@ -39,12 +42,16 @@ export class LoginComponent implements OnInit {
     }, error => {
       console.error('Error iniciando sesión', error);
     });
+    this.showMessage();
   }
 
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
-
-  ngOnInit(): void {
+  showMessage() {
+    this.snackBar.open('Correo o Contraseña incorrecta', 'Cerrar', {
+      duration: 5000, // duración en milisegundos (5000ms = 5 segundos)
+    });
   }
+  
 }

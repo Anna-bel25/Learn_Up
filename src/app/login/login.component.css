@@ -97,7 +97,7 @@ input{
     padding: 0 60px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #ee6c4d;
+    border: 2px solid #000814;
     background: transparent;
 }
 .input-icon{
@@ -171,7 +171,17 @@ input:focus {
     border-radius: 20px;
     cursor: pointer;
 }
-
+/*mensaje de erro de inicion de sesion*/
+.custom-snackbar {
+    background-color: #47ff22; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    /* Otros estilos personalizados */
+  }
+  
+  .custom-snackbar .mat-simple-snackbar-action {
+    color: #ffd600; /* Color del botón de acción */
+  }
 
 /* Media Queries */
 @media (max-width:963.39px){
