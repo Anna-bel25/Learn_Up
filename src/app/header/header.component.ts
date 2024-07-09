@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterLink,CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
   userInfo: { tipocuenta: string, username: string } | null = null;
@@ -37,7 +37,7 @@ export class HeaderComponent {
       }
     });
 
-    this.getUserInfo();
+    this.getUserInfo();  // Llama al método para obtener la información del usuario
   }
 
   setActiveLink(index: number) {
@@ -49,19 +49,19 @@ export class HeaderComponent {
     return this.activeLinkIndex === index;
   }
 
-
-  // ir a la pagina de login --- Maria
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
+
   getUserInfo() {
-    this.userInfo = this.apiService.getUserInfoFromToken();
-    console.log('UserInfo:', this.userInfo); // Verificar en la consola
+    this.userInfo = this.apiService.getUserInfoFromToken();  // Obtiene la información del usuario del token
+    console.log('UserInfo:', this.userInfo);  // Verifica en la consola
   }
+
   logout() {
     this.userInfo = null;
     this.apiService.logout();
-    this.router.navigate(['/home']); // Navega a la página de inicio o login después de cerrar sesión
+    this.router.navigate(['/home']);  // Navega a la página de inicio o login después de cerrar sesión
   }
   //--------------------------------
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-//import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,7 @@ export class ApiService {
     return this.http.post<any>(this.librosUrl, data);
   }
 
-  
+
   /*---------------MARIA------------------------*/
   postUsers(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/users`, userData);
@@ -79,19 +78,22 @@ export class ApiService {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const decoded: any = JSON.parse(atob(token.split('.')[1]));
+        // Decodifica el payload del token
+        const payload = token.split('.')[1];
+        const decoded: any = JSON.parse(atob(payload));
+        console.log('Decoded Token Payload:', decoded);  // Verifica el contenido del payload
 
-        // Verificar la expiración del token
-        const currentTimestamp = new Date().getTime() / 1000; // Tiempo actual en segundos
+        // Verifica la expiración del token
+        const currentTimestamp = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
         if (decoded.exp && decoded.exp < currentTimestamp) {
           console.warn('El token ha expirado.');
-          // Realizar acciones de renovación de token o cierre de sesión aquí si es necesario
+          this.logout();  // Cierra la sesión si el token ha expirado
           return null;
         }
 
         return {
-          tipocuenta: decoded.tipocuenta,
-          username: decoded.username
+          tipocuenta: decoded.tipocuenta || 'Desconocido',
+          username: decoded.username || 'Desconocido'
         };
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -99,6 +101,26 @@ export class ApiService {
     }
     return null;
   }
+
+
+  // Nuevo método para verificar el contenido del token
+  verifyTokenContent(): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const payload = token.split('.')[1];
+      const decoded: any = JSON.parse(atob(payload));
+      console.log('Decoded Token Payload:', decoded);
+
+      // Verifica la expiración del token
+      const currentTimestamp = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
+      if (decoded.exp && decoded.exp < currentTimestamp) {
+        console.warn('El token ha expirado.');
+        this.logout();  // Cierra la sesión si el token ha expirado
+      }
+    }
+    return this.http.get(`${this.userUrl}/protected`);  // Puedes ajustar el endpoint según tus necesidades
+  }
+
 
   /*--------------------------------------------*/
 
