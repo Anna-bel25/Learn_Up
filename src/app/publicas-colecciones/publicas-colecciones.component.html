@@ -208,8 +208,13 @@
         <div class="cartitas" *ngIf="recursos.length > 0; else noRecursosMessage">
           <div class="card-container" *ngFor="let recurso of recursos">
             <div class="row" class="card">
-              <div class="img-container">
-                <img [src]="recurso.image_url" alt="Imagen del recurso" width="100%" height="300" style="border-radius: 1.5rem;">
+              <div class="media-container">
+                <div *ngIf="recurso.recurso_tipo === 'video'; else imageTemplate">
+                  <iframe [src]="getSafeUrl(recurso.url)" width="100%" height="300" style="border-radius: 1.5rem;" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <ng-template #imageTemplate>
+                  <img [src]="recurso.image_url" alt="Imagen del recurso" width="100%" height="300" style="border-radius: 1.5rem;">
+                </ng-template>
               </div>
               <div class="content">
                 <h3>{{ recurso.titulo }}</h3>
@@ -228,3 +233,4 @@
       </div>
     </div>
   </section>
+  
