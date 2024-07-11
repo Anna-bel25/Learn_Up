@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { ApiService } from '../api.service';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
 
 
 @Component({
@@ -15,7 +14,6 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent {
   userInfo: { tipocuenta: string, username: string } | null = null;
-  private destroy$ = new Subject<void>();
 
   activeLinkIndex = 0;
   links = [
@@ -39,15 +37,7 @@ export class HeaderComponent {
       }
     });
 
-    this.apiService.getUserInfo().subscribe(userInfo => {
-      this.userInfo = userInfo;
-    });
-
     this.getUserInfo();
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   setActiveLink(index: number) {
@@ -66,7 +56,6 @@ export class HeaderComponent {
   getUserInfo() {
     this.userInfo = this.apiService.getUserInfoFromToken();
     console.log('UserInfo:', this.userInfo); // Verificar en la consola
-    //this.cd.detectChanges();
   }
   logout() {
     this.userInfo = null;

@@ -12,7 +12,6 @@ export class ApiService {
   private videosUrl = 'http://localhost:3000/api/videos';
   private librosUrl='http://localhost:3000/api/libros';
   private userUrl = 'http://localhost:3000/api';
-  private userInfoChanged$ = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +43,7 @@ export class ApiService {
     return this.http.post<any>(this.librosUrl, data);
   }
 
-  
+
   /*---------------MARIA------------------------*/
   postUsers(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/users`, userData);
@@ -53,12 +52,8 @@ export class ApiService {
   postUsersLogin(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/login`, userData).pipe(
       tap((response: any) => {
-        if (response.error) {
-          throw new Error(response.error);
-        } else if (response.token) {
+        if (response.token) {
           localStorage.setItem('token', response.token);
-          this.userInfoChanged$.next(this.getUserInfoFromToken());
-          //this.userInfoChanged$.next(userInfo);
         }
       })
     );
@@ -70,10 +65,6 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.userInfoChanged$.next(null);
-  }
-  getUserInfo(): Observable<any> {
-    return this.userInfoChanged$.asObservable();
   }
 
   getProtectedResource(): Observable<any> {
@@ -154,4 +145,3 @@ export class ApiService {
   }
 
 }
-

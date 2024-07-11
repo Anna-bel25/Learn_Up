@@ -1,5 +1,6 @@
 
 
+
 <!-- START HEADER -->
 
 <header class="header">
@@ -26,7 +27,7 @@
 
     <a *ngIf="!userInfo" routerLink="/login" [class.active]="isActiveLink(6)" (click)="setActiveLink(6)" class="fas fa-user" title="Usuario"></a>
     <a *ngIf="userInfo" (click)="logout()" class="fas fa-sign-out-alt" title="Cerrar sesión"></a>
-    
+
   </div>
 </header>
 
@@ -34,3 +35,4 @@
 
 
 <!-- END HEADER -->
+
