@@ -59,7 +59,7 @@ export class UploadVideoComponent implements OnInit {
         descripcion: form.value.videoDescription,
         nivel: this.selectedNivel,
         materia: this.selectedMateriaNombre,
-        url: this.selectedVideoInput === 'url' ? form.value.videoUrl : ''
+        url: this.selectedVideoInput === 'url' ? this.videoUrl : ''
       };
 
       const formData = new FormData();
@@ -68,10 +68,11 @@ export class UploadVideoComponent implements OnInit {
       formData.append('descripcion', nuevoVideo.descripcion);
       formData.append('nivel', nuevoVideo.nivel);
       formData.append('materia', nuevoVideo.materia);
-      formData.append('url', nuevoVideo.url);
 
       if (this.selectedVideoInput === 'file' && this.selectedVideoFile) {
         formData.append('video', this.selectedVideoFile, this.selectedVideoFile.name);
+      } else if (this.selectedVideoInput === 'url') {
+        formData.append('url', nuevoVideo.url);
       }
 
       this.apiService.postVideos(formData).subscribe(

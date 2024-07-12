@@ -149,6 +149,11 @@ export class ColeccionesComponent implements OnInit {
   
     let resourceType: string | null = null;
     let resourceId: number | null = null;
+    let resourceTitle: string | null = null;
+    let resourceDescription: string | null = null;
+    let resourceUrl: string | null = null;
+    let resourceImageUrl: string | null = null;
+
   
     if (this.selectedResource.video_id) {
       resourceType = 'video';
@@ -160,7 +165,12 @@ export class ColeccionesComponent implements OnInit {
       resourceType = 'libro';
       resourceId = this.selectedResource.libro_id;
     }
-  
+
+    resourceTitle = this.selectedResource.titulo;
+    resourceDescription = this.selectedResource.descripcion;
+    resourceUrl = this.selectedResource.url;
+    resourceImageUrl = this.selectedResource.imagen_url;
+
     if (!resourceType || !resourceId) {
       console.error('Selected resource is missing a valid ID');
       return;
@@ -169,6 +179,10 @@ export class ColeccionesComponent implements OnInit {
     const resourceData = {
       type: resourceType,
       id: resourceId,
+      titulo: resourceTitle,
+      descripcion: resourceDescription,
+      url: resourceUrl,
+      image_url: resourceImageUrl,
       collections: selectedCollections 
     };
   
