@@ -66,8 +66,6 @@ export class RegisterComponent implements OnInit {
       this.checkboxError = true;
       return;
     }
-    
-
     // Detener la ejecución si el formulario es inválido
     if (this.FormularioRegistro.valid) {
       // Procesar el formulario

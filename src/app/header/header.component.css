@@ -102,6 +102,39 @@
   padding: 0 1rem;
   color: var(--medium-gray);
 }
+.options-container{
+  position: absolute;
+  display: flex;
+  flex-direction: column; 
+  text-decoration: none;
+  align-items: end;
+  padding: 5px;
+  background: #f1f1f1;
+  border-radius: 5px;
+  transition: max-height 0.3s ease-out;
+  width: 150px;
+  right: 5%;
+}
+.options-container .letras-opciones {
+  margin: 5px 0;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #000;
+  padding: 10px;
+  border-radius: 5px;
+  transition:  0.3s;
+  cursor: pointer;
+}
+.options-container .letras-opcione:hover {
+  color:var(--white-suit);
+  background-color: var(--pink);
+}
+.linea-horizontal {
+  height: 1px; /* Grosor de la línea */
+  background-color: var(--medium-gray); /* Color de la línea */
+  width: 90%; /* Ancho de la línea (100% del contenedor) */
+  margin: 0 auto; /* Centra la línea horizontalmente */
+}
 
 /* Media Queries */
 @media (max-width:963.39px){

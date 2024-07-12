@@ -17,6 +17,7 @@ import { UploadLibroComponent } from './upload-libro/upload-libro.component';
 import { UploadActividadComponent } from './upload-actividad/upload-actividad.component';
 import { ProtectedComponent } from './protected/ProtectedComponent ';
 import { AuthGuard } from './AuthGuard';
+import { CuentaUsuarioComponent } from './cuenta-usuario/cuenta-usuario.component';
 
 
 export const routes: Routes =
@@ -37,8 +38,9 @@ export const routes: Routes =
   { path: 'subir-actiidad', component: UploadActividadComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  {path:'colecciones', component:PublicasColeccionesComponent},
-  {path:'privadasColecciones',component:PrivadasColeccionesComponent},
+  { path: 'colecciones', component:PublicasColeccionesComponent},
+  { path: 'privadasColecciones', component:PrivadasColeccionesComponent},
+  { path: 'cuenta-usuario', component:CuentaUsuarioComponent},
 
   { path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] },
 
