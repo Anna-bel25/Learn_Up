@@ -8,14 +8,15 @@
         <div class="subtitle"><a [routerLink]="'/recursos'" (click)="scrollToTop()"> Ver recursos</a></div>
     </div>
 </div>
+
 <!--Colecciones-->
-<section class="colection" *ngIf="!mostrarContenido && !mostrarContenido2">
-    <!--<div class="titulo">
+<!-- <section class="colection" *ngIf="!mostrarContenido && !mostrarContenido2">
+    <div class="titulo">
         <h3 class="Linea-efecto">Colecciones Publicas</h3>
-    </div>-->
-    <div class="tarjetas">
+    </div>
+    <div class="tarjetas"> -->
         <!--Coleccion Primavera-->
-        <div class="tarjetitas">
+        <!-- <div class="tarjetitas">
             <div class="imagen">
                 <a (click)="toggleContenido()">
                     <img src="https://img.freepik.com/free-photo/3d-cartoon-background-children_23-2150473313.jpg?t=st=1716941456~exp=1716945056~hmac=5376e4316e8a09a3d5289900f7646b5947963a6b6b7fcfe60b9a85ddcb9922b5&w=826"
@@ -34,9 +35,9 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
          <!--Coleccion blossom-->
-        <div class="tarjetitas">
+        <!-- <div class="tarjetitas">
             <div class="imagen">
                 <a (click)="toggleContenido2()">
                     <img src="https://img.freepik.com/free-photo/multicolored-markers-painted-paper_23-2147843223.jpg?t=st=1717034818~exp=1717038418~hmac=d92ccc017204a72d8236e76c415c5353297bd63fd7191091e656c188b21768ee&w=740 " 
@@ -57,10 +58,10 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
  <!--Coleccion Primavera-->
-<section *ngIf="mostrarContenido">
+<!-- <section *ngIf="mostrarContenido">
     <div class="titulo">
         <h3 class="Linea-efecto">Colección Primavera</h3>
         <a (click)="toggleContenido()">Volver</a>
@@ -112,12 +113,12 @@
         </div>
     </div>
 
-</section>
+</section> -->
 
 
 
 <!--Colecccion Blossom-->
-<section *ngIf="mostrarContenido2" class="publicol">
+<!-- <section *ngIf="mostrarContenido2" class="publicol">
     <div class="titulo">
         <h3 class="Linea-efecto">Colección Blossom</h3>
         <a (click)="toggleContenido2()">Volver</a>
@@ -169,4 +170,67 @@
         </div>
     </div>
 
-</section>
+</section> -->
+
+<!--Colecciones del usuario-->
+<section class="collection" *ngIf="!mostrarContenido">
+    <div class="tarjetas">
+      <div class="tarjetitas" *ngFor="let coleccion of colecciones">
+        <div class="imagen">
+          <a (click)="verRecursos(coleccion)">
+            <img [src] ="getImagenUrl(coleccion)" alt="Imagen de la colección">
+          </a>
+        </div>
+        <div class="contenido">
+          <div class="letras">
+            <h2>{{ coleccion.nombre }}</h2>
+            <span *ngIf="coleccion.es_privado">Privada</span>
+            <span *ngIf="!coleccion.es_privado">Pública</span>
+            <p>By {{ coleccion.usuario_nombre }}</p>
+          </div>
+          <div class="icono">
+            <span class="material-symbols-outlined" (click)="openShareDialog(coleccion.nombre)">
+              share
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section *ngIf="mostrarContenido">
+    <div class="titulo">
+      <h3 class="Linea-efecto">Colección {{ selectedColeccion.nombre }}</h3>
+      <a (click)="toggleContenido()">Volver</a>
+    </div>
+    <div class="tarjetas">
+      <div class="new-content">
+        <div class="cartitas" *ngIf="recursos.length > 0; else noRecursosMessage">
+          <div class="card-container" *ngFor="let recurso of recursos">
+            <div class="row" class="card">
+              <div class="media-container">
+                <div *ngIf="recurso.recurso_tipo === 'video'; else imageTemplate">
+                  <iframe [src]="getSafeUrl(recurso.url)" width="100%" height="300" style="border-radius: 1.5rem;" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <ng-template #imageTemplate>
+                  <img [src]="recurso.image_url" alt="Imagen del recurso" width="100%" height="300" style="border-radius: 1.5rem;">
+                </ng-template>
+              </div>
+              <div class="content">
+                <h3>{{ recurso.titulo }}</h3>
+                <p>{{ recurso.descripcion }}</p>
+                <h2><a [href]="recurso.url" target="_blank">Ver más</a></h2>
+                <div class="icons">
+                  <a href="#" class="fa-solid fa-circle-down" title="Descargar"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noRecursosMessage>
+          <p>No hay recursos disponibles.</p>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+  

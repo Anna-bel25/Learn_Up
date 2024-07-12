@@ -23,6 +23,9 @@ import { PrivadasColeccionesComponent } from './privadas-colecciones/privadas-co
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { CuentaUsuarioComponent } from './cuenta-usuario/cuenta-usuario.component';
+
 //import { routes } from './app.routes';
 
 @Component({
@@ -36,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     FormsModule,
     MatSnackBarModule,
+    MatBottomSheetModule,
 
     //routes,
 
@@ -46,6 +50,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     RegisterComponent,
     PublicasColeccionesComponent,
     PrivadasColeccionesComponent,
+    CuentaUsuarioComponent,
 
     //NIVEL & TEMA COMPONENTS
     LevelComponent,

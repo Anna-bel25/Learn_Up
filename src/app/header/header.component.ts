@@ -17,6 +17,7 @@ export class HeaderComponent {
   private destroy$ = new Subject<void>();
   showOptions = false;
 
+
   activeLinkIndex = 0;
   links = [
     { path: '/home', label: 'Inicio', active: true },
@@ -26,6 +27,7 @@ export class HeaderComponent {
     { path: '/menu-subir', label: 'Subir Recursos', active: false },
     { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
     { path: '/login', label: 'Usuario', active: false },
+    { path: '/cuenta-usuario',label:'Cuenta',active:false},
     { path: '/cuenta-usuario',label:'Cuenta',active:false},
 
     // { path: '/menu-recurso', label: 'Contactanos', active: false },

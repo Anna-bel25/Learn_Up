@@ -138,4 +138,21 @@ export class ApiService {
     });
     return this.http.post(`${this.userUrl}/colecciones/guardar-recurso`, { resource, colecciones }, { headers });
   }
+
+  obtenerColeccionesPublicas(): Observable<any> {
+    return this.http.get(`${this.userUrl}/colecciones/publicas`);
+  }
+
+  obtenerRecursosDeColeccion(coleccionId: number): Observable<any> {
+    return this.http.get(`${this.userUrl}/colecciones/${coleccionId}/recursos`);
+  }
+
+  obtenerColeccionesPrivadas(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any[]>(`${this.userUrl}/colecciones/privadas`, { headers });
+  }
+
 }
