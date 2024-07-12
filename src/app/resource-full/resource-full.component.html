@@ -165,7 +165,7 @@
             (click)="isMp4Url(video.url) ? handleLinkClickVideo($event, video.url) : null"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isMp4Url(video.url) ? '' : ''">
+            [attr.title]="isMp4Url(video.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isMp4Url(video.url) ? '' : '' }}</span>
           </a>
         </div>
@@ -233,7 +233,7 @@
             (click)="handleLinkClickLibro($event, libro.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfLibro(libro.url) ? '' : ''">
+            [attr.title]="isPdfLibro(libro.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfLibro(libro.url) ? '' : '' }}</span>
           </a>
 
@@ -297,7 +297,7 @@
             (click)="handleLinkClickActividad($event, actividad.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfActividad(actividad.url) ? '' : ''">
+            [attr.title]="isPdfActividad(actividad.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfActividad(actividad.url) ? '' : '' }}</span>
           </a>
 

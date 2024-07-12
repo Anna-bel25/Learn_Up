@@ -12,6 +12,7 @@ export class ApiService {
   private videosUrl = 'http://localhost:3000/api/videos';
   private librosUrl='http://localhost:3000/api/libros';
   private userUrl = 'http://localhost:3000/api';
+  private userInfoChanged$ = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -52,8 +53,12 @@ export class ApiService {
   postUsersLogin(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token) {
+        if (response.error) {
+          throw new Error(response.error);
+        } else if (response.token) {
           localStorage.setItem('token', response.token);
+          this.userInfoChanged$.next(this.getUserInfoFromToken());
+          //this.userInfoChanged$.next(userInfo);
         }
       })
     );
@@ -65,6 +70,11 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.userInfoChanged$.next(null);
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.userInfoChanged$.asObservable();
   }
 
   getProtectedResource(): Observable<any> {
@@ -74,6 +84,7 @@ export class ApiService {
     return this.http.get(`${this.userUrl}/protected`, { headers });
   }
 
+
   // Método para obtener la información del usuario desde el token JWT
   getUserInfoFromToken(): { tipocuenta: string, username: string } | null {
     const token = localStorage.getItem('token');
@@ -82,13 +93,12 @@ export class ApiService {
         const decoded: any = JSON.parse(atob(token.split('.')[1]));
 
         // Verificar la expiración del token
-        const currentTimestamp = new Date().getTime() / 1000; // Tiempo actual en segundos
+        const currentTimestamp = new Date().getTime() / 90000; // Tiempo actual en segundos
         if (decoded.exp && decoded.exp < currentTimestamp) {
           console.warn('El token ha expirado.');
           // Realizar acciones de renovación de token o cierre de sesión aquí si es necesario
           return null;
         }
-
         return {
           tipocuenta: decoded.tipocuenta,
           username: decoded.username
@@ -99,6 +109,7 @@ export class ApiService {
     }
     return null;
   }
+
 
   /*--------------------------------------------*/
 
