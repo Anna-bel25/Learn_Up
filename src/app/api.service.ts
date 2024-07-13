@@ -12,6 +12,7 @@ export class ApiService {
   private videosUrl = 'http://localhost:3000/api/videos';
   private librosUrl='http://localhost:3000/api/libros';
   private userUrl = 'http://localhost:3000/api';
+  private userInfoChanged$ = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -52,12 +53,17 @@ export class ApiService {
   postUsersLogin(userData: any): Observable<any> {
     return this.http.post(`${this.userUrl}/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token) {
+        if (response.error) {
+          throw new Error(response.error);
+        } else if (response.token) {
           localStorage.setItem('token', response.token);
+          this.userInfoChanged$.next(this.getUserInfoFromToken());
+          //this.userInfoChanged$.next(userInfo);
         }
       })
     );
   }
+  
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -65,6 +71,11 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.userInfoChanged$.next(null);
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.userInfoChanged$.asObservable();
   }
 
   getProtectedResource(): Observable<any> {
@@ -142,6 +153,22 @@ export class ApiService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<any[]>(`${this.userUrl}/colecciones/privadas`, { headers });
+  }
+
+  eliminarColeccion(coleccion_id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.userUrl}/colecciones/${coleccion_id}`, {headers});
+  }
+
+  eliminarRecursoDeColeccion(coleccion_id: number, recurso_id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.userUrl}/colecciones/${coleccion_id}/recurso/${recurso_id}`, {headers});
   }
 
 }
