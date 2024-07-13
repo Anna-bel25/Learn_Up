@@ -53,5 +53,5 @@ export class LoginComponent implements OnInit {
       duration: 5000, // duración en milisegundos (5000ms = 5 segundos)
     });
   }
-  
+
 }

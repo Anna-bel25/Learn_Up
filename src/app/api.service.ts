@@ -85,6 +85,7 @@ export class ApiService {
     return this.http.get(`${this.userUrl}/protected`, { headers });
   }
 
+
   // Método para obtener la información del usuario desde el token JWT
   getUserInfoFromToken(): { tipocuenta: string, username: string } | null {
     const token = localStorage.getItem('token');
@@ -93,13 +94,12 @@ export class ApiService {
         const decoded: any = JSON.parse(atob(token.split('.')[1]));
 
         // Verificar la expiración del token
-        const currentTimestamp = new Date().getTime() / 1000; // Tiempo actual en segundos
+        const currentTimestamp = new Date().getTime() / 90000; // Tiempo actual en segundos
         if (decoded.exp && decoded.exp < currentTimestamp) {
           console.warn('El token ha expirado.');
           // Realizar acciones de renovación de token o cierre de sesión aquí si es necesario
           return null;
         }
-
         return {
           tipocuenta: decoded.tipocuenta,
           username: decoded.username
@@ -110,6 +110,7 @@ export class ApiService {
     }
     return null;
   }
+
 
   /*--------------------------------------------*/
 

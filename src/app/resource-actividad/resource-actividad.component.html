@@ -29,15 +29,15 @@
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank">
             <span class="link-span">Resolver</span></a>
         </h3>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="!isPdfActividad(actividad.url)" [href]="actividad.url" target="_blank">
             <span class="link-span">Resolver</span> </a>
         </h3>
-        <div class="icons">
+        <div class="icons" *ngIf="isLoggedIn()">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event)"></a>
           <a
             [href]="isPdfActividad(actividad.url) ? getFullPdfUrlActividad(actividad.url) : actividad.url"

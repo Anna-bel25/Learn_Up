@@ -38,6 +38,10 @@ export class ResourceVideoComponent implements OnInit {
 
   constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
+  isLoggedIn(): boolean {
+    return this.apiService.isLoggedIn();
+  }
+
   ngOnInit(): void {
     this.fetchVideos();
   }

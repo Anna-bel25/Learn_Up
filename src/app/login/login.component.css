@@ -87,7 +87,7 @@ h1{
 }
 .contenedor-inputs{
     padding: 7%;
-    border-radius: 10px;    
+    border-radius: 10px;
 }
 /*------------INPUT--------------*/
 input{
@@ -178,7 +178,7 @@ input:focus {
     font-size: 16px; /* Tamaño de la fuente */
     /* Otros estilos personalizados */
   }
-  
+
   .custom-snackbar .mat-simple-snackbar-action {
     color: #ffd600; /* Color del botón de acción */
   }
@@ -305,5 +305,5 @@ input:focus {
         left: 25%; /* Ajusta la posición de la línea */
         bottom: 21%;
       }
-    
+
 }
