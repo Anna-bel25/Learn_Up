@@ -6,7 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { LibrosResponse } from '../interfaces/libro.interface';
 import { VideoModel } from '../models/video.model';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { ActividadModel } from '../models/actividad.model';
 import { FormsModule } from '@angular/forms';
 import { LibroModel } from '../models/lirbo.model';
@@ -117,6 +117,10 @@ export class ResourceFullComponent implements OnInit  {
     this.mostrarVideos();
     //this.mostrarTodo();
     //this.determinarMostrarTodosLosRecursos();
+  }
+
+  isLoggedIn(): boolean {
+    return this.apiService.isLoggedIn();
   }
 
 

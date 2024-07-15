@@ -27,6 +27,7 @@ export class HeaderComponent {
     { path: '/privadasColecciones', label: 'Mis colecciones', active: false },
     { path: '/login', label: 'Usuario', active: false },
     { path: '/cuenta-usuario',label:'Cuenta',active:false},
+    { path: '/cuenta-usuario',label:'Cuenta',active:false},
 
     // { path: '/menu-recurso', label: 'Contactanos', active: false },
   ];

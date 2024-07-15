@@ -19,14 +19,14 @@
                         <input formControlName="correo"type="text" required placeholder="Correo" name="correo">
                         <div class="vertical-line"></div>
                         <i class="fa-solid fa-envelope"></i>
-                        
+
                     </div>
                     <div class="contenedor-error" *ngIf="f['correo'].touched && f['correo'].invalid">
                         <div class="error" *ngIf="f['correo'].errors?.['required']">* Correo es requerido.</div>
                         <div class="error" *ngIf="f['correo'].errors?.['email']">* Correo no es válido.</div>
                     </div>
                 </div>
-    
+
                 <div class="contenedor-datos-usuario">
                     <div class="input-icon">
                         <input formControlName="password" type="password" required placeholder="Contraseña" name="password">

@@ -35,6 +35,10 @@ export class ResourceActividadComponent implements OnInit {
 
   constructor(private apiService: ApiService, private http: HttpClient,public dialog: MatDialog) { }
 
+  isLoggedIn(): boolean {
+    return this.apiService.isLoggedIn();
+  }
+
   ngOnInit(): void {
     this.fetchActividades();
   }

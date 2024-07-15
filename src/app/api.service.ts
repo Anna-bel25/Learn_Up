@@ -62,6 +62,7 @@ export class ApiService {
       })
     );
   }
+  
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -82,6 +83,7 @@ export class ApiService {
     });
     return this.http.get(`${this.userUrl}/protected`, { headers });
   }
+
 
   // Método para obtener la información del usuario desde el token JWT
   getUserInfoFromToken(): { id : number,tipocuenta: string, username: string } | null {
@@ -181,6 +183,22 @@ export class ApiService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<any[]>(`${this.userUrl}/colecciones/privadas`, { headers });
+  }
+
+  eliminarColeccion(coleccion_id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.userUrl}/colecciones/${coleccion_id}`, {headers});
+  }
+
+  eliminarRecursoDeColeccion(coleccion_id: number, recurso_id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.userUrl}/colecciones/${coleccion_id}/recurso/${recurso_id}`, {headers});
   }
 
 }

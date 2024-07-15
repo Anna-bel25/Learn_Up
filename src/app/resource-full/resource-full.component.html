@@ -124,7 +124,7 @@
   <h1 class="title2">Recursos de <span>Videos</span></h1>
   <div *ngIf="videosPaginados.length > 0; else noVideosMessage">
     <div class="row" *ngFor="let video of videosPaginados">
-      <div class="recurso-container">
+      <div class="recurso-container" style="position: relative;">
         <iframe
           *ngIf="isYouTubeUrl(video.url)"
           width="100%"
@@ -144,28 +144,33 @@
           width="100%"
           height="315"
           style="border-radius: 1.5rem;">
+          [attr.controls]="isLoggedIn() ? 'controls' : null">
           Tu navegador no soporta el elemento de video.
         </video>
+        <div *ngIf="!isLoggedIn()"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); color: white; display: flex; justify-content: center; align-items: center; border-radius: 1.5rem; text-transform: none; font-size: 1.3rem;">
+          <p style="text-transform: none; margin: 0;">Por favor inicia sesión para reproducir el video.</p>
+        </div>
       </div>
       <div class="content">
         <h3>{{ video.titulo }}</h3>
         <p>{{ video.descripcion }}</p>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="isMp4Url(video.url)" [href]="getFullVideoUrl(video.url)" class="link-span" target="_blank">
             <span class="link-span">Ver</span> </a>
         </h3>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="!isMp4Url(video.url)" [href]="video.url" class="link-span" target="_blank">
             <span class="link-span">Ver</span> </a>
         </h3>
-        <div class="icons">
+        <div class="icons" *ngIf="isLoggedIn()">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, video)"></a>
           <a
             [href]="isMp4Url(video.url) ? getFullVideoUrl(video.url) : video.url"
             (click)="isMp4Url(video.url) ? handleLinkClickVideo($event, video.url) : null"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isMp4Url(video.url) ? '' : ''">
+            [attr.title]="isMp4Url(video.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isMp4Url(video.url) ? '' : '' }}</span>
           </a>
         </div>
@@ -218,22 +223,22 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank">
             <span class="link-span">Leer</span> </a>
         </h3>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="!isPdfLibro(libro.url)" [href]="libro.url" class="link-span" target="_blank">
             <span class="link-span">Leer</span> </a>
         </h3>
-        <div class="icons">
+        <div class="icons" *ngIf="isLoggedIn()">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, libro)"></a>
           <a
             [href]="isPdfLibro(libro.url) ? getFullPdfUrlLibro(libro.url) : libro.url"
             (click)="handleLinkClickLibro($event, libro.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfLibro(libro.url) ? '' : ''">
+            [attr.title]="isPdfLibro(libro.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfLibro(libro.url) ? '' : '' }}</span>
           </a>
 
@@ -282,22 +287,22 @@
       <div class="content">
         <h3>{{ actividad.titulo }}</h3>
         <p>{{ actividad.descripcion }}</p>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="isPdfActividad(actividad.url)" [href]="getFullPdfUrlActividad(actividad.url)" target="_blank">
             <span class="link-span">Resolver</span> </a>
         </h3>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="!isPdfActividad(actividad.url)" [href]="actividad.url" target="_blank">
             <span class="link-span">Resolver</span> </a>
         </h3>
-        <div class="icons">
+        <div class="icons" *ngIf="isLoggedIn()">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar" (click)="openDialog($event, actividad)"></a>
           <a
             [href]="isPdfActividad(actividad.url) ? getFullPdfUrlActividad(actividad.url) : actividad.url"
             (click)="handleLinkClickActividad($event, actividad.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfActividad(actividad.url) ? '' : ''">
+            [attr.title]="isPdfActividad(actividad.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfActividad(actividad.url) ? '' : '' }}</span>
           </a>
 

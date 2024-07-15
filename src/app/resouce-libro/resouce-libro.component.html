@@ -33,15 +33,16 @@
         <p class="libro-titulo">Autor: <span class="libro-dato">{{ libro.autor }}</span></p>
         <p class="libro-titulo">Fecha de publicación: <span class="libro-dato">{{ libro.fecha | date:'yyyy' }}</span></p>
         <p class="libro-titulo">Edición: <span class="libro-dato">{{ libro.edicion }}</span></p>
-        <h3>
+
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="isPdfLibro(libro.url)" [href]="getFullPdfUrlLibro(libro.url)" target="_blank">
             <span class="link-span">Leer</span></a>
         </h3>
-        <h3>
+        <h3 *ngIf="isLoggedIn()">
           <a *ngIf="!isPdfLibro(libro.url)" [href]="libro.url" target="_blank">
             <span class="link-span">Resolver</span> </a>
         </h3>
-        <div class="icons">
+        <div class="icons" *ngIf="isLoggedIn()">
           <a href="#" class="fa-solid fa-bookmark" title="Guardar"></a>
           <a
             [href]="isPdfLibro(libro.url) ? getFullPdfUrlLibro(libro.url) : libro.url"
