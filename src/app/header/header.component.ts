@@ -40,7 +40,15 @@ export class HeaderComponent {
       }
     });
 
+    this.apiService.getUserInfo().subscribe(userInfo => {
+      this.userInfo = userInfo;
+    });
+
     this.getUserInfo();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   setActiveLink(index: number) {
@@ -59,6 +67,7 @@ export class HeaderComponent {
   getUserInfo() {
     this.userInfo = this.apiService.getUserInfoFromToken();
     console.log('UserInfo:', this.userInfo); // Verificar en la consola
+    //this.cd.detectChanges();
   }
   logout() {
     this.userInfo = null;
@@ -83,6 +92,5 @@ export class HeaderComponent {
       this.showOptions = false;
     }
   }
-  //--------------------------------
-
-}
+}  
+//--------------------------------

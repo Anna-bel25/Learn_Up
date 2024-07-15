@@ -24,7 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import { CuentaUsuarioComponent } from './cuenta-usuario/cuenta-usuario.component';
+import { CuentaUsuarioComponent } from './cuenta-Usuario-Scree/cuenta-usuario/cuenta-usuario.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 //import { routes } from './app.routes';
 
@@ -40,6 +42,7 @@ import { CuentaUsuarioComponent } from './cuenta-usuario/cuenta-usuario.componen
     FormsModule,
     MatSnackBarModule,
     MatBottomSheetModule,
+    MatDialogModule,
 
     //routes,
 

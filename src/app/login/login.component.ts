@@ -41,8 +41,9 @@ export class LoginComponent implements OnInit {
       }
     }, error => {
       console.error('Error iniciando sesión', error);
+      this.showMessage();
     });
-    this.showMessage();
+    
   }
 
   navigateToRegister() {
