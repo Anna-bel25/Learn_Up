@@ -67,7 +67,7 @@ export class UploadMenuComponent implements AfterViewInit, OnInit {
       if (tituloSeccion) {
         tituloSeccion.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         //window.scrollBy(0, 650);
-        window.scrollTo({ top: 730, behavior: 'smooth' });
+        window.scrollTo({ top: 750, behavior: 'smooth' });
       } else {
         console.error('Elemento del título de la sección no encontrado');
       }

@@ -72,14 +72,19 @@
               <label for="videoFile">Archivo de video (MP4)</label>
               <div class="input-wrapper">
                 <input #videoFileInput type="file" id="videoFile" (change)="onVideoFileChange($event)" accept="video/mp4" style="display: none;">
-                <button type="button" class="btn3" (click)="selectVideoFile()">Seleccionar archivo</button>
+                <button type="button" class="btn" (click)="selectVideoFile()">Seleccionar archivo</button>
                 <span *ngIf="isVideoFileSelected()" class="file-selected">Archivo seleccionado: {{ selectedVideoFileName }}</span>
                 <span *ngIf="!isVideoFileSelected()" class="file-not-selected">No se ha seleccionado ningún archivo</span>
               </div>
             </div>
           </div>
 
-          <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir video</button>
+          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <!-- <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir video</button> -->
+          <div *ngIf="!uploadForm.valid ||!isDetailsFilled()" class="error-message">
+            <p style="text-transform: none !important; color: var(--pink);">Por favor, complete todos los campos antes de subir el video.</p>
+          </div>
+
         </form>
       </div>
     </div>

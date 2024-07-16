@@ -4,11 +4,12 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { ActividadModel } from '../models/actividad.model';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-actividad',
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule ],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule  ],
   templateUrl: './upload-actividad.component.html',
   styleUrl: './upload-actividad.component.css'
 })
@@ -44,10 +45,12 @@ export class UploadActividadComponent implements OnInit {
   activityImageFile: File | null = null;
   activityImageFileName: string = '';
 
+  showToast = false;
+
   @ViewChild('activityFileInput') activityFileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('activityImageInput') activityImageInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar ) {}
 
   ngOnInit(): void {
     this.obtenerMaterias();
@@ -85,6 +88,7 @@ export class UploadActividadComponent implements OnInit {
           console.log('Actividad subida exitosamente:', response);
           form.resetForm();
           this.resetForm();
+          this.showMessageOK();
         },
         (error) => {
           if (error.error instanceof ErrorEvent) {
@@ -96,8 +100,26 @@ export class UploadActividadComponent implements OnInit {
         }
       );
     } else {
-      console.error('Formulario inválido o faltan datos necesarios.');
+      this.showMessageERROR();
     }
+  }
+
+  showMessageERROR() {
+    this.snackBar.open('Por favor, complete todos los campos antes de subir la actividad.', 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: 'custom-snack-bar'
+    });
+  }
+
+  showMessageOK() {
+    this.snackBar.open('Actividad subida exitosamente!', 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: 'custom-snack-bar'
+    });
   }
 
   /*subirActividad(form: NgForm): void {

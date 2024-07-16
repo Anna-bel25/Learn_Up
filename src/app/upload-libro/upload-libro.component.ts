@@ -4,6 +4,7 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { CommonModule } from '@angular/common';
 import { LibroModel } from '../models/lirbo.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-libro',
@@ -50,7 +51,7 @@ export class UploadLibroComponent implements OnInit {
   @ViewChild('libroFileInput') libroFileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('libroImageInput') libroImageInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar ) {}
 
   ngOnInit(): void {
     this.obtenerMaterias();
@@ -96,6 +97,7 @@ export class UploadLibroComponent implements OnInit {
           console.log('Libro subido exitosamente:', response);
           form.resetForm();
           this.resetForm();
+          this.showMessageOK();
         },
         (error) => {
           if (error.error instanceof ErrorEvent) {
@@ -107,10 +109,27 @@ export class UploadLibroComponent implements OnInit {
         }
       );
     } else {
-      console.error('Formulario inválido o faltan datos necesarios.');
+      this.showMessageERROR();
     }
   }
 
+  showMessageERROR() {
+    this.snackBar.open('Por favor, complete todos los campos antes de subir la actividad.', 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: 'custom-snack-bar'
+    });
+  }
+
+  showMessageOK() {
+    this.snackBar.open('Actividad subida exitosamente!', 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: 'custom-snack-bar'
+    });
+  }
 
 
   /*subirLibro(form: NgForm): void {

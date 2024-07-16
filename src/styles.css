@@ -28,7 +28,7 @@ html {
   outline: none;
   border: none;
   text-decoration: none;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   transition: .2s linear;
 }
 
@@ -51,6 +51,11 @@ html {
   background:var(--pink);
 }
 
+.btn:disabled {
+  background-color: #2422228b;
+  color: var(--light-gray);
+  cursor: not-allowed;
+}
 
 /* Estilos de los botones */
 .btn2 {
@@ -85,6 +90,12 @@ html {
 
 .btn3:hover{
   background:var(--pink);
+}
+
+.btn3:disabled {
+  background-color: #2422228b;
+  color: var(--light-gray);
+  cursor: not-allowed;
 }
 
 .content:last-child .btn3 {

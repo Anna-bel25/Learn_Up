@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { VideoModel } from '../models/video.model';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-video',
@@ -45,7 +46,7 @@ export class UploadVideoComponent implements OnInit {
   @ViewChild('videoFileInput') videoFileInput!: ElementRef<HTMLInputElement>;
 
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private snackBar: MatSnackBar ) {}
 
   ngOnInit(): void {
     this.obtenerMaterias();
@@ -80,6 +81,7 @@ export class UploadVideoComponent implements OnInit {
           console.log('Video subido exitosamente:', response);
           form.resetForm();
           this.resetForm();
+          this.showMessageOK();
         },
         (error) => {
           if (error.error instanceof ErrorEvent) {
@@ -91,9 +93,30 @@ export class UploadVideoComponent implements OnInit {
           }
         );
       } else {
-        console.error('Formulario inválido o faltan datos necesarios.');
+        this.showMessageERROR();
       }
     }
+
+    showMessageERROR() {
+      this.snackBar.open('Por favor, complete todos los campos antes de subir la actividad.', 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: 'custom-snack-bar'
+      });
+    }
+
+    showMessageOK() {
+      this.snackBar.open('Actividad subida exitosamente!', 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: 'custom-snack-bar'
+      });
+    }
+
+
+
 
   /*subirVideo(form: NgForm): void {
     if (form.valid && this.selectedMateriaId && this.selectedMateriaNombre) {

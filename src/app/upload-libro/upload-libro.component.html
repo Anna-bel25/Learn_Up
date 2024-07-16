@@ -122,14 +122,20 @@
               <label for="imageFile">Archivo de imagen (PNG, JPG, JPEG)</label>
               <div class="input-wrapper">
                 <input #libroImageInput type="file" id="imageFile" (change)="onLibroImageChange($event)" accept="image/png, image/jpeg, image/jpg" style="display: none;">
-                <button type="button" class="btn3" (click)="selectLibroImage()">Seleccionar archivo</button>
+                <button type="button" class="btn" (click)="selectLibroImage()">Seleccionar archivo</button>
                 <span *ngIf="isLibroImageSelected()" class="file-selected">Archivo seleccionado: {{ libroImageFileName }}</span>
                 <span *ngIf="!isLibroImageSelected()" class="file-not-selected">No se ha seleccionado ningún archivo</span>
               </div>
             </div>
           </div>
 
-          <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir libro</button>
+          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <!-- <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir libro</button> -->
+          <div *ngIf="!uploadForm.valid ||!isDetailsFilled()" class="error-message">
+            <br>
+            <p style="text-transform: none !important; color: var(--pink);">Por favor, complete todos los campos antes de subir el libro.</p>
+          </div>
+
         </form>
       </div>
     </div>

@@ -49,7 +49,7 @@
             (click)="handleLinkClickLibro($event, libro.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfLibro(libro.url) ? '' : ''">
+            [attr.title]="isPdfLibro(libro.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfLibro(libro.url) ? '' : '' }}</span>
           </a>
         </div>

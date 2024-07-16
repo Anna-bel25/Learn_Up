@@ -44,7 +44,7 @@
             (click)="handleLinkClickActividad($event, actividad.url)"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isPdfActividad(actividad.url) ? '' : ''">
+            [attr.title]="isPdfActividad(actividad.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isPdfActividad(actividad.url) ? '' : '' }}</span>
           </a>
 

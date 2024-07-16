@@ -75,7 +75,7 @@
             (click)="isMp4Url(video.url) ? handleLinkClickVideo($event, video.url) : null"
             target="_blank"
             class="fa-solid fa-circle-down"
-            [attr.title]="isMp4Url(video.url) ? '' : ''">
+            [attr.title]="isMp4Url(video.url) ? '' : 'Descargar'">
             <span class="link-span">{{ isMp4Url(video.url) ? '' : '' }}</span>
           </a>
         </div>

@@ -99,20 +99,30 @@
               <label for="imageFile">Archivo de imagen (PNG, JPG, JPEG)</label>
               <div class="input-wrapper">
                 <input #activityImageInput type="file" id="imageFile" (change)="onActivityImageChange($event)" accept="image/png, image/jpeg, image/jpg" style="display: none;">
-                <button type="button" class="btn3" (click)="selectActivityImage()">Seleccionar archivo</button>
+                <button type="button" class="btn" (click)="selectActivityImage()">Seleccionar archivo</button>
                 <span *ngIf="isActivityImageSelected()" class="file-selected">Archivo seleccionado: {{ activityImageFileName }}</span>
                 <span *ngIf="!isActivityImageSelected()" class="file-not-selected"></span>
               </div>
             </div>
           </div>
 
-          <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <!-- <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir actividad</button> -->
+          <div *ngIf="!uploadForm.valid ||!isDetailsFilled()" class="error-message">
+            <br>
+            <p style="text-transform: none !important; color: var(--pink);">Por favor, complete todos los campos antes de subir la actividad.</p>
+          </div>
+
         </form>
       </div>
     </div>
   </div>
 </section>
 <!-- END SECCIÓN DE SUBIR ACTIVIDADES -->
+
+
+
+
 
 
 
