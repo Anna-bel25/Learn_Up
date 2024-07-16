@@ -17,7 +17,6 @@ export class HeaderComponent {
   private destroy$ = new Subject<void>();
   showOptions = false;
 
-
   activeLinkIndex = 0;
   links = [
     { path: '/home', label: 'Inicio', active: true },
@@ -94,4 +93,5 @@ export class HeaderComponent {
       this.showOptions = false;
     }
   }
-}
+}  
+//--------------------------------

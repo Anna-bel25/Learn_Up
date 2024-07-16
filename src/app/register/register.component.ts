@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MustMatch, noSpecialCharactersValidator } from './MustMatch';
 import { ApiService } from '../api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
   checkboxError: boolean = false;
   users: any[] = [];
   
-  constructor(private router: Router, private fb: FormBuilder, private apiservice: ApiService) {
+  constructor(private router: Router, private fb: FormBuilder, private apiservice: ApiService,private snackBar: MatSnackBar) {
     this.FormularioRegistro = this.fb.group({
       tipocuenta: [''], 
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -41,7 +42,7 @@ export class RegisterComponent implements OnInit {
   get f() { return this.FormularioRegistro.controls; }
 
   ngOnInit() {
-    const userData = {}; // Aquí debes crear un objeto con los datos del usuario
+    const userData = {}; 
     this.apiservice.postUsers(userData).subscribe(data => {
       this.users = data;
     });
@@ -80,6 +81,7 @@ export class RegisterComponent implements OnInit {
 
       this.apiservice.postUsers(user).subscribe(response => {
         console.log('Usuario registrado exitosamente', response);
+        this.showMessage();
         this.router.navigate(['/login']); // Navega a la página de login tras el registro exitoso
       }, error => {
         console.error('Error registrando el usuario', error);
@@ -119,5 +121,10 @@ export class RegisterComponent implements OnInit {
     if (opcionesElement) {
         opcionesElement.classList.toggle('active');
     }
+  }
+  showMessage() {
+    this.snackBar.open('Usuario regsitrado exitosamente', 'Cerrar', {
+      duration: 3000, // duración en milisegundos (5000ms = 5 segundos)
+    });
   }
 }

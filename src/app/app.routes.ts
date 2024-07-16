@@ -17,7 +17,7 @@ import { UploadLibroComponent } from './upload-libro/upload-libro.component';
 import { UploadActividadComponent } from './upload-actividad/upload-actividad.component';
 import { ProtectedComponent } from './protected/ProtectedComponent ';
 import { AuthGuard } from './AuthGuard';
-import { CuentaUsuarioComponent } from './cuenta-usuario/cuenta-usuario.component';
+import { CuentaUsuarioComponent } from './cuenta-Usuario-Scree/cuenta-usuario/cuenta-usuario.component';
 
 
 export const routes: Routes =

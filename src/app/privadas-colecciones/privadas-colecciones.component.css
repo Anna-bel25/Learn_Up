@@ -38,13 +38,14 @@ span{
 
 .titulo h3 {
     font-size: 2rem;
-    margin-bottom: 9px;
+    margin-bottom: 15px;
     margin-top: 0%;
 }
 
 .titulo a {
     margin-left: 20px;
     margin-top: 17px;
+    margin-bottom: 15px;
     font-size: 1rem;
     font-weight: 800;
 }
@@ -95,7 +96,7 @@ span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: 18px;
+    margin-left: 48px;
     margin-top: 50px;
 }
 
@@ -224,7 +225,7 @@ span{
     display: flex;
     flex-direction: column;
     width: 720px;
-    margin-left: 22px;
+    margin-left: 48px;
 }
 
 .content h3 {
@@ -261,6 +262,8 @@ span{
     color: var(--light-gray);
     font-size: 1.2rem;
     transition: all 0.5s linear;
+    margin-top: 0;
+    margin-bottom: 150px;
 }
 
 .icons a:hover {
@@ -316,4 +319,15 @@ span{
         width: 80%;
         height: 20%;
     }
+}
+
+.media-container iframe{
+    width: 100%;
+    /* height: 140%; */
+    margin-right: 90px;
+    margin-left: 20px;
+}
+
+.media-container img{
+    margin-left: 22px;
 }
