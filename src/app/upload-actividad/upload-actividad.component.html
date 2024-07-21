@@ -9,14 +9,14 @@
       <div class="box">
         <h2>Detalles Principales</h2>
         <form #uploadForm="ngForm" (ngSubmit)="subirActividad(uploadForm)" autocomplete="off">
-          <div class="input-container first">
+          <div class="input-container">
             <label for="activityTitulo">Título de la actividad:</label>
             <div class="input-wrapper">
               <input type="text" id="titulo" name="titulo" required [(ngModel)]="activityTitle" #titulo="ngModel" placeholder="Ingrese el título de la actividad" autocomplete="off" maxlength="100">
             </div>
           </div>
 
-          <div class="input-container first">
+          <div class="input-container">
             <label for="activityDescription">Descripción de la actividad:</label>
             <div class="input-wrapper">
               <textarea id="activityDescription" [(ngModel)]="activityDescription" name="activityDescription" required placeholder="Ingrese la descripción de la actividad" autocomplete="off" maxlength="500"></textarea>
@@ -72,7 +72,7 @@
               <label for="activityFile">Archivo de actividad (PDF)</label>
               <div class="input-wrapper">
                 <input #activityFileInput type="file" id="activityFile" (change)="onActivityFileChange($event)" accept="application/pdf" style="display: none;">
-                <button type="button" class="btn3" (click)="selectActivityFile()">Seleccionar Archivo</button>
+                <button type="button" class="btn" (click)="selectActivityFile()">Seleccionar Archivo</button>
                 <span *ngIf="isActivityFileSelected()" class="file-selected">Archivo seleccionado: {{ selectedActivityFileName }}</span>
                 <span *ngIf="!isActivityFileSelected()" class="file-not-selected">No se ha seleccionado ningún archivo</span>
               </div>
@@ -101,7 +101,7 @@
                 <input #activityImageInput type="file" id="imageFile" (change)="onActivityImageChange($event)" accept="image/png, image/jpeg, image/jpg" style="display: none;">
                 <button type="button" class="btn" (click)="selectActivityImage()">Seleccionar archivo</button>
                 <span *ngIf="isActivityImageSelected()" class="file-selected">Archivo seleccionado: {{ activityImageFileName }}</span>
-                <span *ngIf="!isActivityImageSelected()" class="file-not-selected"></span>
+                <span *ngIf="!isActivityImageSelected()" class="file-not-selected">No se ha seleccionado ninguna iamgen</span>
               </div>
             </div>
           </div>

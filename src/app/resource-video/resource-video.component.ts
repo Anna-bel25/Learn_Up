@@ -36,6 +36,9 @@ export class ResourceVideoComponent implements OnInit {
   videosPorPagina: number = 5;
   paginaActualVideos: number = 1;
 
+  backendProblem: boolean = false;
+  internetProblem: boolean = false;
+
   constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   isLoggedIn(): boolean {
@@ -44,6 +47,23 @@ export class ResourceVideoComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchVideos();
+
+    // Check for backend problem
+    this.apiService.getVideos().subscribe({
+      next: (response: VideoModel[]) => {
+        console.log('Response from API:', response);
+      },
+      error: (error) => {
+        console.error('Error al recuperar los actividades:', error.message);
+        this.backendProblem = true;
+      }
+    });
+
+    // Check for internet problem
+    setInterval(() => {
+      this.internetProblem = !navigator.onLine;
+    }, 1000);
+
   }
 
   fetchVideos(): void {

@@ -72,6 +72,9 @@ export class ResourceFullComponent implements OnInit  {
 
   filtroActivo: string | null = null
 
+  backendProblem: boolean = false;
+  internetProblem: boolean = false;
+
 
   mostrarTodo() {
     this.mostrarTodosLosRecursos = true;
@@ -117,6 +120,23 @@ export class ResourceFullComponent implements OnInit  {
     this.mostrarVideos();
     //this.mostrarTodo();
     //this.determinarMostrarTodosLosRecursos();
+
+    // Check for backend problem
+    this.apiService.getVideos().subscribe({
+      next: (response: VideoModel[]) => {
+        console.log('Response from API:', response);
+      },
+      error: (error) => {
+        console.error('Error al recuperar los videos:', error.message);
+        this.backendProblem = true;
+      }
+    });
+
+    // Check for internet problem
+    setInterval(() => {
+      this.internetProblem = !navigator.onLine;
+    }, 1000);
+
   }
 
   isLoggedIn(): boolean {

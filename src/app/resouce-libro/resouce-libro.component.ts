@@ -35,6 +35,9 @@ export class ResouceLibroComponent implements OnInit {
   librosPorPagina: number = 5;
   paginaActualLibros: number = 1;
 
+  backendProblem: boolean = false;
+  internetProblem: boolean = false;
+
   constructor(private apiService: ApiService, private http: HttpClient, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   isLoggedIn(): boolean {
@@ -43,6 +46,23 @@ export class ResouceLibroComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchLibros();
+
+    // Check for backend problem
+    this.apiService.getLibros().subscribe({
+      next: (response: LibroModel[]) => {
+        console.log('Response from API:', response);
+      },
+      error: (error) => {
+        console.error('Error al recuperar los actividades:', error.message);
+        this.backendProblem = true;
+      }
+    });
+
+    // Check for internet problem
+    setInterval(() => {
+      this.internetProblem = !navigator.onLine;
+    }, 1000);
+
   }
 
   fetchLibros(): void {

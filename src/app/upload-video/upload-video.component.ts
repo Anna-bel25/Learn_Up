@@ -98,7 +98,7 @@ export class UploadVideoComponent implements OnInit {
     }
 
     showMessageERROR() {
-      this.snackBar.open('Por favor, complete todos los campos antes de subir la actividad.', 'Cerrar', {
+      this.snackBar.open('Por favor, complete todos los campos antes de subir el video.', 'Cerrar', {
         duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
@@ -107,7 +107,7 @@ export class UploadVideoComponent implements OnInit {
     }
 
     showMessageOK() {
-      this.snackBar.open('Actividad subida exitosamente!', 'Cerrar', {
+      this.snackBar.open('Video subido exitosamente!', 'Cerrar', {
         duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',

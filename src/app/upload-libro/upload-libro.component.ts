@@ -114,7 +114,7 @@ export class UploadLibroComponent implements OnInit {
   }
 
   showMessageERROR() {
-    this.snackBar.open('Por favor, complete todos los campos antes de subir la actividad.', 'Cerrar', {
+    this.snackBar.open('Por favor, complete todos los campos antes de subir el libro.', 'Cerrar', {
       duration: 5000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
@@ -123,7 +123,7 @@ export class UploadLibroComponent implements OnInit {
   }
 
   showMessageOK() {
-    this.snackBar.open('Actividad subida exitosamente!', 'Cerrar', {
+    this.snackBar.open('Libro subido exitosamente!', 'Cerrar', {
       duration: 5000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',

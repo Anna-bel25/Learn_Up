@@ -122,6 +122,18 @@
 <!-- VIDEOS SECTION START -->
 <section *ngIf="mostrarVideo" class="about">
   <h1 class="title2">Recursos de <span>Videos</span></h1>
+
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
+
   <div *ngIf="videosPaginados.length > 0; else noVideosMessage">
     <div class="row" *ngFor="let video of videosPaginados">
       <div class="recurso-container" style="position: relative;">
@@ -199,7 +211,19 @@
 <!-- LIBROS SECTION START -->
 <section *ngIf="mostrarLibro" class="about">
   <h1 class="title2">Recursos de <span>Libros</span></h1>
-  <div>
+
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
+
+  <div *ngIf="librosPaginados.length > 0; else noLibrosMessage">
     <div class="row" *ngFor="let libro of librosPaginados">
       <div class="img-container">
         <img *ngIf="isLocalImageLibro(libro.imagen_url); else externalImage"
@@ -267,7 +291,20 @@
 <!-- ACTIVIDADES SECTION START -->
 <section *ngIf="mostrarActividad" class="about">
   <h1 class="title2">Recursos de<span>Actividades</span></h1>
-  <div>
+
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
+
+
+  <div *ngIf="actividadesPaginados.length > 0; else noActividadesMessage">
     <div class="row" *ngFor="let actividad of actividadesPaginados">
       <div class="img-container">
         <img *ngIf="isLocalImageActividad(actividad.imagen_url); else externalImage"

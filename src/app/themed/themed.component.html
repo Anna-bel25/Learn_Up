@@ -5,6 +5,17 @@
 <section id="preescolar-section" class="blogs" *ngIf="mostrarPreescolar">
   <h1 class="title"> materias de <span>preescolar</span> <a> </a> </h1>
 
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
+
   <div class="box-container">
     <div class="box" *ngFor="let materia of materiasPreescolar">
       <div class="image">
@@ -35,6 +46,17 @@
 
 <section id="primaria-section" class="blogs" *ngIf="mostrarPrimaria">
   <h1 class="title"> materias de <span>primaria</span> <a> </a> </h1>
+
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
 
   <div class="box-container">
     <div class="box" *ngFor="let materia of materiasPrimaria">
@@ -68,6 +90,17 @@
 <section id="secundaria-section" class="blogs" *ngIf="mostrarSecundaria">
   <h1 class="title"> materias de <span>secundaria</span> <a> </a> </h1>
 
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
+
   <div class="box-container">
     <div class="box" *ngFor="let materia of materiasSecundaria">
       <div class="image">
@@ -97,6 +130,17 @@
 
 <section id="bachillerato-section" class="blogs" *ngIf="mostrarBachillerato">
   <h1 class="title"> materias de <span>bachillerato</span> <a> </a> </h1>
+
+  <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+  </div>
+
+  <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+    <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+  </div>
 
   <div class="box-container">
     <div class="box" *ngFor="let materia of materiasBachillerato">

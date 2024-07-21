@@ -30,10 +30,30 @@ export class ThemedComponent implements OnInit {
   nivelSeleccionado: string = '';
   materiaSeleccionada: string = '';
 
+  backendProblem: boolean = false;
+  internetProblem: boolean = false;
+
   constructor(private apiService: ApiService, private http: HttpClient,  private router: Router) {}
 
   ngOnInit() {
     this.obtenerMaterias();
+
+    //Check for backend problem
+    this.apiService.getMaterias().subscribe({
+      next: (response: MateriaModel[]) => {
+        console.log('Response from API:', response);
+      },
+      error: (error) => {
+        console.error('Error al recuperar los actividades:', error.message);
+        this.backendProblem = true;
+      }
+    });
+
+    //Check for internet problem
+    setInterval(() => {
+      this.internetProblem = !navigator.onLine;
+    }, 1000);
+
   }
 
   obtenerMaterias(): void {

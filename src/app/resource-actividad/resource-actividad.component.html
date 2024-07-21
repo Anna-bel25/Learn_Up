@@ -12,7 +12,25 @@
   </div>
   <!-- END FILTER -->
 
+  
+  <section class="about">
+    <div class="contenedor-recursos" *ngIf="!backendProblem && !internetProblem">
+    </div>
+
+    <div class="contenedor-mensaje" *ngIf="backendProblem && !internetProblem">
+      <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión al servidor. Por favor, inténtalo de nuevo más tarde.</p>
+    </div>
+
+    <div class="contenedor-mensaje" *ngIf="!backendProblem && internetProblem">
+      <p style="font-size: 1.2rem; font-weight: 800; color: var(--pink);">Hay un problema con la conexión a internet. Por favor, verifica tu conexión e inténtalo de nuevo.</p>
+    </div>
+  </section>
+
+
   <h1 class="title">{{ nivel }} <span>{{ materia }}</span></h1>
+  <div *ngIf="actividadesMostradas.length === 0">
+    <p style="font-size: 1rem;">El recurso no existe en la base de datos</p>
+  </div>
   <div *ngIf="actividades.length > 0; else noActividadesMessage">
     <div class="row" *ngFor="let actividad of actividadesPaginadas">
       <div class="img-container">

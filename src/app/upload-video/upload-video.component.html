@@ -79,9 +79,10 @@
             </div>
           </div>
 
-          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir video</button>
           <!-- <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir video</button> -->
           <div *ngIf="!uploadForm.valid ||!isDetailsFilled()" class="error-message">
+            <br>
             <p style="text-transform: none !important; color: var(--pink);">Por favor, complete todos los campos antes de subir el video.</p>
           </div>
 

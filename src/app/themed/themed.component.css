@@ -222,3 +222,8 @@ section {
   line-height: 2;
   padding: .4rem 0;
 }
+
+
+.contenedor-mensaje {
+  text-transform: none !important;
+}

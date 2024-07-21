@@ -37,7 +37,7 @@ html {
 .btn{
   display: inline-block;
   margin-top: 1rem;
-  margin: .8rem;
+  /* margin: .8rem; */
   border-radius: 5rem;
   background: var(--black-suit);
   color:white;
@@ -52,8 +52,8 @@ html {
 }
 
 .btn:disabled {
-  background-color: #2422228b;
-  color: var(--light-gray);
+  background-color: var(--black-suit);
+  color: grey;
   cursor: not-allowed;
 }
 
@@ -93,8 +93,8 @@ html {
 }
 
 .btn3:disabled {
-  background-color: #2422228b;
-  color: var(--light-gray);
+  background-color: var(--black-suit);
+  color: grey;
   cursor: not-allowed;
 }
 

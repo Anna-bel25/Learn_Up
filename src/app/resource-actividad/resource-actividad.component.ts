@@ -33,6 +33,9 @@ export class ResourceActividadComponent implements OnInit {
   actividadesPorPagina: number = 5;
   paginaActualActividades: number = 1;
 
+  backendProblem: boolean = false;
+  internetProblem: boolean = false;
+
   constructor(private apiService: ApiService, private http: HttpClient,public dialog: MatDialog) { }
 
   isLoggedIn(): boolean {
@@ -41,6 +44,23 @@ export class ResourceActividadComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchActividades();
+
+    // Check for backend problem
+    this.apiService.getActividades().subscribe({
+      next: (response: ActividadModel[]) => {
+        console.log('Response from API:', response);
+      },
+      error: (error) => {
+        console.error('Error al recuperar los actividades:', error.message);
+        this.backendProblem = true;
+      }
+    });
+
+    // Check for internet problem
+    setInterval(() => {
+      this.internetProblem = !navigator.onLine;
+    }, 1000);
+
   }
 
   fetchActividades(): void {

@@ -95,7 +95,7 @@
               <label for="libroFile">Archivo del libro (PDF)</label>
               <div class="input-wrapper">
                 <input #libroFileInput type="file" id="libroFile" (change)="onLibroFileChange($event)" accept="application/pdf" style="display: none;">
-                <button type="button" class="btn3" (click)="selectLibroFile()">Seleccionar archivo</button>
+                <button type="button" class="btn" (click)="selectLibroFile()">Seleccionar archivo</button>
                 <span *ngIf="isLibroFileSelected()" class="file-selected">Archivo seleccionado: {{ selectedLibroFileName }}</span>
                 <span *ngIf="!isLibroFileSelected()" class="file-not-selected">No se ha seleccionado ningún archivo</span>
               </div>
@@ -129,7 +129,7 @@
             </div>
           </div>
 
-          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir actividad</button>
+          <button class="btn" type="submit" [ngClass]="{'btn-disabled':!uploadForm.valid}" [disabled]="!uploadForm.valid">Subir libro</button>
           <!-- <button class="btn" type="submit" [disabled]="!uploadForm.valid">Subir libro</button> -->
           <div *ngIf="!uploadForm.valid ||!isDetailsFilled()" class="error-message">
             <br>
