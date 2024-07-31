@@ -28,7 +28,7 @@ import { CuentaUsuarioComponent } from './cuenta-Usuario-Scree/cuenta-usuario/cu
 import {MatDialogModule} from '@angular/material/dialog';
 import { delay, EMPTY, Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
-import { createApi } from 'unsplash-js';
+//import { createApi } from 'unsplash-js';
 
 //import { routes } from './app.routes';
 
