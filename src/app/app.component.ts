@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,7 +26,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { CuentaUsuarioComponent } from './cuenta-Usuario-Scree/cuenta-usuario/cuenta-usuario.component';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { delay, EMPTY, Observable, of } from 'rxjs';
+import { environment } from '../environments/environment';
+import { createApi } from 'unsplash-js';
 
 //import { routes } from './app.routes';
 
@@ -75,6 +77,25 @@ import {MatDialogModule} from '@angular/material/dialog';
   styleUrl: './app.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class AppComponent {
   title = 'LearnUp';
 }
+
+/*export class AppComponent implements OnInit {
+
+  public unsplashItems$: Observable<any> = EMPTY;
+  title = 'LearnUp';
+
+  async ngOnInit(): Promise<void> {
+    const unsplashAPI = createApi({
+      accessKey: environment.UNSPLASH_API_KEY,
+    });
+    const res = await unsplashAPI.photos.list({ page: 1, perPage: 12 });
+    if (res.type === 'success') {
+      this.unsplashItems$ = of(res.response.results).pipe(delay(600));
+    }
+  }
+}*/
+
+
