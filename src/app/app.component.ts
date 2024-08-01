@@ -26,9 +26,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { CuentaUsuarioComponent } from './cuenta-Usuario-Scree/cuenta-usuario/cuenta-usuario.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { delay, EMPTY, Observable, of } from 'rxjs';
-import { environment } from '../environments/environment';
-import { createApi } from 'unsplash-js';
+//import { delay, EMPTY, Observable, of } from 'rxjs';
+//import { environment } from '../environments/environment';
+//import { createApi } from 'unsplash-js';
 
 //import { routes } from './app.routes';
 

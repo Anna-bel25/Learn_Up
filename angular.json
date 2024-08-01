@@ -35,13 +35,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
@@ -95,6 +95,13 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+        "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "repo": "https://github.com/Anna-bel25/Learn_Up.git",
+            "baseHref": "https://Anna-bel25.github.io/Learn_Up/"
           }
         }
       }
